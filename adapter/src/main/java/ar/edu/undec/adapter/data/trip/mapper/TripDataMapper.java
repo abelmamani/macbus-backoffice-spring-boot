@@ -1,0 +1,38 @@
+package ar.edu.undec.adapter.data.trip.mapper;
+
+import ar.edu.undec.adapter.data.exceptions.FailedMappingException;
+import ar.edu.undec.adapter.data.service.mapper.ServiceDataMapper;
+import ar.edu.undec.adapter.data.stoptime.mapper.StopTimeDataMapper;
+import ar.edu.undec.adapter.data.trip.models.TripNode;
+import trip.models.Trip;
+
+import java.util.stream.Collectors;
+
+public class TripDataMapper {
+    public static Trip dataCoreMapper(TripNode trip){
+        try {
+            return Trip.getInstance(trip.getId(),
+                    trip.getHeadsign(),
+                    trip.getDepartureTime(),
+                    trip.getTripStatus(),
+                    ServiceDataMapper.dataCoreMapper(trip.getService()),
+                    trip.getStopTImes().stream().map(StopTimeDataMapper::dataCoreMapper).collect(Collectors.toList()));
+            }catch (RuntimeException exception){
+            throw new FailedMappingException("Error mapping from node to core");
+        }
+    }
+    public static TripNode dataNodeMapper(Trip trip){
+        try {
+            return TripNode.builder()
+                    .id(trip.getId())
+                    .headsign(trip.getHeadsign())
+                    .departureTime(trip.getDepartureTime())
+                    .tripStatus(trip.getTripStatus())
+                    .service(ServiceDataMapper.dataNodeMapper(trip.getService()))
+                    .stopTImes(trip.getStopTImes().stream().map(StopTimeDataMapper::dataNodeMapper).collect(Collectors.toList()))
+                    .build();
+        }catch (RuntimeException exception){
+            throw new FailedMappingException("Error mapping from core to node");
+        }
+    }
+}
