@@ -3,7 +3,7 @@ package stopsequence.usecases;
 import route.inputs.GetRouteInput;
 import stopsequence.inputs.GetStopSequencesByRouteInput;
 import stopsequence.models.StopSequence;
-import stopsequence.outputs.GetStopSequencesByRouteRepository;
+
 import java.util.List;
 
 public class GetStopSequencesByRouteUseCase implements GetStopSequencesByRouteInput {

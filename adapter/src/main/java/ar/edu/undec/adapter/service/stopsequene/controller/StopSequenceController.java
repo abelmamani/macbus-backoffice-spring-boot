@@ -13,7 +13,7 @@ import stopsequence.models.CreateStopSequenceRequestModel;
 @RestController
 @RequestMapping("stop_sequences")
 @CrossOrigin("*")
-public class ShapeController {
+public class StopSequenceController {
     private GetStopSequencesByRouteInput getStopSequencesByRouteInput;
     private CreateStopSequenceInput createStopSequenceInput;
 
