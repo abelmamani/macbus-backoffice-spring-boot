@@ -1,7 +1,8 @@
 package stop.inputs;
 
 import stop.models.CreateStopRequestModel;
+import stop.models.Stop;
 
 public interface CreateStopInput {
-    Long createStop(CreateStopRequestModel createStopRequestModel);
+    Stop createStop(CreateStopRequestModel createStopRequestModel);
 }

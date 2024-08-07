@@ -22,7 +22,15 @@ public class GetRouteUseCase implements GetRouteInput {
     }
 
     @Override
-    public RouteResponseModel getRouteByName(String name) {
+    public Route getRouteByName(String name) {
+        Optional<Route> route = getRouteRepository.findByLongName(name);
+        if (route.isEmpty())
+            throw new RouteNotExistsException("La linea " + name + " no existe.");
+        return route.get();
+    }
+
+    @Override
+    public RouteResponseModel getRouteGeneralInfoByName(String name) {
         Optional<Route> route = getRouteRepository.findByLongName(name);
         if(route.isEmpty())
             throw new RouteNotExistsException("La linea " + name + " no existe.");

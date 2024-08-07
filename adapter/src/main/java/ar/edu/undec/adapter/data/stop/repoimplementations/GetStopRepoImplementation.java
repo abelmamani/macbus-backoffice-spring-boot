@@ -18,4 +18,9 @@ public class GetStopRepoImplementation implements GetStopRepository {
     public Optional<Stop> findById(Long id) {
         return stopCRUD.findById(id).map(StopDataMapper::dataCoreMapper);
     }
+
+    @Override
+    public Optional<Stop> findByName(String name) {
+        return stopCRUD.findByName(name).map(StopDataMapper::dataCoreMapper);
+    }
 }

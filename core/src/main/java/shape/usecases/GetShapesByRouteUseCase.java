@@ -1,7 +1,7 @@
 package shape.usecases;
 
 import shape.inpúts.GetShapesByRouteInput;
-import shape.models.ShapeResponseModel;
+import shape.models.Shape;
 import shape.outputs.GetShapesByRouteRepository;
 import java.util.List;
 
@@ -13,7 +13,7 @@ public class GetShapesByRouteUseCase implements GetShapesByRouteInput {
     }
 
     @Override
-    public List<ShapeResponseModel> getAllShapes(String longName) {
+    public List<Shape> getAllShapes(String longName) {
         return getShapesByRouteRepository.findAllShapesByRouteLongName(longName);
     }
 }

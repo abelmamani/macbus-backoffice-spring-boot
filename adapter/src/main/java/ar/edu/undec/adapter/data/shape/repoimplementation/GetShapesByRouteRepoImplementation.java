@@ -3,7 +3,7 @@ package ar.edu.undec.adapter.data.shape.repoimplementation;
 import ar.edu.undec.adapter.data.shape.crud.ShapeCRUD;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
-import shape.models.ShapeResponseModel;
+import shape.models.Shape;
 import shape.outputs.GetShapesByRouteRepository;
 import java.util.List;
 
@@ -13,7 +13,7 @@ public class GetShapesByRouteRepoImplementation implements GetShapesByRouteRepos
     private ShapeCRUD shapeCRUD;
 
     @Override
-    public List<ShapeResponseModel> findAllShapesByRouteLongName(String longName) {
+    public List<Shape> findAllShapesByRouteLongName(String longName) {
         return shapeCRUD.findAllShapesByRouteLongName(longName);
     }
 }

@@ -18,7 +18,7 @@ public class CreateShapeUseCase implements CreateShapeInput {
 
     @Override
     public RouteStatus createShape(CreateShapeRequestModel createShapeRequestModel) {
-        Route busRoute = getRouteInput.getRouteById(createShapeRequestModel.getRouteId());
+        Route busRoute = getRouteInput.getRouteByName(createShapeRequestModel.getRouteName());
         Route route = Route.getInstance(busRoute.getId(),
                     busRoute.getShortName(),
                     busRoute.getLongName(),

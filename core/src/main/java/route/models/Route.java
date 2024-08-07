@@ -6,9 +6,10 @@ import shape.models.Shape;
 import stopsequence.models.StopSequence;
 import trip.models.Trip;
 
+import java.util.Comparator;
 import java.util.List;
+import java.util.NoSuchElementException;
 import java.util.Objects;
-import java.util.stream.IntStream;
 
 public class Route {
     private Long id;
@@ -148,5 +149,17 @@ public class Route {
 
         if (trips.stream().anyMatch(Objects::isNull))
             throw new RouteException("Uno de los viajes es nulo.");
+    }
+
+    public Shape getLastShape() {
+        return this.shapes.stream()
+                .max(Comparator.comparingInt(Shape::getSequence))
+                .orElseThrow(() -> new NoSuchElementException("La shape no esta disponible."));
+    }
+
+    public StopSequence getLastStopSequence() {
+        return this.stopSequences.stream()
+                .max(Comparator.comparingInt(StopSequence::getDistanceTraveled))
+                .orElseThrow(() -> new NoSuchElementException("El stop sequence no esta disponible."));
     }
 }

@@ -17,4 +17,9 @@ public class GetServiceRepoImplementation implements GetServiceRepository {
     public Optional<service.models.Service> findById(Long id) {
         return serviceCRUD.findById(id).map(ServiceDataMapper::dataCoreMapper);
     }
+
+    @Override
+    public Optional<service.models.Service> findByName(String name) {
+        return serviceCRUD.findByName(name).map(ServiceDataMapper::dataCoreMapper);
+    }
 }

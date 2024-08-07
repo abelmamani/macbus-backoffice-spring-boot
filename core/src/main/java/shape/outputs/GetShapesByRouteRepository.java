@@ -1,8 +1,9 @@
 package shape.outputs;
 
-import shape.models.ShapeResponseModel;
+import shape.models.Shape;
+
 import java.util.List;
 
 public interface GetShapesByRouteRepository {
-    List<ShapeResponseModel> findAllShapesByRouteLongName(String longName);
+    List<Shape> findAllShapesByRouteLongName(String longName);
 }

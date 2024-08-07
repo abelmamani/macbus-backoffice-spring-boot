@@ -34,7 +34,7 @@ public class RouteController {
     @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<?> getRouteByName(@PathVariable("name") String name){
         try {
-            return ResponseEntity.ok(getRouteInput.getRouteByName(name));
+            return ResponseEntity.ok(getRouteInput.getRouteGeneralInfoByName(name));
         }catch (RuntimeException exception){
             return ResponseManager.badRequest(exception.getMessage());
         }

@@ -44,7 +44,7 @@ public class StopController {
     @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<?> createStop(@RequestBody CreateStopRequestModel createRouteRequestModel){
         try {
-            return ResponseManager.createRequest(createStopInput.createStop(createRouteRequestModel));
+            return ResponseEntity.created(null).body(createStopInput.createStop(createRouteRequestModel));
         }catch (RuntimeException exception){
             return ResponseManager.badRequest(exception.getMessage());
         }
