@@ -13,12 +13,7 @@ public class GetServiceUseCase implements GetServiceInput {
     }
 
     @Override
-    public Service getService(Long id) {
-        return getServiceRepository.findById(id).orElseThrow(() -> new ServiceNotExistsException("El servicio con id " + id + " no existe."));
-    }
-
-    @Override
-    public Service getServiceByName(String name) {
+    public Service getService(String name) {
         return getServiceRepository.findByName(name).orElseThrow(() -> new ServiceNotExistsException("El servicio " + name + " no existe."));
     }
 }

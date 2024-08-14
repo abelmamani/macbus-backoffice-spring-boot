@@ -4,7 +4,6 @@ import stop.exceptions.StopNotExistsException;
 import stop.inputs.GetStopInput;
 import stop.models.Stop;
 import stop.outputs.GetStopRepository;
-import java.util.Optional;
 
 public class GetStopUseCase implements GetStopInput {
     private GetStopRepository getStopRepository;
@@ -14,12 +13,7 @@ public class GetStopUseCase implements GetStopInput {
     }
 
     @Override
-    public Stop getStop(Long id) {
-        return getStopRepository.findById(id).orElseThrow(() -> new StopNotExistsException("La parada con id " + id + " no existe."));
-    }
-
-    @Override
-    public Stop getStopByName(String name) {
+    public Stop getStop(String name) {
         return getStopRepository.findByName(name).orElseThrow(() -> new StopNotExistsException("La parada " + name + " no existe."));
     }
 }

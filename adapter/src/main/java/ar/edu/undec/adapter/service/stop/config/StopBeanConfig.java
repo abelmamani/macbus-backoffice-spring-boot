@@ -21,8 +21,8 @@ public class StopBeanConfig {
         return new CreateStopUseCase(createStopRepository);
     }
     @Bean
-    public UpdateStopInput updateStopInput(UpdateStopRepository updateStopRepository, GetStopInput getStopInput){
-        return new UpdateStopUseCase(updateStopRepository, getStopInput);
+    public UpdateStopInput updateStopInput(UpdateStopRepository updateStopRepository){
+        return new UpdateStopUseCase(updateStopRepository);
     }
     @Bean
     public DeleteStopInput deleteStopInput(DeleteStopRepository deleteStopRepository){

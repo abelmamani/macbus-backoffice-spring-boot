@@ -22,8 +22,8 @@ public class ServiceBeanConfig {
         return new CreateServiceUseCase(createServiceRepository);
     }
     @Bean
-    public UpdateServiceInput updateServiceInput(UpdateServiceRepository updateServiceRepository, GetServiceInput getServiceInput){
-        return new UpdateServiceUseCase(updateServiceRepository, getServiceInput);
+    public UpdateServiceInput updateServiceInput(UpdateServiceRepository updateServiceRepository){
+        return new UpdateServiceUseCase(updateServiceRepository);
     }
     @Bean
     public DeleteServiceInput deleteServiceInput(DeleteServiceRepository deleteServiceRepository, TripRepository tripRepository){

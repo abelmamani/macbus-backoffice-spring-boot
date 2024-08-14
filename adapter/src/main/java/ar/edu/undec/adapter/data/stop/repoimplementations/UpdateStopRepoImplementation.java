@@ -7,6 +7,8 @@ import org.springframework.stereotype.Service;
 import stop.models.Stop;
 import stop.outputs.UpdateStopRepository;
 
+import java.util.Optional;
+
 @AllArgsConstructor
 @Service
 public class UpdateStopRepoImplementation implements UpdateStopRepository {
@@ -15,6 +17,11 @@ public class UpdateStopRepoImplementation implements UpdateStopRepository {
     @Override
     public boolean existsByName(String name) {
         return stopCRUD.existsByName(name);
+    }
+
+    @Override
+    public Optional<Stop> findByName(String name) {
+        return stopCRUD.findByName(name).map(StopDataMapper::dataCoreMapper);
     }
 
     @Override

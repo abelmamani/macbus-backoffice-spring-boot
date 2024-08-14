@@ -1,8 +1,6 @@
 package shape.usecases;
 
 import route.exceptions.RouteNotExistsException;
-import route.inputs.GetRouteInput;
-import route.inputs.UpdateRouteInput;
 import route.models.Route;
 import route.models.RouteStatus;
 import route.outputs.UpdateRouteRepository;

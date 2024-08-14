@@ -10,6 +10,9 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import user.models.ERole;
 
+import java.time.LocalDateTime;
+import java.util.UUID;
+
 
 @SpringBootApplication
 public class AdapterApplication {
@@ -31,6 +34,8 @@ public class AdapterApplication {
                         .email("abel@gmail.com")
                         .password(passwordEncoder.encode("1234"))
                         .role(ERole.ROLE_ADMIN)
+                        .resetToken(UUID.randomUUID().toString())
+                        .tokenExpiryDate(LocalDateTime.now().minusMinutes(1))
                         .build();
                 userCRUD.save(userEntity);
             }

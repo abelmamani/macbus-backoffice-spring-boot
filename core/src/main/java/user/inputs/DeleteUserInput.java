@@ -1,5 +1,5 @@
 package user.inputs;
 
 public interface DeleteUserInput {
-    void deleteUser(Long id);
+    void deleteUser(String email);
 }

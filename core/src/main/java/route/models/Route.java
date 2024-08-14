@@ -1,20 +1,16 @@
 package route.models;
 
 import route.exceptions.RouteException;
-import shape.exceptions.ShapeException;
 import shape.models.Shape;
 import stopsequence.models.StopSequence;
 import trip.models.Trip;
-
-import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.Comparator;
 import java.util.List;
 import java.util.NoSuchElementException;
-import java.util.Objects;
 
 public class Route {
-    private Long id;
+    private String id;
     private String shortName;
     private String longName;
     private String description;
@@ -25,7 +21,7 @@ public class Route {
     private List<StopSequence> stopSequences;
     private List<Trip> trips;
 
-    private Route(Long id, String shortName, String longName, String description, String color, String textColor, RouteStatus routeStatus, List<Shape> shapes, List<StopSequence> stopSequences, List<Trip> trips) {
+    private Route(String id, String shortName, String longName, String description, String color, String textColor, RouteStatus routeStatus, List<Shape> shapes, List<StopSequence> stopSequences, List<Trip> trips) {
         this.id = id;
         this.shortName = shortName;
         this.longName = longName;
@@ -38,7 +34,7 @@ public class Route {
         this.trips = trips;
     }
 
-    public static Route getInstance(Long id, String shortName, String longName, String description, String color, String textColor, RouteStatus routeStatus, List<Shape> shapes, List<StopSequence> stopSequences, List<Trip> trips) {
+    public static Route getInstance(String id, String shortName, String longName, String description, String color, String textColor, RouteStatus routeStatus, List<Shape> shapes, List<StopSequence> stopSequences, List<Trip> trips) {
         if (shortName == null || shortName.trim().isEmpty())
             throw new RouteException("El nombre corto de la linea es requerido.");
         if (longName == null || longName.trim().isEmpty())
@@ -52,7 +48,7 @@ public class Route {
         return new Route(id, shortName, longName, description, color, textColor, routeStatus, shapes, stopSequences, trips);
     }
 
-    public Long getId() {
+    public String getId() {
         return id;
     }
 
@@ -113,7 +109,7 @@ public class Route {
     }
 
     public boolean existStopSequenceByDistanceTraveled(Integer distanceTraveled) {
-        return this.stopSequences.stream().anyMatch(stopSequence -> stopSequence.getDistanceTraveled() == distanceTraveled);
+        return this.stopSequences.stream().anyMatch(stopSequence -> stopSequence.getDistanceTraveled().equals(distanceTraveled));
     }
 
     public boolean existStopSequenceByStopName(String name) {

@@ -2,7 +2,10 @@ package user.outputs;
 
 import user.models.User;
 
+import java.util.Optional;
+
 public interface UpdateUserRepository {
     boolean existsByEmail(String email);
-    Long update(User user);
+    Optional<User> findByEamil(String email);
+    void update(User user);
 }

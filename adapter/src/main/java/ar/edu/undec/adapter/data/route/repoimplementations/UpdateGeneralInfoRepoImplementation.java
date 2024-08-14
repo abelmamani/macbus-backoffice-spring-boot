@@ -7,6 +7,8 @@ import org.springframework.stereotype.Service;
 import route.models.Route;
 import route.outputs.UpdateGeneralInfoRepository;
 
+import java.util.Optional;
+
 @AllArgsConstructor
 @Service
 public class UpdateGeneralInfoRepoImplementation implements UpdateGeneralInfoRepository {
@@ -20,6 +22,11 @@ public class UpdateGeneralInfoRepoImplementation implements UpdateGeneralInfoRep
     @Override
     public boolean existsByLongName(String longName) {
         return routeCRUD.existsByLongName(longName);
+    }
+
+    @Override
+    public Optional<Route> findByLongName(String longName) {
+        return routeCRUD.findByLongName(longName).map(RouteDataMapper::dataCoreMapper);
     }
 
     @Override

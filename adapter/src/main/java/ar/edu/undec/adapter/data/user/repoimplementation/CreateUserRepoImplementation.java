@@ -25,7 +25,7 @@ public class CreateUserRepoImplementation implements CreateUserRepository{
     }
 
     @Override
-    public Long save(User user) {
+    public String save(User user) {
         return createUserCRUD.save(UserDataMapper.dataNodeMapper(user)).getId();
     }
 }

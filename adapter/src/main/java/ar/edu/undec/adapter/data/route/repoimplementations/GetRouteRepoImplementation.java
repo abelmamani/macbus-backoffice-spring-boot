@@ -15,11 +15,6 @@ public class GetRouteRepoImplementation implements GetRouteRepository {
     private RouteCRUD routeCRUD;
 
     @Override
-    public Optional<Route> findById(Long id) {
-        return routeCRUD.findById(id).map(RouteDataMapper::dataCoreMapper);
-    }
-
-    @Override
     public Optional<Route> findByLongName(String longName) {
         return routeCRUD.findByLongName(longName).map(RouteDataMapper::dataCoreMapper);
     }

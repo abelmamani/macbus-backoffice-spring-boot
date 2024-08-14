@@ -5,17 +5,12 @@ import route.inputs.GetRouteInput;
 import route.models.Route;
 import route.models.RouteResponseModel;
 import route.outputs.GetRouteRepository;
-import java.util.Optional;
 
 public class GetRouteUseCase implements GetRouteInput {
     private GetRouteRepository getRouteRepository;
 
     public GetRouteUseCase(GetRouteRepository getRouteRepository) {
         this.getRouteRepository = getRouteRepository;
-    }
-    @Override
-    public Route getRouteById(Long id) {
-        return getRouteRepository.findById(id).orElseThrow(() -> new RouteNotExistsException("La linea con id " + id + " no existe."));
     }
 
     @Override

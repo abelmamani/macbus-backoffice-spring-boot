@@ -16,7 +16,7 @@ public class ChangePasswordUseCase implements ChangePasswordInput {
     @Override
     public void changePassword(ChangePasswordRequestModel changePasswordRequestModel) {
         User user = changePasswordRepository.findByEmail(changePasswordRequestModel.getEmail())
-                .orElseThrow(() -> new UserNotExistException("El email es invalido."));
+                .orElseThrow(() -> new UserNotExistException("El usuario con email "+changePasswordRequestModel.getEmail()+" no existe."));
         User updateUser = User.getInstance(user.getId(),
                 user.getName(),
                 user.getLastName(),

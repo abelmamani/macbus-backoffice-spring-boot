@@ -5,7 +5,6 @@ import ar.edu.undec.adapter.data.service.mapper.ServiceDataMapper;
 import ar.edu.undec.adapter.data.stoptime.mapper.StopTimeDataMapper;
 import ar.edu.undec.adapter.data.trip.models.TripNode;
 import trip.models.Trip;
-
 import java.util.stream.Collectors;
 
 public class TripDataMapper {

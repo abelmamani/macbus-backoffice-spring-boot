@@ -23,7 +23,7 @@ public class CreateRouteRepoImplementation implements CreateRouteRepository {
     }
 
     @Override
-    public Long save(Route route) {
+    public String save(Route route) {
         return routeCRUD.save(RouteDataMapper.dataNodeMapper(route)).getId();
     }
 }

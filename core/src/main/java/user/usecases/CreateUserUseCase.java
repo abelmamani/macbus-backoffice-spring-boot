@@ -7,6 +7,9 @@ import user.models.ERole;
 import user.models.User;
 import user.outputs.CreateUserRepository;
 
+import java.time.LocalDateTime;
+import java.util.UUID;
+
 public class CreateUserUseCase implements CreateUserInput {
     private CreateUserRepository createUserRepository;
 
@@ -15,7 +18,7 @@ public class CreateUserUseCase implements CreateUserInput {
     }
 
     @Override
-    public Long createUser(CreateUserRequestModel createUserRequestModel) {
+    public String createUser(CreateUserRequestModel createUserRequestModel) {
         if(createUserRepository.existsByEmail(createUserRequestModel.getEmail()))
             throw new UserAlreadyExistsException("El usuario con email " +createUserRequestModel.getEmail()+ " ya existe." );
         try {
@@ -28,8 +31,8 @@ public class CreateUserUseCase implements CreateUserInput {
                 createUserRequestModel.getEmail(),
                 createUserRepository.encodePassword(createUserRequestModel.getPassword()),
                 ERole.valueOf(createUserRequestModel.getRole()),
-                null,
-                null);
+                UUID.randomUUID().toString(),
+                LocalDateTime.now().minusMinutes(1));
         return createUserRepository.save(user);
     }
 }

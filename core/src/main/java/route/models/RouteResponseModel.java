@@ -1,7 +1,7 @@
 package route.models;
 
 public class RouteResponseModel {
-    private Long id;
+    private String id;
     private String shortName;
     private String longName;
     private String description;
@@ -10,7 +10,7 @@ public class RouteResponseModel {
     private RouteStatus routeStatus;
     private RouteResponseModel(){}
 
-    public RouteResponseModel(Long id, String shortName, String longName, String description, String color, String textColor, RouteStatus routeStatus) {
+    public RouteResponseModel(String id, String shortName, String longName, String description, String color, String textColor, RouteStatus routeStatus) {
         this.id = id;
         this.shortName = shortName;
         this.longName = longName;
@@ -20,11 +20,11 @@ public class RouteResponseModel {
         this.routeStatus = routeStatus;
     }
 
-    public static RouteResponseModel getInstance(Long id, String shortName, String longName, String description, String color, String textColor, RouteStatus routeStatus) {
+    public static RouteResponseModel getInstance(String id, String shortName, String longName, String description, String color, String textColor, RouteStatus routeStatus) {
         return new RouteResponseModel(id, shortName, longName, description, color, textColor, routeStatus);
     }
 
-    public Long getId() {
+    public String getId() {
         return id;
     }
 

@@ -23,4 +23,9 @@ public class ResponseManager {
         response.put("id", id);
         return ResponseEntity.created(null).body(response);
     }
+    public static ResponseEntity<?> createdRequest(String id) {
+        Map<String, String> response = new HashMap<>();
+        response.put("id", id);
+        return ResponseEntity.created(null).body(response);
+    }
 }

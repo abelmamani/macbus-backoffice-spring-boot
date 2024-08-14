@@ -3,7 +3,6 @@ package ar.edu.undec.adapter.service.shape.config;
 import org.springframework.context.annotation.Bean;
 import org.springframework.stereotype.Component;
 import route.inputs.GetRouteInput;
-import route.inputs.UpdateRouteInput;
 import route.outputs.UpdateRouteRepository;
 import shape.inpúts.CreateShapeInput;
 import shape.inpúts.GetShapesByRouteInput;

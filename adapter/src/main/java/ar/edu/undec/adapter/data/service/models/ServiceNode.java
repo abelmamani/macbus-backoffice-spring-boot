@@ -8,6 +8,8 @@ import org.springframework.data.neo4j.core.schema.GeneratedValue;
 import org.springframework.data.neo4j.core.schema.Id;
 import org.springframework.data.neo4j.core.schema.Node;
 import org.springframework.data.neo4j.core.schema.Property;
+import org.springframework.data.neo4j.core.support.UUIDStringGenerator;
+
 import java.time.LocalDate;
 
 @Data
@@ -16,8 +18,9 @@ import java.time.LocalDate;
 @Builder
 @Node("Service")
 public class ServiceNode {
-    @Id @GeneratedValue
-    private Long id;
+    @Id
+    @GeneratedValue(UUIDStringGenerator.class)
+    String id;
     private String name;
     @Property("start_name")
     private LocalDate startDate;

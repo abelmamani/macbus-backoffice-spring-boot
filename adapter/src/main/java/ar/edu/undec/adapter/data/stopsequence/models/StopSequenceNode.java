@@ -6,6 +6,7 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.springframework.data.neo4j.core.schema.*;
+import org.springframework.data.neo4j.core.support.UUIDStringGenerator;
 import java.time.LocalTime;
 
 @Data
@@ -14,8 +15,9 @@ import java.time.LocalTime;
 @Builder
 @Node("StopSequence")
 public class StopSequenceNode {
-    @Id @GeneratedValue
-    private Long id;
+    @Id
+    @GeneratedValue(UUIDStringGenerator.class)
+    String id;
     @Property("arrival_time")
     private LocalTime arrivalTime;
     @Property("distance_traveled")

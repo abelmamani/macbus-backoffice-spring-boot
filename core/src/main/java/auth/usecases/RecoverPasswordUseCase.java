@@ -31,7 +31,6 @@ public class RecoverPasswordUseCase implements RecoverPasswordInput {
                 token,
                 LocalDateTime.now().plusHours(1));
 
-
         recoverPasswordRepository.save(updateUser);
         recoverPasswordRepository.sendPasswordResetEmail(user.getEmail(), token);
     }
@@ -48,8 +47,8 @@ public class RecoverPasswordUseCase implements RecoverPasswordInput {
                 user.getEmail(),
                 recoverPasswordRepository.encodePassword(newPassword),
                 user.getRole(),
-                null,
-                null);
+                user.getResetToken(),
+                LocalDateTime.now().minusMinutes(1));
         recoverPasswordRepository.save(updateUser);
     }
 

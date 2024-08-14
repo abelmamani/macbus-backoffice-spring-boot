@@ -45,8 +45,16 @@ public class CreateStopSequenceUseCase implements CreateStopSequenceInput {
             throw new StopSequenceException("Ya existe una parada con tiempo de arribo igual a "+createStopSequenceRequestModel.getArrivalTime());
         if(busRoute.existStopSequenceByDistanceTraveled(createStopSequenceRequestModel.getDistanceTraveled()))
             throw new StopSequenceException("Ya existe una parada con distancia recorrida igual a "+createStopSequenceRequestModel.getDistanceTraveled());
-
-        List<StopSequence> stopSequences = busRoute.getStopSequences();
+       List<StopSequence> stopSequences = busRoute.getStopSequences();
+        boolean isInvalidSequence = stopSequences.stream()
+                .anyMatch(sequence ->
+                        (createStopSequenceRequestModel.getDistanceTraveled() > sequence.getDistanceTraveled()
+                                && createStopSequenceRequestModel.getArrivalTime().isBefore(sequence.getArrivalTime())) ||
+                                (createStopSequenceRequestModel.getDistanceTraveled() < sequence.getDistanceTraveled()
+                                        && createStopSequenceRequestModel.getArrivalTime().isAfter(sequence.getArrivalTime()))
+                );
+        if (isInvalidSequence)
+            throw new StopSequenceException("La secuencia de parada no es válida. El tiempo de arribo y la distancia recorrida deben ser proporcionales.");
         stopSequences.add(StopSequence.getInstance(null,
                 createStopSequenceRequestModel.getArrivalTime(),
                 createStopSequenceRequestModel.getDistanceTraveled(),

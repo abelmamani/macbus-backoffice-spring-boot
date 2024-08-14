@@ -8,11 +8,11 @@ import org.springframework.data.neo4j.core.schema.GeneratedValue;
 import org.springframework.data.neo4j.core.schema.Id;
 import org.springframework.data.neo4j.core.schema.Node;
 import org.springframework.data.neo4j.core.schema.Property;
+import org.springframework.data.neo4j.core.support.UUIDStringGenerator;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import user.models.ERole;
-
 import java.time.LocalDateTime;
 import java.util.Collection;
 import java.util.List;
@@ -23,8 +23,9 @@ import java.util.List;
 @AllArgsConstructor
 @Node("User")
 public class UserNode implements UserDetails {
-    @Id @GeneratedValue
-    private Long id;
+    @Id
+    @GeneratedValue(UUIDStringGenerator.class)
+    private String id;
     private String name;
     @Property(name = "last_name")
     private String lastName;

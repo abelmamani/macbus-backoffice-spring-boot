@@ -6,8 +6,9 @@ import org.springframework.stereotype.Repository;
 import java.util.Optional;
 
 @Repository
-public interface UserCRUD extends Neo4jRepository <UserNode, Long> {
+public interface UserCRUD extends Neo4jRepository <UserNode, String> {
     boolean existsByEmail(String email);
     Optional<UserNode> findByEmail(String email);
     Optional<UserNode> findByResetToken(String resetToken);
+    void deleteByEmail(String email);
 }

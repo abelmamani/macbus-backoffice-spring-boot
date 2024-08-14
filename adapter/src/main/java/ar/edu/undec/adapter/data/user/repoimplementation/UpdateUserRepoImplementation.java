@@ -8,6 +8,8 @@ import org.springframework.stereotype.Service;
 import user.models.User;
 import user.outputs.UpdateUserRepository;
 
+import java.util.Optional;
+
 @AllArgsConstructor
 @Service
 public class UpdateUserRepoImplementation implements UpdateUserRepository {
@@ -17,8 +19,14 @@ public class UpdateUserRepoImplementation implements UpdateUserRepository {
     public boolean existsByEmail(String email) {
         return userCRUD.existsByEmail(email);
     }
+
     @Override
-    public Long update(User user) {
-        return userCRUD.save(UserDataMapper.dataNodeMapper(user)).getId();
+    public Optional<User> findByEamil(String email) {
+        return userCRUD.findByEmail(email).map(UserDataMapper::dataCoreMapper);
+    }
+
+    @Override
+    public void update(User user) {
+        userCRUD.save(UserDataMapper.dataNodeMapper(user)).getId();
     }
 }

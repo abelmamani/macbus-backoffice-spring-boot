@@ -34,7 +34,7 @@ public class ServiceController {
     @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<?> getService(@PathVariable("name") String name){
         try {
-            return ResponseEntity.ok(getServiceInput.getServiceByName(name));
+            return ResponseEntity.ok(getServiceInput.getService(name));
         }catch (RuntimeException exception){
             return ResponseManager.badRequest(exception.getMessage());
         }
@@ -44,17 +44,17 @@ public class ServiceController {
     @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<?> createService(@RequestBody CreateServiceRequestModel createServiceRequestModel){
         try {
-            return ResponseManager.createRequest(createServiceInput.createService(createServiceRequestModel));
+            return ResponseManager.createdRequest(createServiceInput.createService(createServiceRequestModel));
         }catch (RuntimeException exception){
             return ResponseManager.badRequest(exception.getMessage());
         }
     }
 
-    @PutMapping
+    @PutMapping("/{name}")
     @PreAuthorize("hasRole('ADMIN')")
-    public ResponseEntity<?> updateService(@RequestBody UpdateServiceRequestModel updateServiceRequestModel){
+    public ResponseEntity<?> updateService(@PathVariable("name") String name, @RequestBody UpdateServiceRequestModel updateServiceRequestModel){
         try {
-            updateServiceInput.updateService(updateServiceRequestModel);
+            updateServiceInput.updateService(name, updateServiceRequestModel);
             return ResponseManager.successRequest("Se actualizo el servicio correctamente.");
         }catch (RuntimeException exception){
             return ResponseManager.badRequest(exception.getMessage());

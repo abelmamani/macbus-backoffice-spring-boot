@@ -1,22 +1,21 @@
 package service.models;
 
 import stop.exceptions.StopException;
-
 import java.time.LocalDate;
 
 public class Service {
-    private Long id;
+    private String id;
     private String name;
     private LocalDate startDate;
     private LocalDate endDate;
-    private Service(Long id, String name, LocalDate startDate, LocalDate endDate) {
+    private Service(String id, String name, LocalDate startDate, LocalDate endDate) {
         this.id = id;
         this.name = name;
         this.startDate = startDate;
         this.endDate = endDate;
     }
 
-    public static Service getInstance(Long id, String name, LocalDate startDate, LocalDate endDate) {
+    public static Service getInstance(String id, String name, LocalDate startDate, LocalDate endDate) {
         if(name == null || name.trim().isEmpty())
             throw new StopException("El nombre del servicio es requerido.");
         if(startDate == null)
@@ -26,7 +25,7 @@ public class Service {
         return new Service(id, name, startDate, endDate);
     }
 
-    public Long getId() {
+    public String getId() {
         return id;
     }
 

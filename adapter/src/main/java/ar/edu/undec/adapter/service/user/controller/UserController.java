@@ -32,11 +32,11 @@ public class UserController {
         }
     }
 
-    @GetMapping("/{id}")
+    @GetMapping("/{name}")
     @PreAuthorize("hasRole('ADMIN')")
-    public ResponseEntity<?> getUser(@PathVariable("id") Long id){
+    public ResponseEntity<?> getUser(@PathVariable("name") String name){
         try {
-            return ResponseEntity.ok(getUserInput.getUser(id));
+            return ResponseEntity.ok(getUserInput.getUser(name));
         }catch (RuntimeException exception){
            return ResponseManager.badRequest(exception.getMessage());
         }
@@ -46,17 +46,18 @@ public class UserController {
     @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<?> createUser(@RequestBody CreateUserRequestModel createUserRequestModel){
         try {
-            return ResponseManager.createRequest(createUserInput.createUser(createUserRequestModel));
+            return ResponseManager.createdRequest(createUserInput.createUser(createUserRequestModel));
         }catch (RuntimeException exception){
             return ResponseManager.badRequest(exception.getMessage());
         }
     }
 
-    @PutMapping
+    @PutMapping("/{email}")
     @PreAuthorize("hasRole('ADMIN')")
-    public ResponseEntity<?> updateUser(@RequestBody UpdateUserRequestModel updateUserRequestModel){
+    public ResponseEntity<?> updateUser(@PathVariable("email") String email, @RequestBody UpdateUserRequestModel updateUserRequestModel){
         try {
-            return ResponseManager.createRequest(updateUserInput.updateUser(updateUserRequestModel));
+            updateUserInput.updateUser(email, updateUserRequestModel);
+            return ResponseManager.successRequest("Usuario actualizado correctamente.");
         }catch (RuntimeException exception){
             return ResponseManager.badRequest(exception.getMessage());
         }
@@ -67,18 +68,18 @@ public class UserController {
     public ResponseEntity<?> changePassword(@RequestBody ChangePasswordRequestModel changePasswordRequestModel){
         try {
             changePasswordInput.changePassword(changePasswordRequestModel);
-            return ResponseManager.successRequest("Se actualizo correctamente la contraseña.");
+            return ResponseManager.successRequest("Contraseña actualizada correctamente.");
         }catch (RuntimeException exception){
             return ResponseManager.badRequest(exception.getMessage());
         }
     }
 
-    @DeleteMapping("/{id}")
+    @DeleteMapping("/{email}")
     @PreAuthorize("hasRole('ADMIN')")
-    public ResponseEntity<?> deleteUser(@PathVariable("id") Long id){
+    public ResponseEntity<?> deleteUser(@PathVariable("email") String email){
         try {
-            deleteUserInput.deleteUser(id);
-            return ResponseManager.successRequest("Se elimino el usuario correctamente.");
+            deleteUserInput.deleteUser(email);
+            return ResponseManager.successRequest("Usuario eliminado correctamente.");
         }catch (RuntimeException exception){
             return ResponseManager.badRequest(exception.getMessage());
         }

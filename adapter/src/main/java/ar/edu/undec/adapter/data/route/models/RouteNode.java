@@ -8,6 +8,7 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.springframework.data.neo4j.core.schema.*;
+import org.springframework.data.neo4j.core.support.UUIDStringGenerator;
 import route.models.RouteStatus;
 import java.util.List;
 
@@ -17,8 +18,9 @@ import java.util.List;
 @Builder
 @Node("Route")
 public class RouteNode {
-    @Id @GeneratedValue
-    private Long id;
+    @Id
+    @GeneratedValue(UUIDStringGenerator.class)
+    String id;
     @Property("short_name")
     private String shortName;
     @Property("long_name")

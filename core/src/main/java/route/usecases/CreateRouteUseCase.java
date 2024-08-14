@@ -9,8 +9,6 @@ import route.outputs.CreateRouteRepository;
 import shape.models.Shape;
 import stopsequence.models.StopSequence;
 import trip.models.Trip;
-
-import java.awt.*;
 import java.util.ArrayList;
 
 public class CreateRouteUseCase implements CreateRouteInput {
@@ -21,7 +19,7 @@ public class CreateRouteUseCase implements CreateRouteInput {
     }
 
     @Override
-    public Long createRoute(CreateRouteRequestModel createRouteRequestModel) {
+    public String createRoute(CreateRouteRequestModel createRouteRequestModel) {
         if(createRouteRepository.existsByShortName(createRouteRequestModel.getShortName()))
             throw new RouteAlreadyExistException("La linea con nombre corto "+createRouteRequestModel.getShortName()+" ya existe.");
         if(createRouteRepository.existsByLongName(createRouteRequestModel.getLongName()))

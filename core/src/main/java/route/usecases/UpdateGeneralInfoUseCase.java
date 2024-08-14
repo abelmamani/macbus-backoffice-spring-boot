@@ -1,6 +1,7 @@
 package route.usecases;
 
 import route.exceptions.RouteAlreadyExistException;
+import route.exceptions.RouteNotExistsException;
 import route.inputs.GetRouteInput;
 import route.inputs.UpdateGeneralInfoInput;
 import route.models.Route;
@@ -8,22 +9,21 @@ import route.models.UpdateRouteRequestModel;
 import route.outputs.UpdateGeneralInfoRepository;
 
 public class UpdateGeneralInfoUseCase implements UpdateGeneralInfoInput {
-    private UpdateGeneralInfoRepository updateRouteRepository;
-    private GetRouteInput getRouteInput;
+    private UpdateGeneralInfoRepository updateGeneralInfoRepository;
 
-    public UpdateGeneralInfoUseCase(UpdateGeneralInfoRepository updateRouteRepository, GetRouteInput getRouteInput) {
-        this.updateRouteRepository = updateRouteRepository;
-        this.getRouteInput = getRouteInput;
+    public UpdateGeneralInfoUseCase(UpdateGeneralInfoRepository updateGeneralInfoRepository) {
+        this.updateGeneralInfoRepository = updateGeneralInfoRepository;
     }
 
     @Override
-    public void updateRoute(UpdateRouteRequestModel updateRouteRequestModel) {
-        Route foundRoute = getRouteInput.getRouteById(updateRouteRequestModel.getId());
-        if(updateRouteRepository.existsByShortName(updateRouteRequestModel.getShortName()) && !foundRoute.getShortName().equals(updateRouteRequestModel.getShortName()))
+    public void updateRoute(String longName, UpdateRouteRequestModel updateRouteRequestModel) {
+        Route foundRoute = updateGeneralInfoRepository.findByLongName(longName)
+                .orElseThrow(()-> new RouteNotExistsException("La lines "+longName+" no existe."));
+        if(updateGeneralInfoRepository.existsByShortName(updateRouteRequestModel.getShortName()) && !foundRoute.getShortName().equals(updateRouteRequestModel.getShortName()))
             throw new RouteAlreadyExistException("La linea con nombre corto " + updateRouteRequestModel.getShortName() + " ya existe.");
-        if(updateRouteRepository.existsByLongName(updateRouteRequestModel.getLongName()) && !foundRoute.getLongName().equals(updateRouteRequestModel.getLongName()))
+        if(updateGeneralInfoRepository.existsByLongName(updateRouteRequestModel.getLongName()) && !foundRoute.getLongName().equals(updateRouteRequestModel.getLongName()))
             throw new RouteAlreadyExistException("La linea con nombre largo " + updateRouteRequestModel.getLongName() + " ya existe.");
-        Route route = Route.getInstance(updateRouteRequestModel.getId(),
+        Route route = Route.getInstance(foundRoute.getId(),
               updateRouteRequestModel.getShortName(),
               updateRouteRequestModel.getLongName(),
               updateRouteRequestModel.getDescription(),
@@ -33,6 +33,6 @@ public class UpdateGeneralInfoUseCase implements UpdateGeneralInfoInput {
                 foundRoute.getShapes(),
                 foundRoute.getStopSequences(),
                 foundRoute.getTrips());
-        updateRouteRepository.update(route);
+        updateGeneralInfoRepository.update(route);
     }
 }

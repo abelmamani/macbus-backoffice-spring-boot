@@ -11,7 +11,7 @@ import java.util.List;
 import java.util.Optional;
 
 @Repository
-public interface RouteCRUD extends Neo4jRepository<RouteNode, Long> {
+public interface RouteCRUD extends Neo4jRepository<RouteNode, String> {
     boolean existsByShortName(String shortName);
     boolean existsByLongName(String longName);
     Optional<RouteNode> findByLongName(String longName);

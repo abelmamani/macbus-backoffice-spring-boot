@@ -1,7 +1,6 @@
 package route.outputs;
 
 import route.models.Route;
-
 import java.time.LocalTime;
 import java.util.Optional;
 

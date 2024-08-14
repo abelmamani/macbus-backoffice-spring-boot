@@ -1,7 +1,6 @@
 package route.models;
 
 public class UpdateRouteRequestModel {
-    private Long id;
     private String shortName;
     private String longName;
     private String description;
@@ -9,20 +8,15 @@ public class UpdateRouteRequestModel {
     private String textColor;
 
     private UpdateRouteRequestModel(){}
-    private UpdateRouteRequestModel(Long id, String shortName, String longName, String description, String color, String textColor) {
-        this.id = id;
+    private UpdateRouteRequestModel(String shortName, String longName, String description, String color, String textColor) {
         this.shortName = shortName;
         this.longName = longName;
         this.description = description;
         this.color = color;
         this.textColor = textColor;
     }
-    public static UpdateRouteRequestModel getInstance(Long id, String shortName, String longName, String description, String color, String textColor) {
-        return new UpdateRouteRequestModel(id, shortName, longName, description, color, textColor);
-    }
-
-    public Long getId() {
-        return id;
+    public static UpdateRouteRequestModel getInstance(String shortName, String longName, String description, String color, String textColor) {
+        return new UpdateRouteRequestModel(shortName, longName, description, color, textColor);
     }
 
     public String getShortName() {

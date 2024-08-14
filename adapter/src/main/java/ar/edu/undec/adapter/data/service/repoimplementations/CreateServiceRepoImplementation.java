@@ -17,7 +17,7 @@ public class CreateServiceRepoImplementation implements CreateServiceRepository 
     }
 
     @Override
-    public Long save(service.models.Service service) {
+    public String save(service.models.Service service) {
         return serviceCRUD.save(ServiceDataMapper.dataNodeMapper(service)).getId();
     }
 }

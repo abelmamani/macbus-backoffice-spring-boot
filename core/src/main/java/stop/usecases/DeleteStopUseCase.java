@@ -1,7 +1,6 @@
 package stop.usecases;
 
 import stop.exceptions.StopException;
-import stop.exceptions.StopNotExistsException;
 import stop.inputs.DeleteStopInput;
 import stop.models.StopStatus;
 import stop.outputs.DeleteStopRepository;

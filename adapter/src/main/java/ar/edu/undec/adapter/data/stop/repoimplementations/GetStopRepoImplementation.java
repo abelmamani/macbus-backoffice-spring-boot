@@ -6,18 +6,12 @@ import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 import stop.models.Stop;
 import stop.outputs.GetStopRepository;
-
 import java.util.Optional;
 
 @AllArgsConstructor
 @Service
 public class GetStopRepoImplementation implements GetStopRepository {
     private StopCRUD stopCRUD;
-
-    @Override
-    public Optional<Stop> findById(Long id) {
-        return stopCRUD.findById(id).map(StopDataMapper::dataCoreMapper);
-    }
 
     @Override
     public Optional<Stop> findByName(String name) {

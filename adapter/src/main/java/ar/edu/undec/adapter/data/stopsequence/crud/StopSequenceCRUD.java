@@ -6,7 +6,7 @@ import org.springframework.data.neo4j.repository.query.Query;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface StopSequenceCRUD extends Neo4jRepository<StopSequenceNode, Long> {
+public interface StopSequenceCRUD extends Neo4jRepository<StopSequenceNode, String> {
     @Query("""
     MATCH (s:Stop)<-[:STOP_AT]-(seq:StopSequence)<-[:HAS_STOP]-(r:Route)
     WHERE s.name = $stopName AND r.long_name <> $routeName

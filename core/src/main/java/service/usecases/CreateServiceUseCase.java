@@ -17,9 +17,9 @@ public class CreateServiceUseCase implements CreateServiceInput {
     }
 
     @Override
-    public Long createService(CreateServiceRequestModel createServiceRequestModel) {
+    public String createService(CreateServiceRequestModel createServiceRequestModel) {
         if(createServiceRepository.existsByName(createServiceRequestModel.getName()))
-            throw new ServiceAlreadyExistException("El servicio "+createServiceRequestModel.getName() + "ya existe.");
+            throw new ServiceAlreadyExistException("El servicio "+createServiceRequestModel.getName() + " ya existe.");
         if(createServiceRequestModel.getStartDate().isBefore(LocalDate.now()) || createServiceRequestModel.getEndDate().isBefore(LocalDate.now()))
             throw new StopException("La fecha de inicio y fin deben ser superiores a la fecha actual.");
         if(createServiceRequestModel.getStartDate().isAfter(createServiceRequestModel.getEndDate()))

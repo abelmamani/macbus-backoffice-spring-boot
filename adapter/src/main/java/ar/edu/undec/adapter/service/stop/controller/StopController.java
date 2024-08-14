@@ -30,11 +30,11 @@ public class StopController {
         }
     }
 
-    @GetMapping("/{id}")
+    @GetMapping("/{name}")
     @PreAuthorize("hasRole('ADMIN')")
-    public ResponseEntity<?> getStop(@PathVariable("id") Long id){
+    public ResponseEntity<?> getStop(@PathVariable("name") String name){
         try {
-            return ResponseEntity.ok(getStopInput.getStop(id));
+            return ResponseEntity.ok(getStopInput.getStop(name));
         }catch (RuntimeException exception){
            return ResponseManager.badRequest(exception.getMessage());
         }
@@ -44,17 +44,17 @@ public class StopController {
     @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<?> createStop(@RequestBody CreateStopRequestModel createRouteRequestModel){
         try {
-            return ResponseEntity.created(null).body(createStopInput.createStop(createRouteRequestModel));
+            return ResponseManager.createdRequest(createStopInput.createStop(createRouteRequestModel));
         }catch (RuntimeException exception){
             return ResponseManager.badRequest(exception.getMessage());
         }
     }
 
-    @PutMapping
+    @PutMapping("/{name}")
     @PreAuthorize("hasRole('ADMIN')")
-    public ResponseEntity<?> updateStop(@RequestBody UpdateStopRequestModel updateRouteRequestModel){
+    public ResponseEntity<?> updateStop(@PathVariable("name") String name, @RequestBody UpdateStopRequestModel updateRouteRequestModel){
         try {
-            updateStopInput.updateStop(updateRouteRequestModel);
+            updateStopInput.updateStop(name, updateRouteRequestModel);
             return ResponseManager.successRequest("Se actualizo la parada correctamente.");
         }catch (RuntimeException exception){
             return ResponseManager.badRequest(exception.getMessage());

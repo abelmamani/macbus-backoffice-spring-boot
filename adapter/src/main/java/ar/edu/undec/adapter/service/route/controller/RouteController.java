@@ -44,17 +44,17 @@ public class RouteController {
     @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<?> createRoute(@RequestBody CreateRouteRequestModel createRouteRequestModel){
         try {
-            return ResponseManager.createRequest(createRouteInput.createRoute(createRouteRequestModel));
+            return ResponseManager.createdRequest(createRouteInput.createRoute(createRouteRequestModel));
         }catch (RuntimeException exception){
             return ResponseManager.badRequest(exception.getMessage());
         }
     }
 
-    @PutMapping
+    @PutMapping("/{name}")
     @PreAuthorize("hasRole('ADMIN')")
-    public ResponseEntity<?> updateRoute(@RequestBody UpdateRouteRequestModel updateRouteRequestModel){
+    public ResponseEntity<?> updateRoute(@PathVariable("name") String name, @RequestBody UpdateRouteRequestModel updateRouteRequestModel){
         try {
-            updateGeneralInfoInputt.updateRoute(updateRouteRequestModel);
+            updateGeneralInfoInputt.updateRoute(name, updateRouteRequestModel);
             return ResponseManager.successRequest("Se actualizo la linea correctamente.");
         }catch (RuntimeException exception){
             return ResponseManager.badRequest(exception.getMessage());

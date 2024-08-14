@@ -8,6 +8,7 @@ import org.springframework.data.neo4j.core.schema.GeneratedValue;
 import org.springframework.data.neo4j.core.schema.Id;
 import org.springframework.data.neo4j.core.schema.Node;
 import org.springframework.data.neo4j.core.schema.Property;
+import org.springframework.data.neo4j.core.support.UUIDStringGenerator;
 
 @Data
 @NoArgsConstructor
@@ -15,8 +16,9 @@ import org.springframework.data.neo4j.core.schema.Property;
 @Builder
 @Node("Shape")
 public class ShapeNode {
-    @Id @GeneratedValue
-    private Long id;
+    @Id
+    @GeneratedValue(UUIDStringGenerator.class)
+    String id;
     private Double latitude;
     private Double longitude;
     private Integer sequence;

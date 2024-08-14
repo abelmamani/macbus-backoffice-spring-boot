@@ -5,6 +5,7 @@ import ar.edu.undec.adapter.data.service.mapper.ServiceDataMapper;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 import service.outputs.UpdateServiceRepository;
+import java.util.Optional;
 
 @AllArgsConstructor
 @Service
@@ -14,6 +15,11 @@ public class UpdateServiceRepoImplementation implements UpdateServiceRepository 
     @Override
     public boolean existsByName(String name) {
         return serviceCRUD.existsByName(name);
+    }
+
+    @Override
+    public Optional<service.models.Service> findByName(String name) {
+        return serviceCRUD.findByName(name).map(ServiceDataMapper::dataCoreMapper);
     }
 
     @Override

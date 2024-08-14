@@ -2,17 +2,16 @@ package stopsequence.models;
 
 import stop.models.Stop;
 import stopsequence.exceptions.StopSequenceException;
-
 import java.time.LocalTime;
 
 public class StopSequence {
-    private Long id;
+    private String id;
     private LocalTime arrivalTime;
     private Integer distanceTraveled;
     private String headsign;
     private Stop stop;
 
-    private StopSequence(Long id, LocalTime arrivalTime, Integer distanceTraveled, String headsign, Stop stop) {
+    private StopSequence(String id, LocalTime arrivalTime, Integer distanceTraveled, String headsign, Stop stop) {
         this.id = id;
         this.arrivalTime = arrivalTime;
         this.distanceTraveled = distanceTraveled;
@@ -20,7 +19,7 @@ public class StopSequence {
         this.stop = stop;
     }
 
-    public static StopSequence getInstance(Long id, LocalTime arrivalTime, Integer distanceTraveled, String headsign, Stop stop) {
+    public static StopSequence getInstance(String id, LocalTime arrivalTime, Integer distanceTraveled, String headsign, Stop stop) {
         if(arrivalTime == null)
             throw new StopSequenceException("El tiempo de arribo es requerido.");
         if(distanceTraveled < 0)
@@ -30,7 +29,7 @@ public class StopSequence {
         return new StopSequence(id, arrivalTime, distanceTraveled, headsign, stop);
     }
 
-    public Long getId() {
+    public String getId() {
         return id;
     }
 

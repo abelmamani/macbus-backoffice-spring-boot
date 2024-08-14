@@ -12,8 +12,9 @@ import java.util.Optional;
 @Service
 public class GetUserRepoImplementation implements GetUserRepository {
     private UserCRUD userCRUD;
+
     @Override
-    public Optional<User> findById(Long id) {
-        return userCRUD.findById(id).map(UserDataMapper::dataCoreMapper);
+    public Optional<User> findByEmail(String email) {
+        return userCRUD.findByEmail(email).map(UserDataMapper::dataCoreMapper);
     }
 }

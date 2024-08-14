@@ -3,13 +3,13 @@ package shape.models;
 import shape.exceptions.ShapeException;
 
 public class Shape {
-    private Long id;
+    private String id;
     private Double latitude;
     private Double longitude;
     private Integer sequence;
     private Integer distanceTraveled;
     private Shape(){}
-    private Shape(Long id, Double latitude, Double longitude, Integer sequence, Integer distanceTraveled) {
+    private Shape(String id, Double latitude, Double longitude, Integer sequence, Integer distanceTraveled) {
         this.id = id;
         this.latitude = latitude;
         this.longitude = longitude;
@@ -17,7 +17,7 @@ public class Shape {
         this.distanceTraveled = distanceTraveled;
     }
 
-    public static Shape getInstance(Long id, Double latitude, Double longitude, Integer sequence, Integer distanceTraveled) {
+    public static Shape getInstance(String id, Double latitude, Double longitude, Integer sequence, Integer distanceTraveled) {
         if (latitude < -90 || latitude > 90)
             throw new ShapeException("La latitud debe estar entre -90 y 90 grados.");
 
@@ -33,7 +33,7 @@ public class Shape {
         return new Shape(id, latitude, longitude, sequence, distanceTraveled);
     }
 
-    public Long getId() {
+    public String getId() {
         return id;
     }
 

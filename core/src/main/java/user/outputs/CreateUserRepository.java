@@ -6,5 +6,5 @@ public interface CreateUserRepository {
 
     boolean existsByEmail(String email);
     String encodePassword(String password);
-    Long save(User user);
+    String save(User user);
 }

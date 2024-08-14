@@ -7,7 +7,7 @@ import java.util.List;
 import java.util.Map;
 
 @Repository
-public interface TripCRUD extends Neo4jRepository<TripNode, Long> {
+public interface TripCRUD extends Neo4jRepository<TripNode, String> {
     @Query("MATCH (r:Route)-[:HAS_TRIP]->(t:Trip)-[:TRIP_AT]->(s:Service) " +
             "WHERE r.long_name = $longName " +
             "RETURN {departureTime: t.departure_time, tripStatus: t.trip_status, service: s.name}")

@@ -18,7 +18,7 @@ public class CreateStopRepoImplementation implements CreateStopRepository {
     }
 
     @Override
-    public Stop save(Stop stop) {
-        return StopDataMapper.dataCoreMapper(stopCRUD.save(StopDataMapper.dataNodeMapper(stop)));
+    public String save(Stop stop) {
+        return stopCRUD.save(StopDataMapper.dataNodeMapper(stop)).getId();
     }
 }

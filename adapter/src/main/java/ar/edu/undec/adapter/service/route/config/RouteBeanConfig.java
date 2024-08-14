@@ -21,15 +21,11 @@ public class RouteBeanConfig {
         return new CreateRouteUseCase(createRouteRepository);
     }
     @Bean
-    public UpdateGeneralInfoInput updateGeneralInfoInput(UpdateGeneralInfoRepository updateGeneralInfoRepository, GetRouteInput getRouteInput){
-        return new UpdateGeneralInfoUseCase(updateGeneralInfoRepository, getRouteInput);
+    public UpdateGeneralInfoInput updateGeneralInfoInput(UpdateGeneralInfoRepository updateGeneralInfoRepository){
+        return new UpdateGeneralInfoUseCase(updateGeneralInfoRepository);
     }
     @Bean
     public DeleteRouteInput deleteRouteInput(DeleteRouteRepository deleteRouteRepository){
         return new DeleteRouteUseCase(deleteRouteRepository);
-    }
-    @Bean
-    public UpdateRouteInput updateRouteInput(UpdateRouteRepository updateRouteRepository){
-        return new UpdateRouteUseCase(updateRouteRepository);
     }
 }

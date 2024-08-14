@@ -9,13 +9,14 @@ import user.outputs.DeleteUserRepository;
 @Service
 public class DeleteUserRepoImplementation implements DeleteUserRepository {
     private UserCRUD userCRUD;
+
     @Override
-    public boolean existsById(Long id) {
-        return userCRUD.existsById(id);
+    public boolean existsByEmail(String email) {
+        return userCRUD.existsByEmail(email);
     }
 
     @Override
-    public void deleteById(Long id) {
-        userCRUD.deleteById(id);
+    public void deleteByEamil(String email) {
+        userCRUD.deleteByEmail(email);
     }
 }

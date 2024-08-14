@@ -12,10 +12,9 @@ public class DeleteUserUseCase implements DeleteUserInput {
     }
 
     @Override
-    public void deleteUser(Long id) {
-        if(!deleteUserRepository.existsById(id)){
-            throw new UserNotExistException("No se puede eliminar, el usuario con id " + id + " no existe.");
-        }
-        deleteUserRepository.deleteById(id);
+    public void deleteUser(String email) {
+        if(!deleteUserRepository.existsByEmail(email))
+            throw new UserNotExistException("No se puede eliminar, el usuario " + email + " no existe.");
+        deleteUserRepository.deleteByEamil(email);
     }
 }

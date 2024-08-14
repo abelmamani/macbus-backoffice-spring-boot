@@ -3,23 +3,17 @@ package service.models;
 import java.time.LocalDate;
 
 public class UpdateServiceRequestModel {
-    private Long id;
     private String name;
     private LocalDate startDate;
     private LocalDate endDate;
     private UpdateServiceRequestModel(){}
-    private UpdateServiceRequestModel(Long id, String name, LocalDate startDate, LocalDate endDate) {
-        this.id = id;
+    private UpdateServiceRequestModel(String name, LocalDate startDate, LocalDate endDate) {
         this.name = name;
         this.startDate = startDate;
         this.endDate = endDate;
     }
-    public static UpdateServiceRequestModel getInstance(Long id, String name, LocalDate startDate, LocalDate endDate) {
-        return new UpdateServiceRequestModel(id, name, startDate, endDate);
-    }
-
-    public Long getId() {
-        return id;
+    public static UpdateServiceRequestModel getInstance(String name, LocalDate startDate, LocalDate endDate) {
+        return new UpdateServiceRequestModel(name, startDate, endDate);
     }
 
     public String getName() {

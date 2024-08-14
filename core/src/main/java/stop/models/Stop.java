@@ -3,14 +3,14 @@ package stop.models;
 import stop.exceptions.StopException;
 
 public class Stop {
-    private Long id;
+    private String id;
     private String name;
     private Double latitude;
     private Double longitude;
     private StopStatus status;
     private Stop(){}
 
-    private Stop(Long id, String name, Double latitude, Double longitude, StopStatus status) {
+    private Stop(String id, String name, Double latitude, Double longitude, StopStatus status) {
         this.id = id;
         this.name = name;
         this.latitude = latitude;
@@ -18,7 +18,7 @@ public class Stop {
         this.status = status;
     }
 
-    public static Stop getInstance(Long id, String name, Double latitude, Double longitude, StopStatus status) {
+    public static Stop getInstance(String id, String name, Double latitude, Double longitude, StopStatus status) {
         if(name == null || name.trim().isEmpty())
             throw new StopException("El nombre de la parada es requerido.");
         if(latitude == null)
@@ -30,7 +30,7 @@ public class Stop {
         return new Stop(id, name, latitude, longitude, status);
     }
 
-    public Long getId() {
+    public String getId() {
         return id;
     }
 
