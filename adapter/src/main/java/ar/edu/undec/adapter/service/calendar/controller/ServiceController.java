@@ -30,11 +30,11 @@ public class ServiceController {
         }
     }
 
-    @GetMapping("/{id}")
+    @GetMapping("/{name}")
     @PreAuthorize("hasRole('ADMIN')")
-    public ResponseEntity<?> getService(@PathVariable("id") Long id){
+    public ResponseEntity<?> getService(@PathVariable("name") String name){
         try {
-            return ResponseEntity.ok(getServiceInput.getService(id));
+            return ResponseEntity.ok(getServiceInput.getServiceByName(name));
         }catch (RuntimeException exception){
             return ResponseManager.badRequest(exception.getMessage());
         }
@@ -61,11 +61,11 @@ public class ServiceController {
         }
     }
 
-    @DeleteMapping("/{id}")
+    @DeleteMapping("/{name}")
     @PreAuthorize("hasRole('ADMIN')")
-    public ResponseEntity<?> deleteService(@PathVariable("id") Long id){
+    public ResponseEntity<?> deleteService(@PathVariable("name") String name){
         try {
-            deleteServiceInput.deleteService(id);
+            deleteServiceInput.deleteServiceByName(name);
             return ResponseManager.successRequest("Se elimino eñ servicio correctamente.");
         }catch (RuntimeException exception){
             return ResponseManager.badRequest(exception.getMessage());

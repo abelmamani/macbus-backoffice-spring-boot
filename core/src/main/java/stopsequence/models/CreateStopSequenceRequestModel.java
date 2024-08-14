@@ -1,20 +1,21 @@
 package stopsequence.models;
 
-import stop.models.Stop;
-
 import java.time.LocalTime;
 
 public class CreateStopSequenceRequestModel {
     private String busRouteName;
     private LocalTime arrivalTime;
     private Integer distanceTraveled;
-    private Stop stop;
+    private String headsign;
+    private String stopName;
+    private CreateStopSequenceRequestModel(){}
 
-    public CreateStopSequenceRequestModel(String busRouteName, LocalTime arrivalTime, Integer distanceTraveled, Stop stop) {
+    public CreateStopSequenceRequestModel(String busRouteName, LocalTime arrivalTime, Integer distanceTraveled, String headsign, String stopName) {
         this.busRouteName = busRouteName;
         this.arrivalTime = arrivalTime;
         this.distanceTraveled = distanceTraveled;
-        this.stop = stop;
+        this.headsign = headsign;
+        this.stopName = stopName;
     }
 
     public String getBusRouteName() {
@@ -29,7 +30,11 @@ public class CreateStopSequenceRequestModel {
         return distanceTraveled;
     }
 
-    public Stop getStop() {
-        return stop;
+    public String getHeadsign() {
+        return headsign;
+    }
+
+    public String getStopName() {
+        return stopName;
     }
 }

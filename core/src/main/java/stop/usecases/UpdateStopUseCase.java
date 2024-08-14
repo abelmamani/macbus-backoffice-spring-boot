@@ -24,7 +24,8 @@ public class UpdateStopUseCase implements UpdateStopInput {
         Stop newBusStop = Stop.getInstance(updateStopRequestModel.getId(),
                 updateStopRequestModel.getName(),
                 updateStopRequestModel.getLatitude(),
-                updateStopRequestModel.getLongitude());
+                updateStopRequestModel.getLongitude(),
+                foundStop.getStatus());
         updateStopRepository.update(newBusStop);
     }
 }

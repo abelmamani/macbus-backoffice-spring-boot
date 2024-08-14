@@ -4,6 +4,7 @@ import stop.exceptions.StopAlreadyExistException;
 import stop.inputs.CreateStopInput;
 import stop.models.CreateStopRequestModel;
 import stop.models.Stop;
+import stop.models.StopStatus;
 import stop.outputs.CreateStopRepository;
 
 public class CreateStopUseCase implements CreateStopInput {
@@ -20,7 +21,8 @@ public class CreateStopUseCase implements CreateStopInput {
         Stop stop = Stop.getInstance(null,
                 createStopRequestModel.getName(),
                 createStopRequestModel.getLatitude(),
-                createStopRequestModel.getLongitude());
+                createStopRequestModel.getLongitude(),
+                StopStatus.UNASSIGNED);
         return createStopRepository.save(stop);
     }
 }

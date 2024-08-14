@@ -1,7 +1,9 @@
 package stop.usecases;
 
+import stop.exceptions.StopException;
 import stop.exceptions.StopNotExistsException;
 import stop.inputs.DeleteStopInput;
+import stop.models.StopStatus;
 import stop.outputs.DeleteStopRepository;
 
 public class DeleteStopUseCase implements DeleteStopInput {
@@ -12,9 +14,9 @@ public class DeleteStopUseCase implements DeleteStopInput {
     }
 
     @Override
-    public void deleteStop(Long id) {
-        if(!deleteStopRepository.existsById(id))
-            throw new StopNotExistsException("La parada con id " + id + " no existe.");
-        deleteStopRepository.deleteById(id);
+    public void deleteStop(String name) {
+        if(!deleteStopRepository.existsByNameAndStatus(name, StopStatus.UNASSIGNED))
+            throw new StopException( "La parada " + name + " no existe o no puede eliminarse.");
+        deleteStopRepository.deleteByName(name);
     }
 }

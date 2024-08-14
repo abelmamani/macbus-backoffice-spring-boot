@@ -20,6 +20,7 @@ public class StopSequenceNode {
     private LocalTime arrivalTime;
     @Property("distance_traveled")
     private Integer distanceTraveled;
+    private String headsign;
     @Relationship(type = "STOP_AT", direction = Relationship.Direction.OUTGOING)
     private StopNode stop;
 }

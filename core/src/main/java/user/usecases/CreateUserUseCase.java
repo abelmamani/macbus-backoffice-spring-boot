@@ -27,7 +27,9 @@ public class CreateUserUseCase implements CreateUserInput {
                 createUserRequestModel.getLastName(),
                 createUserRequestModel.getEmail(),
                 createUserRepository.encodePassword(createUserRequestModel.getPassword()),
-                ERole.valueOf(createUserRequestModel.getRole()));
+                ERole.valueOf(createUserRequestModel.getRole()),
+                null,
+                null);
         return createUserRepository.save(user);
     }
 }

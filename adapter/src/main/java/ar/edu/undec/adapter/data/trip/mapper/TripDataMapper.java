@@ -12,7 +12,6 @@ public class TripDataMapper {
     public static Trip dataCoreMapper(TripNode trip){
         try {
             return Trip.getInstance(trip.getId(),
-                    trip.getHeadsign(),
                     trip.getDepartureTime(),
                     trip.getTripStatus(),
                     ServiceDataMapper.dataCoreMapper(trip.getService()),
@@ -25,7 +24,6 @@ public class TripDataMapper {
         try {
             return TripNode.builder()
                     .id(trip.getId())
-                    .headsign(trip.getHeadsign())
                     .departureTime(trip.getDepartureTime())
                     .tripStatus(trip.getTripStatus())
                     .service(ServiceDataMapper.dataNodeMapper(trip.getService()))

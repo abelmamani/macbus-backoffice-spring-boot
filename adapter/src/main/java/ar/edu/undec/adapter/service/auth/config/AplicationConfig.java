@@ -2,8 +2,11 @@ package ar.edu.undec.adapter.service.auth.config;
 
 import ar.edu.undec.adapter.data.user.crud.UserCRUD;
 import auth.inputs.LoginInput;
+import auth.inputs.RecoverPasswordInput;
 import auth.outputs.LoginRepository;
+import auth.outputs.RecoverPasswordRepository;
 import auth.usecases.LoginUseCase;
+import auth.usecases.RecoverPasswordUseCase;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -45,5 +48,9 @@ public class AplicationConfig {
     @Bean
     public LoginInput loginInput(LoginRepository loginRepository){
         return new LoginUseCase(loginRepository);
+    }
+    @Bean
+    public RecoverPasswordInput recoverPasswordInput(RecoverPasswordRepository recoverPasswordRepository){
+        return new RecoverPasswordUseCase(recoverPasswordRepository);
     }
 }

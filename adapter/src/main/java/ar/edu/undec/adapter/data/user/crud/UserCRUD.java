@@ -9,4 +9,5 @@ import java.util.Optional;
 public interface UserCRUD extends Neo4jRepository <UserNode, Long> {
     boolean existsByEmail(String email);
     Optional<UserNode> findByEmail(String email);
+    Optional<UserNode> findByResetToken(String resetToken);
 }

@@ -1,9 +1,8 @@
 package trip.inputs;
 
-import trip.models.Trip;
-
+import trip.models.TripResponseModel;
 import java.util.List;
 
 public interface GetTripsByRouteInput {
-    List<Trip> getAllTrips(String longName);
+    List<TripResponseModel> getAllTrips(String longName);
 }

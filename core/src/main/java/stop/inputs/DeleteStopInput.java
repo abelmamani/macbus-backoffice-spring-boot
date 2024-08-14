@@ -1,5 +1,5 @@
 package stop.inputs;
 
 public interface DeleteStopInput {
-    void deleteStop(Long id);
+    void deleteStop(String name);
 }

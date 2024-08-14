@@ -10,7 +10,8 @@ public class StopDataMapper {
             return Stop.getInstance(stopNode.getId(),
                     stopNode.getName(),
                     stopNode.getLatitude(),
-                    stopNode.getLongitude());
+                    stopNode.getLongitude(),
+                    stopNode.getStatus());
         }catch (RuntimeException exception){
             throw new FailedMappingException("Error mapping from node to core");
         }
@@ -22,6 +23,7 @@ public class StopDataMapper {
                     .name(stop.getName())
                     .latitude(stop.getLatitude())
                     .longitude(stop.getLongitude())
+                    .status(stop.getStatus())
                     .build();
         }catch (RuntimeException exception){
             throw new FailedMappingException("Error mapping from core to node");

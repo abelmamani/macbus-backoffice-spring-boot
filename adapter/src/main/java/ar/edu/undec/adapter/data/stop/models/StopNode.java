@@ -7,6 +7,7 @@ import lombok.NoArgsConstructor;
 import org.springframework.data.neo4j.core.schema.GeneratedValue;
 import org.springframework.data.neo4j.core.schema.Id;
 import org.springframework.data.neo4j.core.schema.Node;
+import stop.models.StopStatus;
 
 @Data
 @NoArgsConstructor
@@ -19,4 +20,5 @@ public class StopNode {
     private String name;
     private Double latitude;
     private Double longitude;
+    private StopStatus status;
 }

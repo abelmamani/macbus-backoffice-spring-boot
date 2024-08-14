@@ -10,4 +10,5 @@ import java.util.Optional;
 public interface ServiceCRUD extends Neo4jRepository<ServiceNode, Long> {
     boolean existsByName(String name);
     Optional<ServiceNode> findByName(String name);
+    void deleteByName(String name);
 }

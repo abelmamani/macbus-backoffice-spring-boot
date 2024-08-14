@@ -13,6 +13,6 @@ public class UpdateRouteUseCase implements UpdateRouteInput {
 
     @Override
     public void updateRoute(Route route) {
-        updateRouteRepository.udpate(route);
+        updateRouteRepository.update(route);
     }
 }

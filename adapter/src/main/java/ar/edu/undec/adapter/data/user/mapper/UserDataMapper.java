@@ -12,7 +12,9 @@ public class UserDataMapper {
                     userNode.getLastName(),
                     userNode.getEmail(),
                     userNode.getPassword(),
-                    userNode.getRole());
+                    userNode.getRole(),
+                    userNode.getResetToken(),
+                    userNode.getTokenExpiryDate());
         }catch (RuntimeException exception){
             throw new FailedMappingException("Error mapping from node to core");
         }
@@ -26,6 +28,8 @@ public class UserDataMapper {
                     .email(user.getEmail())
                     .password(user.getPassword())
                     .role(user.getRole())
+                    .resetToken(user.getResetToken())
+                    .tokenExpiryDate(user.getTokenExpiryDate())
                     .build();
         }catch (RuntimeException exception){
             throw new FailedMappingException("Error mapping from core to node");

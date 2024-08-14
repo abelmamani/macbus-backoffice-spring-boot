@@ -4,6 +4,8 @@ package user.models;
 import user.exceptions.UserException;
 import utils.GmailValidator;
 
+import java.time.LocalDateTime;
+
 public class User {
     private Long id;
     private String name;
@@ -11,17 +13,21 @@ public class User {
     private String email;
     private String password;
     private ERole role;
+    private String resetToken;
+    private LocalDateTime tokenExpiryDate;
 
-    private User(Long id, String name, String lastName, String email, String password, ERole role) {
+    private User(Long id, String name, String lastName, String email, String password, ERole role, String resetToken, LocalDateTime tokenExpiryDate) {
         this.id = id;
         this.name = name;
         this.lastName = lastName;
         this.email = email;
         this.password = password;
         this.role = role;
+        this.resetToken = resetToken;
+        this.tokenExpiryDate = tokenExpiryDate;
     }
 
-    public static User getInstance(Long id, String name, String lastName, String email, String password, ERole role) {
+    public static User getInstance(Long id, String name, String lastName, String email, String password, ERole role, String resetToken, LocalDateTime tokenExpiryDate) {
         if (name == null || name.isBlank())
             throw new UserException("El nombre del usuario es requerido.");
 
@@ -40,7 +46,7 @@ public class User {
         if (role == null)
             throw new UserException("El rol del usuario es requerido.");
 
-        return new User(id, name, lastName, email, password, role);
+        return new User(id, name, lastName, email, password, role, resetToken, tokenExpiryDate);
     }
 
     public Long getId() {
@@ -60,5 +66,13 @@ public class User {
     }
     public ERole getRole() {
         return role;
+    }
+
+    public String getResetToken() {
+        return resetToken;
+    }
+
+    public LocalDateTime getTokenExpiryDate() {
+        return tokenExpiryDate;
     }
 }

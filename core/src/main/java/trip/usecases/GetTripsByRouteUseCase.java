@@ -1,20 +1,19 @@
 package trip.usecases;
 
 import trip.inputs.GetTripsByRouteInput;
-import trip.models.Trip;
-import trip.outputs.GetTripsByRouteRepository;
-
+import trip.models.TripResponseModel;
+import trip.outputs.TripRepository;
 import java.util.List;
 
 public class GetTripsByRouteUseCase implements GetTripsByRouteInput {
-    private GetTripsByRouteRepository getTripsByRouteRepository;
+    private TripRepository getTripsByRouteRepository;
 
-    public GetTripsByRouteUseCase(GetTripsByRouteRepository getTripsByRouteRepository) {
+    public GetTripsByRouteUseCase(TripRepository getTripsByRouteRepository) {
         this.getTripsByRouteRepository = getTripsByRouteRepository;
     }
 
     @Override
-    public List<Trip> getAllTrips(String longName) {
+    public List<TripResponseModel> getAllTrips(String longName) {
         return getTripsByRouteRepository.findAllByRouteLongName(longName);
     }
 }

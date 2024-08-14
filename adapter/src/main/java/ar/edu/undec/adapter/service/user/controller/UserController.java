@@ -6,6 +6,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import user.inputs.*;
+import user.models.ChangePasswordRequestModel;
 import user.models.CreateUserRequestModel;
 import user.models.UpdateUserRequestModel;
 
@@ -18,6 +19,7 @@ public class UserController {
     private GetUserInput getUserInput;
     private CreateUserInput createUserInput;
     private UpdateUserInput updateUserInput;
+    private ChangePasswordInput changePasswordInput;
     private DeleteUserInput deleteUserInput;
 
     @GetMapping
@@ -55,6 +57,17 @@ public class UserController {
     public ResponseEntity<?> updateUser(@RequestBody UpdateUserRequestModel updateUserRequestModel){
         try {
             return ResponseManager.createRequest(updateUserInput.updateUser(updateUserRequestModel));
+        }catch (RuntimeException exception){
+            return ResponseManager.badRequest(exception.getMessage());
+        }
+    }
+
+    @PutMapping("/change-password")
+    @PreAuthorize("hasRole('ADMIN')")
+    public ResponseEntity<?> changePassword(@RequestBody ChangePasswordRequestModel changePasswordRequestModel){
+        try {
+            changePasswordInput.changePassword(changePasswordRequestModel);
+            return ResponseManager.successRequest("Se actualizo correctamente la contraseña.");
         }catch (RuntimeException exception){
             return ResponseManager.badRequest(exception.getMessage());
         }

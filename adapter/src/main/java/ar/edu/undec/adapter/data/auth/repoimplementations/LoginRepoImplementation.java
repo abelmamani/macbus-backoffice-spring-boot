@@ -17,7 +17,6 @@ import user.models.User;
 public class LoginRepoImplementation implements LoginRepository {
     private final UserCRUD userCRUD;
     private final JwtService jwtService;
-    private final PasswordEncoder passwordEncoder;
     private final AuthenticationManager authenticationManager;
 
     @Override

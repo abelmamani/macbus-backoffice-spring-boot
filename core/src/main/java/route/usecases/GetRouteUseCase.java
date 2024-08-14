@@ -15,32 +15,23 @@ public class GetRouteUseCase implements GetRouteInput {
     }
     @Override
     public Route getRouteById(Long id) {
-        Optional<Route> route = getRouteRepository.findById(id);
-        if(route.isEmpty())
-            throw new RouteNotExistsException("La linea con id " + id + " no existe.");
-        return route.get();
+        return getRouteRepository.findById(id).orElseThrow(() -> new RouteNotExistsException("La linea con id " + id + " no existe."));
     }
 
     @Override
     public Route getRouteByName(String name) {
-        Optional<Route> route = getRouteRepository.findByLongName(name);
-        if (route.isEmpty())
-            throw new RouteNotExistsException("La linea " + name + " no existe.");
-        return route.get();
+        return getRouteRepository.findByLongName(name).orElseThrow( () -> new RouteNotExistsException("La linea " + name + " no existe."));
     }
 
     @Override
     public RouteResponseModel getRouteGeneralInfoByName(String name) {
-        Optional<Route> route = getRouteRepository.findByLongName(name);
-        if(route.isEmpty())
-            throw new RouteNotExistsException("La linea " + name + " no existe.");
-        RouteResponseModel routeResponseModel = RouteResponseModel.getInstance(route.get().getId(),
-                route.get().getShortName(),
-                route.get().getLongName(),
-                route.get().getDescription(),
-                route.get().getColor(),
-                route.get().getTextColor(),
-                route.get().getRouteStatus());
-        return routeResponseModel;
+        Route route = getRouteRepository.findByLongName(name).orElseThrow(() -> new RouteNotExistsException("La linea " + name + " no existe."));
+        return RouteResponseModel.getInstance(route.getId(),
+                route.getShortName(),
+                route.getLongName(),
+                route.getDescription(),
+                route.getColor(),
+                route.getTextColor(),
+                route.getRouteStatus());
     }
 }

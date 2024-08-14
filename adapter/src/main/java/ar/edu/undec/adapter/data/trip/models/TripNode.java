@@ -19,7 +19,6 @@ import java.util.List;
 public class TripNode {
     @Id @GeneratedValue
     private Long id;
-    private String headsign;
     @Property("departure_time")
     private LocalTime departureTime;
     @Property("trip_status")

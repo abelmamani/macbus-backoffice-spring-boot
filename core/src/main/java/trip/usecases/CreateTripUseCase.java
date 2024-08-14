@@ -1,11 +1,12 @@
 package trip.usecases;
 
-import route.inputs.GetRouteInput;
-import route.inputs.UpdateRouteInput;
+import route.exceptions.RouteException;
 import route.models.Route;
 import route.models.RouteStatus;
-import service.inputs.GetServiceInput;
+import route.outputs.UpdateRouteRepository;
+import service.exceptions.ServiceException;
 import service.models.Service;
+import service.outputs.GetServiceRepository;
 import stoptime.models.StopTIme;
 import trip.exceptions.TripException;
 import trip.inputs.CreateTripInput;
@@ -16,37 +17,29 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 public class CreateTripUseCase implements CreateTripInput {
-    private GetServiceInput getServiceInput;
-    private GetRouteInput getRouteInput;
-    private UpdateRouteInput updateRouteInput;
+    private UpdateRouteRepository updateRouteRepository;
+    private GetServiceRepository getServiceRepository;
 
-    public CreateTripUseCase(GetServiceInput getServiceInput, GetRouteInput getRouteInput, UpdateRouteInput updateRouteInput) {
-        this.getServiceInput = getServiceInput;
-        this.getRouteInput = getRouteInput;
-        this.updateRouteInput = updateRouteInput;
+    public CreateTripUseCase(UpdateRouteRepository updateRouteRepository, GetServiceRepository getServiceRepository) {
+        this.updateRouteRepository = updateRouteRepository;
+        this.getServiceRepository = getServiceRepository;
     }
 
     @Override
     public RouteStatus createTrip(CreateTripRequestModel createTripRequestModel) {
-        Service service = getServiceInput.getServiceByName(createTripRequestModel.getServiceName());
-        Route route = getRouteInput.getRouteByName(createTripRequestModel.getRouteName());
-
-        boolean tripExists = route.getTrips().stream()
-                .anyMatch(trip -> trip.getService().getName().equals(createTripRequestModel.getServiceName()) &&
-                        trip.getDepartureTime().equals(createTripRequestModel.getDepartureTime()));
-        if (tripExists)
+        Route route = updateRouteRepository.findByLongName(createTripRequestModel.getBusRouteName()).orElseThrow(() -> new RouteException("La linea no existe."));
+        Service service = getServiceRepository.findByName(createTripRequestModel.getServiceName()).orElseThrow(() -> new ServiceException("El servicio no existe."));
+        if(route.existTripByDepartureTimeAndService(createTripRequestModel.getDepartureTime(), createTripRequestModel.getServiceName()))
             throw new TripException("Ya existe un viaje para el mismo servicio y hora de salida.");
 
         List<StopTIme> stopTimes = route.getStopSequences().stream()
                 .map(s -> StopTIme.getInstance(null, s.getArrivalTime(), s.getDistanceTraveled(), s.getStop()))
                 .collect(Collectors.toList());
 
-        Trip trip = Trip.getInstance(null, route.getLongName(), createTripRequestModel.getDepartureTime(), TripStatus.SCHEDULED, service, stopTimes);
-
         List<Trip> trips = route.getTrips();
-        trips.add(trip);
+        trips.add(Trip.getInstance(null, createTripRequestModel.getDepartureTime(), TripStatus.SCHEDULED, service, stopTimes));
 
-        Route updateRoute = Route.getInstance(route.getId(),
+        updateRouteRepository.update(Route.getInstance(route.getId(),
                 route.getShortName(),
                 route.getLongName(),
                 route.getDescription(),
@@ -55,9 +48,7 @@ public class CreateTripUseCase implements CreateTripInput {
                 RouteStatus.WITH_TRIPS,
                 route.getShapes(),
                 route.getStopSequences(),
-                trips);
-        updateRouteInput.updateRoute(updateRoute);
-
+                trips));
         return RouteStatus.WITH_TRIPS;
     }
 }

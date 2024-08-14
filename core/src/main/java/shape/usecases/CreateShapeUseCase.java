@@ -1,35 +1,43 @@
 package shape.usecases;
 
+import route.exceptions.RouteNotExistsException;
 import route.inputs.GetRouteInput;
 import route.inputs.UpdateRouteInput;
 import route.models.Route;
 import route.models.RouteStatus;
+import route.outputs.UpdateRouteRepository;
+import shape.exceptions.ShapeException;
 import shape.inpúts.CreateShapeInput;
 import shape.models.CreateShapeRequestModel;
 
 public class CreateShapeUseCase implements CreateShapeInput {
-    private GetRouteInput getRouteInput;
-    private UpdateRouteInput updateRouteInput;
+    private UpdateRouteRepository updateRouteRepository;
 
-    public CreateShapeUseCase(GetRouteInput getRouteInput, UpdateRouteInput updateRouteInput) {
-        this.getRouteInput = getRouteInput;
-        this.updateRouteInput = updateRouteInput;
+    public CreateShapeUseCase(UpdateRouteRepository updateRouteRepository) {
+        this.updateRouteRepository = updateRouteRepository;
     }
 
     @Override
     public RouteStatus createShape(CreateShapeRequestModel createShapeRequestModel) {
-        Route busRoute = getRouteInput.getRouteByName(createShapeRequestModel.getRouteName());
+        Route busRoute = updateRouteRepository.findByLongName(createShapeRequestModel.getRouteName())
+                .orElseThrow(() -> new RouteNotExistsException("La linea a eliminar no existe."));
+        RouteStatus routeStatus = busRoute.getRouteStatus();
+        if(!routeStatus.equals(RouteStatus.EMPTY) && !routeStatus.equals(RouteStatus.WITH_SHAPES))
+            throw new ShapeException("No se puede registrar el recorrido porque la ruta tiene paradas y/o viajes existentes.");
         Route route = Route.getInstance(busRoute.getId(),
                     busRoute.getShortName(),
                     busRoute.getLongName(),
                     busRoute.getDescription(),
                     busRoute.getColor(),
                     busRoute.getTextColor(),
-                    busRoute.getRouteStatus().equals(RouteStatus.EMPTY) ? RouteStatus.WITH_SHAPES : busRoute.getRouteStatus(),
+                    RouteStatus.WITH_SHAPES,
                     createShapeRequestModel.getShapes(),
                     busRoute.getStopSequences(),
                     busRoute.getTrips());
-        updateRouteInput.updateRoute(route);
-        return busRoute.getRouteStatus().equals(RouteStatus.EMPTY) ? RouteStatus.WITH_SHAPES : busRoute.getRouteStatus();
+        if(!busRoute.getRouteStatus().equals(RouteStatus.EMPTY)){
+            updateRouteRepository.deleteShapesByLongName(createShapeRequestModel.getRouteName());
+        }
+        updateRouteRepository.update(route);
+        return RouteStatus.WITH_SHAPES;
     }
 }

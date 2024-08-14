@@ -5,6 +5,7 @@ import org.springframework.context.annotation.Configuration;
 import service.inputs.*;
 import service.outputs.*;
 import service.usecases.*;
+import trip.outputs.TripRepository;
 
 @Configuration
 public class ServiceBeanConfig {
@@ -25,7 +26,7 @@ public class ServiceBeanConfig {
         return new UpdateServiceUseCase(updateServiceRepository, getServiceInput);
     }
     @Bean
-    public DeleteServiceInput deleteServiceInput(DeleteServiceRepository deleteServiceRepository){
-        return new DeleteServiceUseCase(deleteServiceRepository);
+    public DeleteServiceInput deleteServiceInput(DeleteServiceRepository deleteServiceRepository, TripRepository tripRepository){
+        return new DeleteServiceUseCase(deleteServiceRepository, tripRepository);
     }
 }

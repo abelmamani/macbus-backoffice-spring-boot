@@ -4,4 +4,5 @@ import stop.models.Stop;
 
 public interface GetStopInput {
     Stop getStop(Long id);
+    Stop getStopByName(String name);
 }

@@ -15,9 +15,11 @@ public class GetStopUseCase implements GetStopInput {
 
     @Override
     public Stop getStop(Long id) {
-        Optional<Stop> stop = getStopRepository.findById(id);
-        if(stop.isEmpty())
-            throw new StopNotExistsException("La parada con id " + id + " no existe.");
-        return stop.get();
+        return getStopRepository.findById(id).orElseThrow(() -> new StopNotExistsException("La parada con id " + id + " no existe."));
+    }
+
+    @Override
+    public Stop getStopByName(String name) {
+        return getStopRepository.findByName(name).orElseThrow(() -> new StopNotExistsException("La parada " + name + " no existe."));
     }
 }

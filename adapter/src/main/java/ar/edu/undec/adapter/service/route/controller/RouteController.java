@@ -61,7 +61,7 @@ public class RouteController {
         }
     }
 
-    @DeleteMapping("/{id}")
+    @DeleteMapping("/{name}")
     @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<?> deleteRoute(@PathVariable("name") String name){
         try {

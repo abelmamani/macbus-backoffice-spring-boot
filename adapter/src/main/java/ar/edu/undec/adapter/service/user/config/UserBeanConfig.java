@@ -25,6 +25,10 @@ public class UserBeanConfig {
         return new UpdateUserUseCase(updateUserRepository, getUserInput);
     }
     @Bean
+    public ChangePasswordInput changePasswordInput(ChangePasswordRepository changePasswordRepository){
+        return new ChangePasswordUseCase(changePasswordRepository);
+    }
+    @Bean
     public DeleteUserInput deleteUserInput(DeleteUserRepository deleteUserRepository){
         return new DeleteUserUseCase(deleteUserRepository);
     }

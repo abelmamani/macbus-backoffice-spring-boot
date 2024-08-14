@@ -1,5 +1,6 @@
 package user.usecases;
 
+import stop.models.Stop;
 import user.exceptions.UserNotExistException;
 import user.inputs.GetUserInput;
 import user.models.User;
@@ -16,9 +17,6 @@ public class GetUserUseCase implements GetUserInput {
 
     @Override
     public User getUser(Long id) {
-        Optional<User> user = getUserRepository.findById(id);
-        if(user.isEmpty())
-            throw new UserNotExistException("El usuario con id "+ id+" no existe.");
-        return user.get();
+        return getUserRepository.findById(id).orElseThrow(() -> new UserNotExistException("El usuario con id "+ id+" no existe."));
     }
 }

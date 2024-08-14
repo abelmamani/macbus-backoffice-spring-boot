@@ -61,11 +61,11 @@ public class StopController {
         }
     }
 
-    @DeleteMapping("/{id}")
+    @DeleteMapping("/{name}")
     @PreAuthorize("hasRole('ADMIN')")
-    public ResponseEntity<?> deleteStop(@PathVariable("id") Long id){
+    public ResponseEntity<?> deleteStop(@PathVariable("name") String name){
         try {
-            deleteStopInput.deleteStop(id);
+            deleteStopInput.deleteStop(name);
             return ResponseManager.successRequest("Se elimino la parada correctamente.");
         }catch (RuntimeException exception){
             return ResponseManager.badRequest(exception.getMessage());

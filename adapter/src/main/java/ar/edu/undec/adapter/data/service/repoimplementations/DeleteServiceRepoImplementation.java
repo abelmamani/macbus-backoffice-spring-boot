@@ -11,12 +11,12 @@ public class DeleteServiceRepoImplementation implements DeleteServiceRepository 
     private ServiceCRUD serviceCRUD;
 
     @Override
-    public boolean existsById(Long id) {
-        return serviceCRUD.existsById(id);
+    public boolean existsByName(String name) {
+        return serviceCRUD.existsByName(name);
     }
 
     @Override
-    public void deleteById(Long id) {
-        serviceCRUD.deleteById(id);
+    public void deleteByName(String name) {
+        serviceCRUD.deleteByName(name);
     }
 }

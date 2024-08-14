@@ -1,6 +1,8 @@
 package stop.outputs;
 
+import stop.models.StopStatus;
+
 public interface DeleteStopRepository {
-    boolean existsById(Long id);
-    void deleteById(Long id);
+    boolean existsByNameAndStatus(String name, StopStatus status);
+    void deleteByName(String name);
 }

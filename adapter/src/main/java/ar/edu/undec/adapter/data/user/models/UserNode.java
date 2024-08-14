@@ -12,6 +12,8 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import user.models.ERole;
+
+import java.time.LocalDateTime;
 import java.util.Collection;
 import java.util.List;
 
@@ -30,6 +32,10 @@ public class UserNode implements UserDetails {
     private String password;
     @Property
     private ERole role;
+    @Property(name = "reset_token")
+    private String resetToken;
+    @Property(name = "token_expiry_date")
+    private LocalDateTime tokenExpiryDate;
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
@@ -60,4 +66,5 @@ public class UserNode implements UserDetails {
     public boolean isEnabled() {
         return true;
     }
+
 }

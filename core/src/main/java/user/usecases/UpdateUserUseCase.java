@@ -34,7 +34,9 @@ public class UpdateUserUseCase implements UpdateUserInput {
                 updateUserRequestModel.getLastName(),
                 updateUserRequestModel.getEmail(),
                 findUser.getPassword(),
-                ERole.valueOf(updateUserRequestModel.getRole()));
+                ERole.valueOf(updateUserRequestModel.getRole()),
+                null,
+                null);
         return updateUserRepository.update(user);
     }
 }
