@@ -25,4 +25,4 @@ public class CreateTripRequestModel {
     public String getServiceName() {
         return serviceName;
     }
-}
+  }

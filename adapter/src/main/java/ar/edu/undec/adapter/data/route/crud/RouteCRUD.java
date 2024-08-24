@@ -6,7 +6,6 @@ import org.springframework.data.neo4j.repository.query.Query;
 import org.springframework.stereotype.Repository;
 import route.models.RouteGeneralInfoResponseModel;
 import route.models.RouteStatus;
-import java.time.LocalTime;
 import java.util.List;
 import java.util.Optional;
 
@@ -30,12 +29,12 @@ public interface RouteCRUD extends Neo4jRepository<RouteNode, String> {
     @Query("MATCH (r:Route)-[rel1:HAS_STOP]->(ss:StopSequence)-[rel2:STOP_AT]->(s:Stop) " +
             "WHERE r.long_name = $longName AND ss.arrival_time = $arrivalTime " +
             "DELETE rel2, rel1, ss")
-    void deleteStopSequenceByLongNameAndArrivalTime(String longName, LocalTime arrivalTime);
+    void deleteStopSequenceByLongNameAndArrivalTime(String longName, String arrivalTime);
 
     @Query("MATCH (r:Route)-[ht:HAS_TRIP]->(t:Trip)<-[pof:PART_OF_TRIP]-(st:StopTime)-[lat:LOCATED_AT]->(s:Stop) " +
             "MATCH (t)-[:TRIP_AT]->(sr:Service {name: $serviceName}) " +
             "WHERE r.long_name = $longName AND t.departure_time = $departureTime " +
             "DETACH DELETE t, st")
-    void deleteTripAndStopTimes(String longName, LocalTime departureTime, String serviceName);
+    void deleteTripAndStopTimes(String longName, String departureTime, String serviceName);
 
 }

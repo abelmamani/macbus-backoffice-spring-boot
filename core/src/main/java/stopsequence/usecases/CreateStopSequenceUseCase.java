@@ -1,5 +1,6 @@
 package stopsequence.usecases;
 
+import jdk.jshell.execution.Util;
 import route.exceptions.RouteException;
 import route.models.Route;
 import route.models.RouteStatus;
@@ -12,6 +13,8 @@ import stopsequence.exceptions.StopSequenceException;
 import stopsequence.inputs.CreateStopSequenceInput;
 import stopsequence.models.CreateStopSequenceRequestModel;
 import stopsequence.models.StopSequence;
+import utils.TimeUtils;
+
 import java.time.LocalTime;
 import java.util.List;
 
@@ -37,11 +40,11 @@ public class CreateStopSequenceUseCase implements CreateStopSequenceInput {
             throw new StopSequenceException("La primera parada debe tener una distancia de 0");
         if (busRoute.getRouteStatus().equals(RouteStatus.WITH_STOP) && !createStopSequenceRequestModel.getDistanceTraveled().equals(busRoute.getLastShape().getDistanceTraveled()))
             throw new StopSequenceException("La última parada debe tener una distancia igual a " + busRoute.getLastShape().getDistanceTraveled());
-        if(busRoute.getRouteStatus().equals(RouteStatus.WITH_STOPS) && !createStopSequenceRequestModel.getArrivalTime().isBefore(busRoute.getLastStopSequence().getArrivalTime()))
+        if(busRoute.getRouteStatus().equals(RouteStatus.WITH_STOPS) && !createStopSequenceRequestModel.getArrivalTime().isBefore(TimeUtils.parseTime(busRoute.getLastStopSequence().getArrivalTime())))
             throw new StopSequenceException("El tiempo de arribo debe ser inferior a " + busRoute.getLastStopSequence().getArrivalTime());
         if(busRoute.getRouteStatus().equals(RouteStatus.WITH_STOPS) && createStopSequenceRequestModel.getDistanceTraveled() >= busRoute.getLastStopSequence().getDistanceTraveled())
             throw new StopSequenceException("La distancia recorrida debe ser inferior a " + busRoute.getLastStopSequence().getDistanceTraveled());
-        if(busRoute.existStopSequenceByArrivalTime(createStopSequenceRequestModel.getArrivalTime()))
+        if(busRoute.existStopSequenceByArrivalTime(TimeUtils.formatTime(createStopSequenceRequestModel.getArrivalTime())))
             throw new StopSequenceException("Ya existe una parada con tiempo de arribo igual a "+createStopSequenceRequestModel.getArrivalTime());
         if(busRoute.existStopSequenceByDistanceTraveled(createStopSequenceRequestModel.getDistanceTraveled()))
             throw new StopSequenceException("Ya existe una parada con distancia recorrida igual a "+createStopSequenceRequestModel.getDistanceTraveled());
@@ -49,14 +52,14 @@ public class CreateStopSequenceUseCase implements CreateStopSequenceInput {
         boolean isInvalidSequence = stopSequences.stream()
                 .anyMatch(sequence ->
                         (createStopSequenceRequestModel.getDistanceTraveled() > sequence.getDistanceTraveled()
-                                && createStopSequenceRequestModel.getArrivalTime().isBefore(sequence.getArrivalTime())) ||
+                                && createStopSequenceRequestModel.getArrivalTime().isBefore(TimeUtils.parseTime(sequence.getArrivalTime()))) ||
                                 (createStopSequenceRequestModel.getDistanceTraveled() < sequence.getDistanceTraveled()
-                                        && createStopSequenceRequestModel.getArrivalTime().isAfter(sequence.getArrivalTime()))
+                                        && createStopSequenceRequestModel.getArrivalTime().isAfter(TimeUtils.parseTime(sequence.getArrivalTime())))
                 );
         if (isInvalidSequence)
             throw new StopSequenceException("La secuencia de parada no es válida. El tiempo de arribo y la distancia recorrida deben ser proporcionales.");
         stopSequences.add(StopSequence.getInstance(null,
-                createStopSequenceRequestModel.getArrivalTime(),
+                TimeUtils.formatTime(createStopSequenceRequestModel.getArrivalTime()),
                 createStopSequenceRequestModel.getDistanceTraveled(),
                 createStopSequenceRequestModel.getHeadsign(),
                 Stop.getInstance(stop.getId(),

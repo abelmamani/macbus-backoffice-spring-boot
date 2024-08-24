@@ -5,12 +5,12 @@ import java.time.LocalTime;
 public class CreateStopSequenceRequestModel {
     private String busRouteName;
     private LocalTime arrivalTime;
-    private Integer distanceTraveled;
+    private Long distanceTraveled;
     private String headsign;
     private String stopName;
     private CreateStopSequenceRequestModel(){}
 
-    public CreateStopSequenceRequestModel(String busRouteName, LocalTime arrivalTime, Integer distanceTraveled, String headsign, String stopName) {
+    public CreateStopSequenceRequestModel(String busRouteName, LocalTime arrivalTime, Long distanceTraveled, String headsign, String stopName) {
         this.busRouteName = busRouteName;
         this.arrivalTime = arrivalTime;
         this.distanceTraveled = distanceTraveled;
@@ -26,7 +26,7 @@ public class CreateStopSequenceRequestModel {
         return arrivalTime;
     }
 
-    public Integer getDistanceTraveled() {
+    public Long getDistanceTraveled() {
         return distanceTraveled;
     }
 

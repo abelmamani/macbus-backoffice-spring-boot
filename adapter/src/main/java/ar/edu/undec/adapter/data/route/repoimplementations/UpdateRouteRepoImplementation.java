@@ -6,8 +6,6 @@ import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 import route.models.Route;
 import route.outputs.UpdateRouteRepository;
-
-import java.time.LocalTime;
 import java.util.Optional;
 
 @AllArgsConstructor
@@ -26,12 +24,12 @@ public class UpdateRouteRepoImplementation implements UpdateRouteRepository {
     }
 
     @Override
-    public void deleteStopSequenceByLongNameAndArrivalTime(String longName, LocalTime arrivalTime) {
+    public void deleteStopSequenceByLongNameAndArrivalTime(String longName, String arrivalTime) {
         routeCRUD.deleteStopSequenceByLongNameAndArrivalTime(longName, arrivalTime);
     }
 
     @Override
-    public void deleteTripAndStopTimes(String longName, LocalTime departureTime, String serviceName) {
+    public void deleteTripAndStopTimes(String longName, String departureTime, String serviceName) {
         routeCRUD.deleteTripAndStopTimes(longName, departureTime, serviceName);
     }
 

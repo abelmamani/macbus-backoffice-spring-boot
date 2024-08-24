@@ -3,17 +3,16 @@ package trip.models;
 import service.models.Service;
 import stoptime.models.StopTIme;
 import trip.exceptions.TripException;
-import java.time.LocalTime;
 import java.util.List;
 
 public class Trip {
     private String id;
-    private LocalTime departureTime;
+    private String departureTime;
     private TripStatus tripStatus;
     private Service service;
     private List<StopTIme> stopTImes;
 
-    private Trip(String id, LocalTime departureTime, TripStatus tripStatus, Service service, List<StopTIme> stopTImes) {
+    private Trip(String id, String departureTime, TripStatus tripStatus, Service service, List<StopTIme> stopTImes) {
         this.id = id;
         this.departureTime = departureTime;
         this.tripStatus = tripStatus;
@@ -21,7 +20,7 @@ public class Trip {
         this.stopTImes = stopTImes;
     }
 
-    public static Trip getInstance(String id, LocalTime departureTime, TripStatus tripStatus, Service service, List<StopTIme> stopTImes) {
+    public static Trip getInstance(String id, String departureTime, TripStatus tripStatus, Service service, List<StopTIme> stopTImes) {
         if(departureTime == null)
             throw new TripException("La hora de salida del viaje es requerido.");
         if(tripStatus == null)
@@ -37,7 +36,7 @@ public class Trip {
         return id;
     }
 
-    public LocalTime getDepartureTime() {
+    public String getDepartureTime() {
         return departureTime;
     }
 

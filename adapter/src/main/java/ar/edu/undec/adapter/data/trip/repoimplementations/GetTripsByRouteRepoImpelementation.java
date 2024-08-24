@@ -7,6 +7,7 @@ import trip.models.TripResponseModel;
 import trip.outputs.TripRepository;
 
 import java.time.LocalTime;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -31,7 +32,7 @@ public class GetTripsByRouteRepoImpelementation implements TripRepository {
 
     private TripResponseModel mapToTripResponseModel(Map<String, Object> map) {
         return new TripResponseModel(
-                (LocalTime) map.get("departureTime"),
+                (String) map.get("departureTime"),
                 (String) map.get("tripStatus"),
                 (String) map.get("service")
         );

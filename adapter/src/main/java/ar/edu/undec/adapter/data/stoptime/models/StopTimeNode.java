@@ -7,7 +7,6 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.springframework.data.neo4j.core.schema.*;
 import org.springframework.data.neo4j.core.support.UUIDStringGenerator;
-import java.time.LocalTime;
 
 @Data
 @NoArgsConstructor
@@ -19,9 +18,9 @@ public class StopTimeNode {
     @GeneratedValue(UUIDStringGenerator.class)
     String id;
     @Property("arrival_time")
-    private LocalTime arrivalTime;
+    private String arrivalTime;
     @Property("distance_traveled")
-    private Integer distanceTraveled;
+    private Long distanceTraveled;
     @Relationship(type = "LOCATED_AT", direction = Relationship.Direction.OUTGOING)
     private StopNode stop;
 }

@@ -9,7 +9,6 @@ import lombok.NoArgsConstructor;
 import org.springframework.data.neo4j.core.schema.*;
 import org.springframework.data.neo4j.core.support.UUIDStringGenerator;
 import trip.models.TripStatus;
-import java.time.LocalTime;
 import java.util.List;
 
 @Data
@@ -22,7 +21,7 @@ public class TripNode {
     @GeneratedValue(UUIDStringGenerator.class)
     String id;
     @Property("departure_time")
-    private LocalTime departureTime;
+    private String departureTime;
     @Property("trip_status")
     private TripStatus tripStatus;
     @Relationship(type = "TRIP_AT", direction = Relationship.Direction.OUTGOING)

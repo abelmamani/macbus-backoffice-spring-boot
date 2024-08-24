@@ -21,8 +21,8 @@ public class ShapeNode {
     String id;
     private Double latitude;
     private Double longitude;
-    private Integer sequence;
+    private Long sequence;
     @Property("distance_traveled")
-    private Integer distanceTraveled;
+    private Long distanceTraveled;
 }
 

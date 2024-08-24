@@ -2,22 +2,21 @@ package stoptime.models;
 
 import stop.models.Stop;
 import stoptime.exceptions.StopTimeException;
-import java.time.LocalTime;
 
 public class StopTIme {
     private String id;
-    private LocalTime arrivalTime;
-    private Integer distanceTraveled;
+    private String arrivalTime;
+    private Long distanceTraveled;
     private Stop stop;
 
-    public StopTIme(String id, LocalTime arrivalTime, Integer distanceTraveled, Stop stop) {
+    public StopTIme(String id, String arrivalTime, Long distanceTraveled, Stop stop) {
         this.id = id;
         this.arrivalTime = arrivalTime;
         this.distanceTraveled = distanceTraveled;
         this.stop = stop;
     }
 
-    public static StopTIme getInstance(String id, LocalTime arrivalTime, Integer distanceTraveled, Stop stop) {
+    public static StopTIme getInstance(String id, String arrivalTime, Long distanceTraveled, Stop stop) {
         if(arrivalTime == null)
             throw new StopTimeException("El timepo de arribo no debe ser negativo.");
         if(distanceTraveled < 0)
@@ -31,11 +30,11 @@ public class StopTIme {
         return id;
     }
 
-    public LocalTime getArrivalTime() {
+    public String getArrivalTime() {
         return arrivalTime;
     }
 
-    public Integer getDistanceTraveled() {
+    public Long getDistanceTraveled() {
         return distanceTraveled;
     }
 

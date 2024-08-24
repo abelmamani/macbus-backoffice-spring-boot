@@ -11,7 +11,6 @@ import stopsequence.exceptions.StopSequenceException;
 import stopsequence.inputs.DeleteStopSequenceInput;
 import stopsequence.models.StopSequence;
 import stopsequence.outputs.StopSequenceRepository;
-import java.time.LocalTime;
 import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -28,7 +27,7 @@ public class DeleteStopSequenceUseCase implements DeleteStopSequenceInput {
     }
 
     @Override
-    public RouteStatus deleteStopSequence(String busRouteName, LocalTime arrivalTime) {
+    public RouteStatus deleteStopSequence(String busRouteName, String arrivalTime) {
         Route busRoute = updateRouteRepository.findByLongName(busRouteName)
                 .orElseThrow(() -> new RouteNotExistsException("La línea " + busRouteName + " no existe."));
         if (busRoute.getRouteStatus().equals(RouteStatus.WITH_TRIPS))

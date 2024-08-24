@@ -10,8 +10,6 @@ import stopsequence.inputs.DeleteStopSequenceInput;
 import stopsequence.inputs.GetStopSequencesByRouteInput;
 import stopsequence.models.CreateStopSequenceRequestModel;
 
-import java.time.LocalTime;
-
 @AllArgsConstructor
 @RestController
 @RequestMapping("stop_sequences")
@@ -43,7 +41,7 @@ public class StopSequenceController {
 
     @DeleteMapping("/route/{longName}/{arrivalTime}")
     @PreAuthorize("hasRole('ADMIN')")
-    public ResponseEntity<?> deleteStopSequenceByRouteAndArrivalTime(@PathVariable("longName") String longName, @PathVariable("arrivalTime") LocalTime arrivalTime){
+    public ResponseEntity<?> deleteStopSequenceByRouteAndArrivalTime(@PathVariable("longName") String longName, @PathVariable("arrivalTime") String arrivalTime){
         try {
             return ResponseEntity.ok(deleteStopSequenceInput.deleteStopSequence(longName, arrivalTime));
         }catch (RuntimeException exception){

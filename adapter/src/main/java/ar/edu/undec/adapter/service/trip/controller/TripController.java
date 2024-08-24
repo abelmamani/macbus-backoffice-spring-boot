@@ -10,8 +10,6 @@ import trip.inputs.DeleteTripInput;
 import trip.inputs.GetTripsByRouteInput;
 import trip.models.CreateTripRequestModel;
 
-import java.time.LocalTime;
-
 @AllArgsConstructor
 @RestController
 @RequestMapping("trips")
@@ -42,7 +40,7 @@ public class TripController {
     }
     @DeleteMapping("/route/{longName}/{serviceName}/{departureTime}")
     @PreAuthorize("hasRole('ADMIN')")
-    public ResponseEntity<?> deleteStopSequenceByRouteAndArrivalTime(@PathVariable("longName") String longName, @PathVariable("serviceName") String serviceName, @PathVariable("departureTime") LocalTime departureTime){
+    public ResponseEntity<?> deleteStopSequenceByRouteAndArrivalTime(@PathVariable("longName") String longName, @PathVariable("serviceName") String serviceName, @PathVariable("departureTime") String departureTime){
         try {
             return ResponseEntity.ok(deleteTripInput.deleteTrip(longName, serviceName, departureTime));
         }catch (RuntimeException exception){

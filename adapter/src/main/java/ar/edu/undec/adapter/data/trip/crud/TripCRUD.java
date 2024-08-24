@@ -3,6 +3,8 @@ import ar.edu.undec.adapter.data.trip.models.TripNode;
 import org.springframework.data.neo4j.repository.Neo4jRepository;
 import org.springframework.data.neo4j.repository.query.Query;
 import org.springframework.stereotype.Repository;
+import trip.models.TripResponseModel;
+
 import java.util.List;
 import java.util.Map;
 

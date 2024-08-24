@@ -13,8 +13,11 @@ import trip.inputs.CreateTripInput;
 import trip.models.CreateTripRequestModel;
 import trip.models.Trip;
 import trip.models.TripStatus;
+import utils.TimeUtils;
 
 import java.time.Duration;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -37,21 +40,21 @@ public class CreateTripUseCase implements CreateTripInput {
             throw new TripException("No se puede registrar viaje porque la línea no tiene un reocrrido y/o secuencias de paradas definidos.");
         Service service = getServiceRepository.findByName(createTripRequestModel.getServiceName()).orElseThrow(() -> new ServiceException("El servicio no existe."));
 
-        if (route.existTripByDepartureTimeAndService(createTripRequestModel.getDepartureTime(), createTripRequestModel.getServiceName()))
+        if (route.existTripByDepartureTimeAndService(createTripRequestModel.getDepartureTime().toString(), createTripRequestModel.getServiceName()))
             throw new TripException("Ya existe un viaje para el mismo servicio y hora de salida.");
 
         List<StopTIme> stopTimes = route.getStopSequences().stream()
                 .map(s -> StopTIme.getInstance(
-                        null,
-                        createTripRequestModel.getDepartureTime().plus(Duration.between(LocalTime.MIN, s.getArrivalTime())),
-                        s.getDistanceTraveled(),
-                        s.getStop()
-                ))
+                            null,
+                            TimeUtils.addLocalTimes(createTripRequestModel.getDepartureTime(), TimeUtils.parseTime(s.getArrivalTime())),
+                            s.getDistanceTraveled(),
+                            s.getStop())
+                    )
                 .collect(Collectors.toList());
         List<Trip> trips = route.getTrips();
         trips.add(Trip.getInstance(
                 null,
-                createTripRequestModel.getDepartureTime(),
+                TimeUtils.formatTime(createTripRequestModel.getDepartureTime()),
                 TripStatus.SCHEDULED,
                 service,
                 stopTimes

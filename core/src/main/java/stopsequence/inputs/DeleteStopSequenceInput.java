@@ -5,5 +5,5 @@ import route.models.RouteStatus;
 import java.time.LocalTime;
 
 public interface DeleteStopSequenceInput {
-    RouteStatus deleteStopSequence(String busRouteName, LocalTime arrivalTime);
+    RouteStatus deleteStopSequence(String busRouteName, String arrivalTime);
 }

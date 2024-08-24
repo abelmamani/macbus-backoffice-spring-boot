@@ -7,7 +7,6 @@ import route.outputs.UpdateRouteRepository;
 import trip.exceptions.TripException;
 import trip.inputs.DeleteTripInput;
 import trip.models.Trip;
-import java.time.LocalTime;
 import java.util.List;
 
 public class DeleteTripUseCase implements DeleteTripInput {
@@ -18,7 +17,7 @@ public class DeleteTripUseCase implements DeleteTripInput {
     }
 
     @Override
-    public RouteStatus deleteTrip(String busRouteName, String serviceName, LocalTime departureTime) {
+    public RouteStatus deleteTrip(String busRouteName, String serviceName, String departureTime) {
         Route route = updateRouteRepository.findByLongName(busRouteName).orElseThrow(() -> new RouteException("La linea no existe."));
         if(!route.existTripByDepartureTimeAndService(departureTime, serviceName))
             throw new TripException("No existe un viaje con el servicio y hora de salida especificada.");

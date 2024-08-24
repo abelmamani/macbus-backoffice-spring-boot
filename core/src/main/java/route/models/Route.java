@@ -4,7 +4,6 @@ import route.exceptions.RouteException;
 import shape.models.Shape;
 import stopsequence.models.StopSequence;
 import trip.models.Trip;
-import java.time.LocalTime;
 import java.util.Comparator;
 import java.util.List;
 import java.util.NoSuchElementException;
@@ -90,25 +89,25 @@ public class Route {
 
     public Shape getLastShape() {
         return this.shapes.stream()
-                .max(Comparator.comparingInt(Shape::getSequence))
+                .max(Comparator.comparingLong(Shape::getSequence))
                 .orElseThrow(() -> new NoSuchElementException("La shape no esta disponible."));
     }
 
-    public StopSequence getStopSequenceByArrivalTime(LocalTime arrivalTime) {
+    public StopSequence getStopSequenceByArrivalTime(String arrivalTime) {
         return stopSequences.stream().filter(s -> s.getArrivalTime().equals(arrivalTime)).findFirst().get();
     }
 
     public StopSequence getLastStopSequence() {
         return this.stopSequences.stream()
-                .max(Comparator.comparingInt(StopSequence::getDistanceTraveled))
+                .max(Comparator.comparingLong(StopSequence::getDistanceTraveled))
                 .orElseThrow(() -> new NoSuchElementException("El stop sequence no esta disponible."));
     }
 
-    public boolean existStopSequenceByArrivalTime(LocalTime arrivalTime) {
+    public boolean existStopSequenceByArrivalTime(String arrivalTime) {
         return this.stopSequences.stream().anyMatch(stopSequence -> stopSequence.getArrivalTime().equals(arrivalTime));
     }
 
-    public boolean existStopSequenceByDistanceTraveled(Integer distanceTraveled) {
+    public boolean existStopSequenceByDistanceTraveled(Long distanceTraveled) {
         return this.stopSequences.stream().anyMatch(stopSequence -> stopSequence.getDistanceTraveled().equals(distanceTraveled));
     }
 
@@ -116,11 +115,11 @@ public class Route {
         return this.stopSequences.stream().anyMatch(stopSequence -> stopSequence.getStop().getName().equals(name));
     }
 
-    public boolean existTripByDepartureTimeAndService(LocalTime departureTime, String service) {
+    public boolean existTripByDepartureTimeAndService(String departureTime, String service) {
         return this.trips.stream().anyMatch(trip -> trip.getDepartureTime().equals(departureTime) && trip.getService().getName().equals(service));
     }
 
-    public Trip getTripByDepartureTimeAndService(LocalTime departureTime, String serviceName) {
+    public Trip getTripByDepartureTimeAndService(String departureTime, String serviceName) {
         return trips.stream().filter(t -> t.getDepartureTime().equals(departureTime) && t.getService().getName().equals(serviceName)).findFirst().get();
     }
 }
