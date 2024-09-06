@@ -1,6 +1,6 @@
 package ar.edu.undec.adapter.data.trip.models;
 
-import ar.edu.undec.adapter.data.service.models.ServiceNode;
+import ar.edu.undec.adapter.data.busservice.models.ServiceNode;
 import ar.edu.undec.adapter.data.stoptime.models.StopTimeNode;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -20,9 +20,9 @@ public class TripNode {
     @Id
     @GeneratedValue(UUIDStringGenerator.class)
     String id;
-    @Property("departure_time")
+    @Property(name = "departure_time")
     private String departureTime;
-    @Property("trip_status")
+    @Property(name = "trip_status")
     private TripStatus tripStatus;
     @Relationship(type = "TRIP_AT", direction = Relationship.Direction.OUTGOING)
     private ServiceNode service;

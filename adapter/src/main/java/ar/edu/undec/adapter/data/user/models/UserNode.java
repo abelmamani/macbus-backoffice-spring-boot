@@ -26,12 +26,15 @@ public class UserNode implements UserDetails {
     @Id
     @GeneratedValue(UUIDStringGenerator.class)
     private String id;
+    @Property(name = "name")
     private String name;
     @Property(name = "last_name")
     private String lastName;
+    @Property(name = "email")
     private String email;
+    @Property(name = "password")
     private String password;
-    @Property
+    @Property(name = "role")
     private ERole role;
     @Property(name = "reset_token")
     private String resetToken;

@@ -38,18 +38,17 @@ public class RecoverPasswordUseCase implements RecoverPasswordInput {
     @Override
     public void resetPassword(String token, String newPassword) {
         User user = recoverPasswordRepository.findByResetToken(token)
-                .orElseThrow(() -> new InvalidTokenException("El token es invalido."));
+                .orElseThrow(() -> new InvalidTokenException("Enlace de recuperación inválido"));
         if (user.getTokenExpiryDate().isBefore(LocalDateTime.now()))
-            throw new InvalidTokenException("El token ya a expirado.");
+            throw new InvalidTokenException("El enlace de recuperación ya ha expirado");
         User updateUser = User.getInstance(user.getId(),
                 user.getName(),
                 user.getLastName(),
                 user.getEmail(),
                 recoverPasswordRepository.encodePassword(newPassword),
                 user.getRole(),
-                user.getResetToken(),
+                "",
                 LocalDateTime.now().minusMinutes(1));
         recoverPasswordRepository.save(updateUser);
     }
-
 }

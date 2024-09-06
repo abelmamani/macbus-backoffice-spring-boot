@@ -16,7 +16,7 @@ public class UpdateStopUseCase implements UpdateStopInput {
 
     @Override
     public void updateStop(String name, UpdateStopRequestModel updateStopRequestModel) {
-        Stop foundStop = updateStopRepository.findByName(name).orElseThrow(() -> new StopNotExistsException("La ´parda "+name+" no existe."));
+        Stop foundStop = updateStopRepository.findByName(name).orElseThrow(() -> new StopNotExistsException("La parada "+name+" no existe."));
         if(updateStopRepository.existsByName(updateStopRequestModel.getName()) && !foundStop.getName().equals(updateStopRequestModel.getName()))
             throw new StopAlreadyExistException("La parada con nombre "+ updateStopRequestModel.getName()+ " ya existe.");
         Stop newBusStop = Stop.getInstance(foundStop.getId(),

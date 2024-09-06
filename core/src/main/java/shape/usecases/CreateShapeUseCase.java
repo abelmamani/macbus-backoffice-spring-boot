@@ -1,9 +1,9 @@
 package shape.usecases;
 
-import route.exceptions.RouteNotExistsException;
-import route.models.Route;
-import route.models.RouteStatus;
-import route.outputs.UpdateRouteRepository;
+import busroute.exceptions.RouteNotExistsException;
+import busroute.models.Route;
+import busroute.models.RouteStatus;
+import busroute.outputs.UpdateRouteRepository;
 import shape.exceptions.ShapeException;
 import shape.inpúts.CreateShapeInput;
 import shape.models.CreateShapeRequestModel;

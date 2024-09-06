@@ -11,6 +11,7 @@ public class StopTimeDataMapper {
             return StopTIme.getInstance(stopTime.getId(),
                     stopTime.getArrivalTime(),
                     stopTime.getDistanceTraveled(),
+                    stopTime.getHeadsign(),
                     StopDataMapper.dataCoreMapper(stopTime.getStop()));
         }catch (RuntimeException exception){
             throw new FailedMappingException("Error mapping from node to core");
@@ -22,6 +23,7 @@ public class StopTimeDataMapper {
                     .id(stopTime.getId())
                     .arrivalTime(stopTime.getArrivalTime())
                     .distanceTraveled(stopTime.getDistanceTraveled())
+                    .headsign(stopTime.getHeadsign())
                     .stop(StopDataMapper.dataNodeMapper(stopTime.getStop()))
                     .build();
         }catch (RuntimeException exception){

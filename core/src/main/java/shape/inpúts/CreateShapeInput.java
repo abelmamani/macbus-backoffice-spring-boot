@@ -1,6 +1,6 @@
 package shape.inpúts;
 
-import route.models.RouteStatus;
+import busroute.models.RouteStatus;
 import shape.models.CreateShapeRequestModel;
 
 public interface CreateShapeInput {

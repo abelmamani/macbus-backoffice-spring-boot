@@ -1,6 +1,6 @@
 package trip.inputs;
 
-import route.models.RouteStatus;
+import busroute.models.RouteStatus;
 import trip.models.CreateTripRequestModel;
 
 public interface CreateTripInput {

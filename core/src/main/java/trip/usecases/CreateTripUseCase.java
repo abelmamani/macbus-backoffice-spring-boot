@@ -1,12 +1,12 @@
 package trip.usecases;
 
-import route.exceptions.RouteException;
-import route.models.Route;
-import route.models.RouteStatus;
-import route.outputs.UpdateRouteRepository;
-import service.exceptions.ServiceException;
-import service.models.Service;
-import service.outputs.GetServiceRepository;
+import busroute.exceptions.RouteException;
+import busroute.models.Route;
+import busroute.models.RouteStatus;
+import busroute.outputs.UpdateRouteRepository;
+import busservice.exceptions.ServiceException;
+import busservice.models.Service;
+import busservice.outputs.GetServiceRepository;
 import stoptime.models.StopTIme;
 import trip.exceptions.TripException;
 import trip.inputs.CreateTripInput;
@@ -15,10 +15,6 @@ import trip.models.Trip;
 import trip.models.TripStatus;
 import utils.TimeUtils;
 
-import java.time.Duration;
-import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.time.LocalTime;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -48,6 +44,7 @@ public class CreateTripUseCase implements CreateTripInput {
                             null,
                             TimeUtils.addLocalTimes(createTripRequestModel.getDepartureTime(), TimeUtils.parseTime(s.getArrivalTime())),
                             s.getDistanceTraveled(),
+                            s.getHeadsign(),
                             s.getStop())
                     )
                 .collect(Collectors.toList());

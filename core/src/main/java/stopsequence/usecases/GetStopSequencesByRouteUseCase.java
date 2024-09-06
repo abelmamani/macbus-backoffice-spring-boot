@@ -1,20 +1,19 @@
 package stopsequence.usecases;
 
-import route.inputs.GetRouteInput;
 import stopsequence.inputs.GetStopSequencesByRouteInput;
-import stopsequence.models.StopSequence;
-
+import stopsequence.models.StopSequenceResponseModel;
+import stopsequence.outputs.StopSequenceRepository;
 import java.util.List;
 
 public class GetStopSequencesByRouteUseCase implements GetStopSequencesByRouteInput {
-    private GetRouteInput getRouteInput;
+    private StopSequenceRepository stopSequenceRepository;
 
-    public GetStopSequencesByRouteUseCase(GetRouteInput getRouteInput) {
-        this.getRouteInput = getRouteInput;
+    public GetStopSequencesByRouteUseCase(StopSequenceRepository stopSequenceRepository) {
+        this.stopSequenceRepository = stopSequenceRepository;
     }
 
     @Override
-    public List<StopSequence> getAllStopSequences(String longName) {
-        return getRouteInput.getRouteByName(longName).getStopSequences();
+    public List<StopSequenceResponseModel> getAllStopSequences(String longName) {
+        return stopSequenceRepository.findAllByRouteLongName(longName);
     }
 }

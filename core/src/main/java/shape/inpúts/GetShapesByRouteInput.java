@@ -1,9 +1,8 @@
 package shape.inpúts;
 
-import shape.models.Shape;
-
+import shape.models.ShapeResponseModel;
 import java.util.List;
 
 public interface GetShapesByRouteInput {
-    List<Shape> getAllShapes(String longName);
+    List<ShapeResponseModel> getAllShapes(String longName);
 }

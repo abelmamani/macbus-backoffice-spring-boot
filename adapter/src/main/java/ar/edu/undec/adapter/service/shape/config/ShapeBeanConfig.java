@@ -2,10 +2,10 @@ package ar.edu.undec.adapter.service.shape.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.stereotype.Component;
-import route.inputs.GetRouteInput;
-import route.outputs.UpdateRouteRepository;
+import busroute.outputs.UpdateRouteRepository;
 import shape.inpúts.CreateShapeInput;
 import shape.inpúts.GetShapesByRouteInput;
+import shape.outputs.ShapeRepository;
 import shape.usecases.CreateShapeUseCase;
 import shape.usecases.GetShapesByRouteUseCase;
 
@@ -17,7 +17,7 @@ public class ShapeBeanConfig {
     }
 
     @Bean
-    public GetShapesByRouteInput getShapesByRouteInput(GetRouteInput getRouteInput){
-        return new GetShapesByRouteUseCase(getRouteInput);
+    public GetShapesByRouteInput getShapesByRouteInput(ShapeRepository shapeRepository){
+        return new GetShapesByRouteUseCase(shapeRepository);
     }
 }

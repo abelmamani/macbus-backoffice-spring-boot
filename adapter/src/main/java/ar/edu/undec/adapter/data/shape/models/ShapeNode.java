@@ -19,10 +19,13 @@ public class ShapeNode {
     @Id
     @GeneratedValue(UUIDStringGenerator.class)
     String id;
+    @Property(name = "latitude")
     private Double latitude;
+    @Property(name = "longitude")
     private Double longitude;
+    @Property(name = "sequence")
     private Long sequence;
-    @Property("distance_traveled")
+    @Property(name = "distance_traveled")
     private Long distanceTraveled;
 }
 

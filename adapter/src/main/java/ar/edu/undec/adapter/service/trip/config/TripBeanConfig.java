@@ -2,8 +2,8 @@ package ar.edu.undec.adapter.service.trip.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.stereotype.Component;
-import route.outputs.UpdateRouteRepository;
-import service.outputs.GetServiceRepository;
+import busroute.outputs.UpdateRouteRepository;
+import busservice.outputs.GetServiceRepository;
 import trip.inputs.CreateTripInput;
 import trip.inputs.DeleteTripInput;
 import trip.inputs.GetTripsByRouteInput;

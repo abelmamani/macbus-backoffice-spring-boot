@@ -1,9 +1,9 @@
 package trip.usecases;
 
-import route.exceptions.RouteException;
-import route.models.Route;
-import route.models.RouteStatus;
-import route.outputs.UpdateRouteRepository;
+import busroute.exceptions.RouteException;
+import busroute.models.Route;
+import busroute.models.RouteStatus;
+import busroute.outputs.UpdateRouteRepository;
 import trip.exceptions.TripException;
 import trip.inputs.DeleteTripInput;
 import trip.models.Trip;

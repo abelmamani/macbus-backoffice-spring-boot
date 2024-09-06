@@ -3,7 +3,11 @@ package ar.edu.undec.adapter.data.stopsequence.mapper;
 import ar.edu.undec.adapter.data.exceptions.FailedMappingException;
 import ar.edu.undec.adapter.data.stop.mapper.StopDataMapper;
 import ar.edu.undec.adapter.data.stopsequence.models.StopSequenceNode;
+import stopsequence.models.StopResponseModel;
 import stopsequence.models.StopSequence;
+import stopsequence.models.StopSequenceResponseModel;
+
+import java.util.Map;
 
 public class StopSequenceDataMapper {
     public static StopSequence dataCoreMapper(StopSequenceNode stopSequence){
@@ -29,5 +33,21 @@ public class StopSequenceDataMapper {
         }catch (RuntimeException exception){
             throw new FailedMappingException("Error mapping from core to node");
         }
+    }
+
+    public static StopSequenceResponseModel mapToStopSequenceResponseModel(Map<String, Object> map) {
+        Map<String, Object> stopMap = (Map<String, Object>) map.get("stop");
+        StopResponseModel stopResponseModel = new StopResponseModel(
+                (String) stopMap.get("name"),
+                (Double) stopMap.get("latitude"),
+                (Double) stopMap.get("longitude")
+        );
+
+        return new StopSequenceResponseModel(
+                (String) map.get("arrivalTime"),
+                (Long) map.get("distanceTraveled"),
+                (String) map.get("headsign"),
+                stopResponseModel
+        );
     }
 }

@@ -1,10 +1,12 @@
 package ar.edu.undec.adapter.data.trip.mapper;
 
 import ar.edu.undec.adapter.data.exceptions.FailedMappingException;
-import ar.edu.undec.adapter.data.service.mapper.ServiceDataMapper;
+import ar.edu.undec.adapter.data.busservice.mapper.ServiceDataMapper;
 import ar.edu.undec.adapter.data.stoptime.mapper.StopTimeDataMapper;
 import ar.edu.undec.adapter.data.trip.models.TripNode;
 import trip.models.Trip;
+import trip.models.TripResponseModel;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 public class TripDataMapper {
@@ -31,5 +33,13 @@ public class TripDataMapper {
         }catch (RuntimeException exception){
             throw new FailedMappingException("Error mapping from core to node");
         }
+    }
+
+    public static TripResponseModel mapToTripResponseModel(Map<String, Object> map) {
+        return new TripResponseModel(
+                (String) map.get("departureTime"),
+                (String) map.get("tripStatus"),
+                (String) map.get("service")
+        );
     }
 }

@@ -1,8 +1,6 @@
 package stopsequence.inputs;
 
-import route.models.RouteStatus;
-
-import java.time.LocalTime;
+import busroute.models.RouteStatus;
 
 public interface DeleteStopSequenceInput {
     RouteStatus deleteStopSequence(String busRouteName, String arrivalTime);

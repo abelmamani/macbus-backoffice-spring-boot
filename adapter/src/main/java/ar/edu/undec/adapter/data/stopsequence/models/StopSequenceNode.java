@@ -17,10 +17,11 @@ public class StopSequenceNode {
     @Id
     @GeneratedValue(UUIDStringGenerator.class)
     String id;
-    @Property("arrival_time")
+    @Property(name = "arrival_time")
     private String arrivalTime;
-    @Property("distance_traveled")
+    @Property(name = "distance_traveled")
     private Long distanceTraveled;
+    @Property(name = "headsign")
     private String headsign;
     @Relationship(type = "STOP_AT", direction = Relationship.Direction.OUTGOING)
     private StopNode stop;

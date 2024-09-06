@@ -26,12 +26,12 @@ public class AdapterApplication {
     @Bean
     CommandLineRunner init(){
         return args -> {
-            if(!userCRUD.existsByEmail("abel@gmail.com")) {
+            if(!userCRUD.existsByEmail("juan@gmail.com")) {
                 UserNode userEntity = UserNode.builder()
                         .id(null)
-                        .name("abel")
-                        .lastName("mamani")
-                        .email("abel@gmail.com")
+                        .name("JUAN")
+                        .lastName("PEREZ")
+                        .email("juan@gmail.com")
                         .password(passwordEncoder.encode("1234"))
                         .role(ERole.ROLE_ADMIN)
                         .resetToken(UUID.randomUUID().toString())

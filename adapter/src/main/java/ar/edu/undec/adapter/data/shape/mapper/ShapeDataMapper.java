@@ -3,6 +3,8 @@ package ar.edu.undec.adapter.data.shape.mapper;
 import ar.edu.undec.adapter.data.exceptions.FailedMappingException;
 import ar.edu.undec.adapter.data.shape.models.ShapeNode;
 import shape.models.Shape;
+import shape.models.ShapeResponseModel;
+import java.util.Map;
 
 public class ShapeDataMapper {
     public static Shape dataCoreMapper(ShapeNode shapeNode){
@@ -28,5 +30,13 @@ public class ShapeDataMapper {
         }catch (RuntimeException exception){
             throw new FailedMappingException("Error mapping from core to node");
         }
+    }
+
+    public static ShapeResponseModel mapToShapeResponseModel(Map<String, Object> map) {
+        return new ShapeResponseModel(
+                (Double) map.get("latitude"),
+                (Double) map.get("longitude"),
+                (Long) map.get("sequence"),
+                (Long) map.get("distanceTraveled"));
     }
 }

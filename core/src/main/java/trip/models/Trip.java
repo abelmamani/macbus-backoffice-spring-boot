@@ -1,6 +1,6 @@
 package trip.models;
 
-import service.models.Service;
+import busservice.models.Service;
 import stoptime.models.StopTIme;
 import trip.exceptions.TripException;
 import java.util.List;

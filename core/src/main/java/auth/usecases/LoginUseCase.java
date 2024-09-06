@@ -18,7 +18,7 @@ public class LoginUseCase implements LoginInput {
     @Override
     public AuthResponse login(LoginRequestModel loginRequestModel) {
         if (!loginRepository.authenticate(loginRequestModel.getEmail(), loginRequestModel.getPassword())) {
-            throw new UserNotExistException("Credenciales incorrectos.");
+            throw new UserNotExistException("Correo electrónico y/o contraseña iconrrecto.");
         }
         User user = loginRepository.findByEmail(loginRequestModel.getEmail());
         return AuthResponse.getInstance(

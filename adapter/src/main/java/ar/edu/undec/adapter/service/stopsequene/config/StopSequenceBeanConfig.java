@@ -2,9 +2,7 @@ package ar.edu.undec.adapter.service.stopsequene.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.stereotype.Component;
-import route.inputs.GetRouteInput;
-import route.outputs.GetRouteRepository;
-import route.outputs.UpdateRouteRepository;
+import busroute.outputs.UpdateRouteRepository;
 import stop.outputs.GetStopRepository;
 import stop.outputs.UpdateStopRepository;
 import stopsequence.inputs.CreateStopSequenceInput;
@@ -27,7 +25,7 @@ public class StopSequenceBeanConfig {
     }
 
     @Bean
-    public GetStopSequencesByRouteInput getStopSequencesByRouteInput(GetRouteInput getRouteInput){
-        return new GetStopSequencesByRouteUseCase(getRouteInput);
+    public GetStopSequencesByRouteInput getStopSequencesByRouteInput(StopSequenceRepository stopSequenceRepository){
+        return new GetStopSequencesByRouteUseCase(stopSequenceRepository);
     }
 }

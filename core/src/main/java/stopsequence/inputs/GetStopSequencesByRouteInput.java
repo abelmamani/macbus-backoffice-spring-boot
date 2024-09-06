@@ -1,8 +1,8 @@
 package stopsequence.inputs;
 
-import stopsequence.models.StopSequence;
+import stopsequence.models.StopSequenceResponseModel;
 import java.util.List;
 
 public interface GetStopSequencesByRouteInput {
-    List<StopSequence> getAllStopSequences(String longName);
+    List<StopSequenceResponseModel> getAllStopSequences(String longName);
 }

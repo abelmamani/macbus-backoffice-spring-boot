@@ -1,19 +1,19 @@
 package shape.usecases;
 
-import route.inputs.GetRouteInput;
 import shape.inpúts.GetShapesByRouteInput;
-import shape.models.Shape;
+import shape.models.ShapeResponseModel;
+import shape.outputs.ShapeRepository;
 import java.util.List;
 
 public class GetShapesByRouteUseCase implements GetShapesByRouteInput {
-    private GetRouteInput getRouteInput;
+    private ShapeRepository shapeRepository;
 
-    public GetShapesByRouteUseCase(GetRouteInput getRouteInput) {
-        this.getRouteInput = getRouteInput;
+    public GetShapesByRouteUseCase(ShapeRepository shapeRepository) {
+        this.shapeRepository = shapeRepository;
     }
 
     @Override
-    public List<Shape> getAllShapes(String longName) {
-        return getRouteInput.getRouteByName(longName).getShapes();
+    public List<ShapeResponseModel> getAllShapes(String longName) {
+        return shapeRepository.findAllByRouteLongName(longName);
     }
 }
