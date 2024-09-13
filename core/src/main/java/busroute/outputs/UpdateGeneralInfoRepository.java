@@ -1,12 +1,9 @@
 package busroute.outputs;
 
-import busroute.models.Route;
-
-import java.util.Optional;
+import busroute.models.UpdateRouteRequestModel;
 
 public interface UpdateGeneralInfoRepository {
-    boolean existsByShortName(String shortName);
+    boolean existsByShortNameAndNotLongName(String shortName, String longName);
     boolean existsByLongName(String longName);
-    Optional<Route> findByLongName(String longName);
-    void update(Route route);
+    void update(String longName, UpdateRouteRequestModel updateRouteRequestModel);
 }

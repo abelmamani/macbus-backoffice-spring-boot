@@ -21,6 +21,10 @@ public interface RouteCRUD extends Neo4jRepository<RouteNode, String> {
     List<Map<String, Object>> findAllRoutesGeneralInfo();
     @Query("MATCH (r:Route {long_name: $longName}) RETURN r.route_status")
     Optional<RouteStatus> getRouteStatusByLongName(String longName);
+    @Query("MATCH (r:Route) WHERE r.short_name = $shortName AND r.long_name <> $longName RETURN COUNT(r) > 0")
+    boolean existsByShortNameAndNotLongName(String shortName, String longName);
+    @Query("MATCH (r:Route {long_name: $name}) SET r.short_name = $shortName, r.long_name = $longName, r.description = $description, r.color = $color, r.text_color = $textColor")
+    void updateGeneralInfo(String name, String shortName, String longName, String description, String color, String textColor);
     @Query("MATCH (r:Route {long_name: $longName}) DELETE r")
     void deleteByLongName(String longName);
     //@Query("MATCH (r:Route {long_name: $longName}) " +
