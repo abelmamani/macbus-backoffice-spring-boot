@@ -38,11 +38,11 @@ public class TripController {
             return ResponseManager.badRequest(exception.getMessage());
         }
     }
-    @DeleteMapping("/route/{longName}/{serviceName}/{departureTime}")
+    @DeleteMapping("/route/{longName}/{tripId}")
     @PreAuthorize("hasRole('ADMIN')")
-    public ResponseEntity<?> deleteStopSequenceByRouteAndArrivalTime(@PathVariable("longName") String longName, @PathVariable("serviceName") String serviceName, @PathVariable("departureTime") String departureTime){
+    public ResponseEntity<?> deleteStopSequenceByRouteAndArrivalTime(@PathVariable("longName") String longName, @PathVariable("tripId") String tripId){
         try {
-            return ResponseEntity.ok(deleteTripInput.deleteTrip(longName, serviceName, departureTime));
+            return ResponseEntity.ok(deleteTripInput.deleteTrip(longName, tripId));
         }catch (RuntimeException exception){
             return ResponseManager.badRequest(exception.getMessage());
         }

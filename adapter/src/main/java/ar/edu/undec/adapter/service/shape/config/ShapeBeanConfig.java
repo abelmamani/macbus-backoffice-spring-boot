@@ -12,8 +12,8 @@ import shape.usecases.GetShapesByRouteUseCase;
 @Component
 public class ShapeBeanConfig {
     @Bean
-    public CreateShapeInput createShapeInput(UpdateRouteRepository updateRouteRepository){
-        return new CreateShapeUseCase(updateRouteRepository);
+    public CreateShapeInput createShapeInput(UpdateRouteRepository updateRouteRepository, ShapeRepository shapeRepository){
+        return new CreateShapeUseCase(updateRouteRepository, shapeRepository);
     }
 
     @Bean

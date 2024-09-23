@@ -1,7 +1,6 @@
 package trip.usecases;
 
 import busroute.exceptions.RouteException;
-import busroute.models.Route;
 import busroute.models.RouteStatus;
 import busroute.outputs.UpdateRouteRepository;
 import busservice.exceptions.ServiceException;
@@ -17,8 +16,6 @@ import trip.models.Trip;
 import trip.models.TripStatus;
 import trip.outputs.TripRepository;
 import utils.TimeUtils;
-
-import java.util.List;
 import java.util.stream.Collectors;
 
 

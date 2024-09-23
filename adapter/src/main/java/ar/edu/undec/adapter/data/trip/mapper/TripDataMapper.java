@@ -37,6 +37,7 @@ public class TripDataMapper {
 
     public static TripResponseModel mapToTripResponseModel(Map<String, Object> map) {
         return new TripResponseModel(
+                (String) map.get("id"),
                 (String) map.get("departureTime"),
                 (String) map.get("tripStatus"),
                 (String) map.get("service")

@@ -39,11 +39,11 @@ public class StopSequenceController {
         }
     }
 
-    @DeleteMapping("/route/{longName}/{arrivalTime}")
+    @DeleteMapping("/route/{routeName}/{sequenceId}")
     @PreAuthorize("hasRole('ADMIN')")
-    public ResponseEntity<?> deleteStopSequenceByRouteAndArrivalTime(@PathVariable("longName") String longName, @PathVariable("arrivalTime") String arrivalTime){
+    public ResponseEntity<?> deleteStopSequenceByRoute(@PathVariable("routeName") String routeName, @PathVariable("sequenceId") String sequenceId){
         try {
-            return ResponseEntity.ok(deleteStopSequenceInput.deleteStopSequence(longName, arrivalTime));
+            return ResponseEntity.ok(deleteStopSequenceInput.deleteStopSequence(routeName, sequenceId));
         }catch (RuntimeException exception){
             return ResponseManager.badRequest(exception.getMessage());
         }

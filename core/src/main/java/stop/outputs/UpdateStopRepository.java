@@ -1,6 +1,7 @@
 package stop.outputs;
 
 import stop.models.Stop;
+import stop.models.StopStatus;
 
 import java.util.Optional;
 

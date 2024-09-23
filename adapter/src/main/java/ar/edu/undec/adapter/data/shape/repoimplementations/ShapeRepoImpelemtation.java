@@ -21,4 +21,9 @@ public class ShapeRepoImpelemtation implements ShapeRepository {
                 .map(ShapeDataMapper::mapToShapeResponseModel)
                 .collect(Collectors.toList());
     }
+
+    @Override
+    public void deleteShapesByRoute(String longName) {
+        shapeCRUD.deleteShapesByRoute(longName);
+    }
 }

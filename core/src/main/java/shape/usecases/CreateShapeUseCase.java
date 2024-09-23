@@ -7,12 +7,15 @@ import busroute.outputs.UpdateRouteRepository;
 import shape.exceptions.ShapeException;
 import shape.inpúts.CreateShapeInput;
 import shape.models.CreateShapeRequestModel;
+import shape.outputs.ShapeRepository;
 
 public class CreateShapeUseCase implements CreateShapeInput {
     private UpdateRouteRepository updateRouteRepository;
+    private ShapeRepository shapeRepository;
 
-    public CreateShapeUseCase(UpdateRouteRepository updateRouteRepository) {
+    public CreateShapeUseCase(UpdateRouteRepository updateRouteRepository, ShapeRepository shapeRepository) {
         this.updateRouteRepository = updateRouteRepository;
+        this.shapeRepository = shapeRepository;
     }
 
     @Override
@@ -33,7 +36,7 @@ public class CreateShapeUseCase implements CreateShapeInput {
                     busRoute.getStopSequences(),
                     busRoute.getTrips());
         if(!busRoute.getRouteStatus().equals(RouteStatus.EMPTY)){
-            updateRouteRepository.deleteShapesByLongName(createShapeRequestModel.getRouteName());
+            shapeRepository.deleteShapesByRoute(createShapeRequestModel.getRouteName());
         }
         updateRouteRepository.update(route);
         return RouteStatus.WITH_SHAPES;

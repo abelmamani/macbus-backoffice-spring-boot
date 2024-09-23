@@ -25,18 +25,8 @@ public class UpdateRouteRepoImplementation implements UpdateRouteRepository {
     }
 
     @Override
-    public void deleteShapesByLongName(String longName) {
-        routeCRUD.deleteShapesByLongName(longName);
-    }
-
-    @Override
-    public void deleteStopSequenceByLongNameAndArrivalTime(String longName, String arrivalTime) {
-        routeCRUD.deleteStopSequenceByLongNameAndArrivalTime(longName, arrivalTime);
-    }
-
-    @Override
-    public void deleteTripAndStopTimes(String longName, String departureTime, String serviceName) {
-        routeCRUD.deleteTripAndStopTimes(longName, departureTime, serviceName);
+    public void updateRouteStatus(String longName, RouteStatus routeStatus) {
+        routeCRUD.updateRouteStatus(longName, routeStatus);
     }
 
     @Override

@@ -16,8 +16,8 @@ import stopsequence.usecases.GetStopSequencesByRouteUseCase;
 @Component
 public class StopSequenceBeanConfig {
     @Bean
-    public CreateStopSequenceInput createStopSequenceInput(UpdateRouteRepository updateRouteRepository, GetStopRepository getStopRepository){
-        return new CreateStopSequenceUseCase(updateRouteRepository, getStopRepository);
+    public CreateStopSequenceInput createStopSequenceInput(UpdateRouteRepository updateRouteRepository, GetStopRepository getStopRepository, StopSequenceRepository stopSequenceRepository){
+        return new CreateStopSequenceUseCase(updateRouteRepository, getStopRepository, stopSequenceRepository);
     }
     @Bean
     public DeleteStopSequenceInput deleteStopSequenceInput(UpdateRouteRepository updateRouteRepository, StopSequenceRepository getStopSequenceRepository, UpdateStopRepository updateStopRepository){

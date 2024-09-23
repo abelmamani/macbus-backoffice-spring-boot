@@ -14,4 +14,6 @@ public interface ShapeCRUD extends Neo4jRepository<ShapeNode, String> {
             "distanceTraveled: s.distance_traveled" +
             "} AS shape")
     List<Map<String, Object>> findAllShapesByRouteLongName(String longName);
+    @Query("MATCH (r:Route {long_name: $longName})-[rel:HAS_SHAPE]->(s:Shape) DETACH DELETE s")
+    void deleteShapesByRoute(String longName);
 }

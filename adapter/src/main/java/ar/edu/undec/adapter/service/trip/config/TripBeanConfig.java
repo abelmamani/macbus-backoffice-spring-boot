@@ -24,7 +24,7 @@ public class TripBeanConfig {
         return new CreateTripUseCase(tripRepository, updateRouteRepository, getServiceRepository, stopSequenceRepository);
     }
     @Bean
-    public DeleteTripInput deleteTripInput(UpdateRouteRepository updateRouteRepository){
-        return new DeleteTripUseCase(updateRouteRepository);
+    public DeleteTripInput deleteTripInput(UpdateRouteRepository updateRouteRepository, TripRepository tripRepository){
+        return new DeleteTripUseCase(updateRouteRepository, tripRepository);
     }
 }

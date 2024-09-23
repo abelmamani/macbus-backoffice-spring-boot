@@ -45,6 +45,7 @@ public class StopSequenceDataMapper {
                 (Double) stopMap.get("longitude"),
                 StopStatus.valueOf((String) stopMap.get("status")));
         return new StopSequenceResponseModel(
+                (String) map.get("id"),
                 (String) map.get("arrivalTime"),
                 (Long) map.get("distanceTraveled"),
                 (String) map.get("headsign"),

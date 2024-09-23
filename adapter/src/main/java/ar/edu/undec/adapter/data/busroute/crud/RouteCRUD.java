@@ -21,6 +21,9 @@ public interface RouteCRUD extends Neo4jRepository<RouteNode, String> {
     List<Map<String, Object>> findAllRoutesGeneralInfo();
     @Query("MATCH (r:Route {long_name: $longName}) RETURN r.route_status")
     Optional<RouteStatus> getRouteStatusByLongName(String longName);
+    @Query("MATCH (r:Route {long_name: $longName}) " +
+            "SET r.route_status = $routeStatus")
+    void updateRouteStatus(String longName, RouteStatus routeStatus);
     @Query("MATCH (r:Route) WHERE r.short_name = $shortName AND r.long_name <> $longName RETURN COUNT(r) > 0")
     boolean existsByShortNameAndNotLongName(String shortName, String longName);
     @Query("MATCH (r:Route {long_name: $name}) SET r.short_name = $shortName, r.long_name = $longName, r.description = $description, r.color = $color, r.text_color = $textColor")
@@ -31,13 +34,5 @@ public interface RouteCRUD extends Neo4jRepository<RouteNode, String> {
             "OPTIONAL MATCH (r)-[rel:HAS_SHAPE]->(s:Shape) " +
             "DETACH DELETE s, r")
     void deleteRouteAndShapes(String longName);
-    @Query("MATCH (r:Route {long_name: $longName})-[rel:HAS_SHAPE]->(s:Shape) DETACH DELETE s")
-    void deleteShapesByLongName(String longName);
-    @Query("MATCH (r:Route {long_name: $longName})-[rel1:HAS_STOP]->(ss:StopSequence {arrival_time: $arrivalTime})-[rel2:STOP_AT]->(s:Stop) DETACH DELETE ss")
-    void deleteStopSequenceByLongNameAndArrivalTime(String longName, String arrivalTime);
-    @Query("MATCH (r:Route {long_name: $longName})-[ht:HAS_TRIP]->(t:Trip)<-[pof:PART_OF_TRIP]-(st:StopTime)-[lat:LOCATED_AT]->(s:Stop) " +
-            "MATCH (t {departure_time: $departureTime})-[:TRIP_AT]->(sr:Service {name: $serviceName}) " +
-            "DETACH DELETE t, st")
-    void deleteTripAndStopTimes(String longName, String departureTime, String serviceName);
 
 }

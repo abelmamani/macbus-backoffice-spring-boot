@@ -1,15 +1,9 @@
 package trip.usecases;
-
-import busroute.exceptions.RouteException;
-import busroute.models.Route;
 import busroute.models.RouteStatus;
 import busroute.outputs.UpdateRouteRepository;
 import trip.exceptions.TripException;
 import trip.inputs.DeleteTripInput;
-import trip.models.Trip;
 import trip.outputs.TripRepository;
-
-import java.util.List;
 
 public class DeleteTripUseCase implements DeleteTripInput {
     private UpdateRouteRepository updateRouteRepository;
@@ -21,12 +15,14 @@ public class DeleteTripUseCase implements DeleteTripInput {
     }
 
     @Override
-    public RouteStatus deleteTrip(String routeId, String tripId) {
-        if(!tripRepository.existsTrip(routeId, tripId))
+    public RouteStatus deleteTrip(String routeName, String tripId) {
+        RouteStatus status = RouteStatus.WITH_TRIPS;
+        if(!tripRepository.existsById(tripId))
             throw new TripException("Error, el viaje a eliminar no existe.");
-        updateRouteRepository.deleteTripAndStopTimes(id);
-        if(updateRouteRepository.getTrips() < 1){
-            updateRouteRepository.getRouteStatusByLongName();
+        tripRepository.deleteTripAndStopTimes(tripId);
+        if(tripRepository.countTripsByRoute(routeName) < 1){
+            updateRouteRepository.updateRouteStatus(routeName, RouteStatus.WITH_STOPS);
+            status = RouteStatus.WITH_STOPS;
         }
         return status;
     }

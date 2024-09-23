@@ -18,11 +18,8 @@ public class TripRepoImpelementation implements TripRepository {
     private final TripCRUD tripCRUD;
 
     @Override
-    public List<TripResponseModel> findAllByRouteLongName(String longName) {
-        List<Map<String, Object>> results = tripCRUD.findAllTripsByRouteLongName(longName);
-        return results.stream()
-                .map(TripDataMapper::mapToTripResponseModel)
-                .collect(Collectors.toList());
+    public boolean existsById(String id) {
+        return tripCRUD.existsById(id);
     }
 
     @Override
@@ -36,6 +33,16 @@ public class TripRepoImpelementation implements TripRepository {
     }
 
     @Override
+    public int countTripsByRoute(String longName) {
+        return tripCRUD.countTripsByRoute(longName);
+    }
+
+    @Override
+    public void deleteTripAndStopTimes(String tripId) {
+        tripCRUD.deleteTripAndStopTimes(tripId);
+    }
+
+    @Override
     public void addTrip(String longName, String tripId) {
         tripCRUD.addTrip(longName, tripId, RouteStatus.WITH_TRIPS);
     }
@@ -43,5 +50,12 @@ public class TripRepoImpelementation implements TripRepository {
     @Override
     public String save(Trip trip) {
         return tripCRUD.save(TripDataMapper.dataNodeMapper(trip)).getId();
+    }
+    @Override
+    public List<TripResponseModel> findAllByRouteLongName(String longName) {
+        List<Map<String, Object>> results = tripCRUD.findAllTripsByRouteLongName(longName);
+        return results.stream()
+                .map(TripDataMapper::mapToTripResponseModel)
+                .collect(Collectors.toList());
     }
 }
