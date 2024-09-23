@@ -1,20 +1,23 @@
-package user.models;
+package conductor.models;
 
-public class UpdateUserRequestModel {
+public class ConductorResponseModel {
+    private String id;
     private String name;
     private String lastName;
     private String email;
-    private String role;
 
-    private UpdateUserRequestModel(){
+    public ConductorResponseModel(){
     }
-    public UpdateUserRequestModel(String name, String lastName, String email, String role) {
+    public ConductorResponseModel(String id, String name, String lastName, String email) {
+        this.id = id;
         this.name = name;
         this.lastName = lastName;
         this.email = email;
-        this.role = role;
     }
 
+    public String getId() {
+        return id;
+    }
     public String getName() {
         return name;
     }
@@ -23,8 +26,5 @@ public class UpdateUserRequestModel {
     }
     public String getEmail() {
         return email;
-    }
-    public String getRole() {
-        return role;
     }
 }

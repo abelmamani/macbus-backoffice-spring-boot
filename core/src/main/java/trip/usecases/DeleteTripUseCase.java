@@ -7,36 +7,27 @@ import busroute.outputs.UpdateRouteRepository;
 import trip.exceptions.TripException;
 import trip.inputs.DeleteTripInput;
 import trip.models.Trip;
+import trip.outputs.TripRepository;
+
 import java.util.List;
 
 public class DeleteTripUseCase implements DeleteTripInput {
     private UpdateRouteRepository updateRouteRepository;
+    private TripRepository tripRepository;
 
-    public DeleteTripUseCase(UpdateRouteRepository updateRouteRepository) {
+    public DeleteTripUseCase(UpdateRouteRepository updateRouteRepository, TripRepository tripRepository) {
         this.updateRouteRepository = updateRouteRepository;
+        this.tripRepository = tripRepository;
     }
 
     @Override
-    public RouteStatus deleteTrip(String busRouteName, String serviceName, String departureTime) {
-        Route route = updateRouteRepository.findByLongName(busRouteName).orElseThrow(() -> new RouteException("La linea no existe."));
-        if(!route.existTripByDepartureTimeAndService(departureTime, serviceName))
-            throw new TripException("No existe un viaje con el servicio y hora de salida especificada.");
-        Trip trip = route.getTripByDepartureTimeAndService(departureTime, serviceName);
-        List<Trip> trips = route.getTrips();
-        trips.remove(trip);
-        RouteStatus status = trips.isEmpty() ? RouteStatus.WITH_STOPS : RouteStatus.WITH_TRIPS;
-        Route updateRoute = Route.getInstance(route.getId(),
-                route.getShortName(),
-                route.getLongName(),
-                route.getDescription(),
-                route.getColor(),
-                route.getTextColor(),
-                status,
-                route.getShapes(),
-                route.getStopSequences(),
-                trips);
-        updateRouteRepository.deleteTripAndStopTimes(busRouteName, departureTime, serviceName);
-        updateRouteRepository.update(updateRoute);
+    public RouteStatus deleteTrip(String routeId, String tripId) {
+        if(!tripRepository.existsTrip(routeId, tripId))
+            throw new TripException("Error, el viaje a eliminar no existe.");
+        updateRouteRepository.deleteTripAndStopTimes(id);
+        if(updateRouteRepository.getTrips() < 1){
+            updateRouteRepository.getRouteStatusByLongName();
+        }
         return status;
     }
 }

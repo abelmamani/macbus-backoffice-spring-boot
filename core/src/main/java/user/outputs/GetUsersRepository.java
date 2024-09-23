@@ -1,9 +1,8 @@
 package user.outputs;
 
-import user.models.User;
-
+import user.models.UserResponseModel;
 import java.util.Collection;
 
 public interface GetUsersRepository {
-    Collection<User> findAll();
+    Collection<UserResponseModel> findAll();
 }

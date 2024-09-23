@@ -32,11 +32,11 @@ public class UserController {
         }
     }
 
-    @GetMapping("/{name}")
+    @GetMapping("/{email}")
     @PreAuthorize("hasRole('ADMIN')")
-    public ResponseEntity<?> getUser(@PathVariable("name") String name){
+    public ResponseEntity<?> getUser(@PathVariable("email") String email){
         try {
-            return ResponseEntity.ok(getUserInput.getUser(name));
+            return ResponseEntity.ok(getUserInput.getUser(email));
         }catch (RuntimeException exception){
            return ResponseManager.badRequest(exception.getMessage());
         }

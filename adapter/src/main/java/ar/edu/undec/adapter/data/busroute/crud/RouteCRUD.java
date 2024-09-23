@@ -27,26 +27,14 @@ public interface RouteCRUD extends Neo4jRepository<RouteNode, String> {
     void updateGeneralInfo(String name, String shortName, String longName, String description, String color, String textColor);
     @Query("MATCH (r:Route {long_name: $longName}) DELETE r")
     void deleteByLongName(String longName);
-    //@Query("MATCH (r:Route {long_name: $longName}) " +
-      //      "OPTIONAL MATCH (r)-[rel:HAS_SHAPE]->(s:Shape) " +
-        //    "DELETE rel, s, r")
     @Query("MATCH (r:Route {long_name: $longName}) " +
             "OPTIONAL MATCH (r)-[rel:HAS_SHAPE]->(s:Shape) " +
             "DETACH DELETE s, r")
     void deleteRouteAndShapes(String longName);
-    //@Query("MATCH (r:Route)-[rel:HAS_SHAPE]->(s:Shape) WHERE r.long_name = $longName DELETE rel, s")
     @Query("MATCH (r:Route {long_name: $longName})-[rel:HAS_SHAPE]->(s:Shape) DETACH DELETE s")
     void deleteShapesByLongName(String longName);
-    //@Query("MATCH (r:Route)-[rel1:HAS_STOP]->(ss:StopSequence)-[rel2:STOP_AT]->(s:Stop) " +
-      //      "WHERE r.long_name = $longName AND ss.arrival_time = $arrivalTime " +
-        //    "DELETE rel2, rel1, ss")
     @Query("MATCH (r:Route {long_name: $longName})-[rel1:HAS_STOP]->(ss:StopSequence {arrival_time: $arrivalTime})-[rel2:STOP_AT]->(s:Stop) DETACH DELETE ss")
     void deleteStopSequenceByLongNameAndArrivalTime(String longName, String arrivalTime);
-
-    //@Query("MATCH (r:Route)-[ht:HAS_TRIP]->(t:Trip)<-[pof:PART_OF_TRIP]-(st:StopTime)-[lat:LOCATED_AT]->(s:Stop) " +
-   //         "MATCH (t)-[:TRIP_AT]->(sr:Service {name: $serviceName}) " +
-     //       "WHERE r.long_name = $longName AND t.departure_time = $departureTime " +
-       //     "DETACH DELETE t, st")
     @Query("MATCH (r:Route {long_name: $longName})-[ht:HAS_TRIP]->(t:Trip)<-[pof:PART_OF_TRIP]-(st:StopTime)-[lat:LOCATED_AT]->(s:Stop) " +
             "MATCH (t {departure_time: $departureTime})-[:TRIP_AT]->(sr:Service {name: $serviceName}) " +
             "DETACH DELETE t, st")

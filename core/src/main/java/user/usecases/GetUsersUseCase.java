@@ -1,9 +1,8 @@
 package user.usecases;
 
 import user.inputs.GetUsersInput;
-import user.models.User;
+import user.models.UserResponseModel;
 import user.outputs.GetUsersRepository;
-
 import java.util.Collection;
 
 public class GetUsersUseCase implements GetUsersInput {
@@ -14,7 +13,7 @@ public class GetUsersUseCase implements GetUsersInput {
     }
 
     @Override
-    public Collection<User> getAllUsers() {
+    public Collection<UserResponseModel> getAllUsers() {
         return getUsersRepository.findAll();
     }
 }

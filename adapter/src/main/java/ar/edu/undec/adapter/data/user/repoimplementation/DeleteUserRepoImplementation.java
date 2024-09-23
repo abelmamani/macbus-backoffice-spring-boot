@@ -16,7 +16,7 @@ public class DeleteUserRepoImplementation implements DeleteUserRepository {
     }
 
     @Override
-    public void deleteByEamil(String email) {
+    public void deleteByEmail(String email) {
         userCRUD.deleteByEmail(email);
     }
 }

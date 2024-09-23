@@ -4,6 +4,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.stereotype.Component;
 import busroute.outputs.UpdateRouteRepository;
 import busservice.outputs.GetServiceRepository;
+import stopsequence.outputs.StopSequenceRepository;
 import trip.inputs.CreateTripInput;
 import trip.inputs.DeleteTripInput;
 import trip.inputs.GetTripsByRouteInput;
@@ -19,8 +20,8 @@ public class TripBeanConfig {
         return new GetTripsByRouteUseCase(getTripsByRouteRepository);
     }
     @Bean
-    public CreateTripInput createTripInput(UpdateRouteRepository updateRouteRepository, GetServiceRepository getServiceRepository){
-        return new CreateTripUseCase(updateRouteRepository, getServiceRepository);
+    public CreateTripInput createTripInput(TripRepository tripRepository, UpdateRouteRepository updateRouteRepository, GetServiceRepository getServiceRepository, StopSequenceRepository stopSequenceRepository){
+        return new CreateTripUseCase(tripRepository, updateRouteRepository, getServiceRepository, stopSequenceRepository);
     }
     @Bean
     public DeleteTripInput deleteTripInput(UpdateRouteRepository updateRouteRepository){

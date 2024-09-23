@@ -27,6 +27,41 @@ public class DeleteStopSequenceUseCase implements DeleteStopSequenceInput {
     }
 
     @Override
+    public RouteStatus deleteStopSequence(String busRouteName, String stopSequenceId) {
+        RouteStatus routeStatus = updateRouteRepository.getRouteStatusByLongName(busRouteName)
+                .orElseThrow(() -> new RouteNotExistsException("La línea " + busRouteName + " no existe."));
+        if (routeStatus.equals(RouteStatus.WITH_TRIPS))
+            throw new StopSequenceException("No se puede eliminar una secuencia de parada porque la línea ya tiene viajes planificados.");
+        if (stopSequenceRepository.existsById(stopSequenceId))
+            throw new StopSequenceException("No existe una parada con tiempo de arribo igual a " + stopSequenceId);
+        int totalStopSequnces = stopSequenceRepository.getTotalStopSequences(busRouteName);
+        if (totalStopSequnces == 2 && arrivalTime.equals(firstSequence.getArrivalTime()))
+                throw new StopSequenceException("No se puede eliminar la primera parada en una secuencia con dos paradas.");
+        if (stopSequences.size() > 2 && (arrivalTime.equals(firstSequence.getArrivalTime()) || arrivalTime.equals(lastSequence.getArrivalTime())))
+                throw new StopSequenceException("No se puede eliminar la primera o última parada en una secuencia con más de dos paradas.");
+
+        RouteStatus routeStatus = stopSequences.isEmpty() ? RouteStatus.WITH_SHAPES : (stopSequences.size() > 1 ? RouteStatus.WITH_STOPS : RouteStatus.WITH_STOP);
+        Route updateRoute = Route.getInstance(
+                busRoute.getId(),
+                busRoute.getShortName(),
+                busRoute.getLongName(),
+                busRoute.getDescription(),
+                busRoute.getColor(),
+                busRoute.getTextColor(),
+                routeStatus,
+                busRoute.getShapes(),
+                stopSequences,
+                busRoute.getTrips()
+        );
+
+        updateRouteRepository.deleteStopSequenceByLongNameAndArrivalTime(busRouteName, arrivalTime);
+        Stop stop = stopSequence.getStop();
+        if(!stopSequenceRepository.isStopUsedInOtherRoutes(stop.getName(), busRoute.getLongName())) {}
+        updateRouteRepository.update(updateRoute);
+        return routeStatus;
+    }
+    /*
+        @Override
     public RouteStatus deleteStopSequence(String busRouteName, String arrivalTime) {
         Route busRoute = updateRouteRepository.findByLongName(busRouteName)
                 .orElseThrow(() -> new RouteNotExistsException("La línea " + busRouteName + " no existe."));
@@ -81,4 +116,5 @@ public class DeleteStopSequenceUseCase implements DeleteStopSequenceInput {
         updateRouteRepository.update(updateRoute);
         return routeStatus;
     }
+    * */
 }

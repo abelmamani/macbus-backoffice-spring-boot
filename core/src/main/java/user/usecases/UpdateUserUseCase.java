@@ -17,7 +17,7 @@ public class UpdateUserUseCase implements UpdateUserInput {
 
     @Override
     public void updateUser(String email, UpdateUserRequestModel updateUserRequestModel) {
-        User findUser = updateUserRepository.findByEamil(email).orElseThrow(() -> new UserNotExistException("El usuario " + email +" no existe."));
+        User findUser = updateUserRepository.findByEmail(email).orElseThrow(() -> new UserNotExistException("El usuario " + email +" no existe."));
         if(updateUserRepository.existsByEmail(updateUserRequestModel.getEmail()) && !findUser.getEmail().equals(updateUserRequestModel.getEmail())){
             throw new UserAlreadyExistsException("El usuario con email "+updateUserRequestModel.getEmail()+" ya existe, utilice otro.");
         }
@@ -32,8 +32,8 @@ public class UpdateUserUseCase implements UpdateUserInput {
                 updateUserRequestModel.getEmail(),
                 findUser.getPassword(),
                 ERole.valueOf(updateUserRequestModel.getRole()),
-                null,
-                null);
+                findUser.getResetToken(),
+                findUser.getTokenExpiryDate());
         updateUserRepository.update(user);
     }
 }

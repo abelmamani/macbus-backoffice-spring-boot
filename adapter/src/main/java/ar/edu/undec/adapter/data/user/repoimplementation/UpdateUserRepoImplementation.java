@@ -21,7 +21,7 @@ public class UpdateUserRepoImplementation implements UpdateUserRepository {
     }
 
     @Override
-    public Optional<User> findByEamil(String email) {
+    public Optional<User> findByEmail(String email) {
         return userCRUD.findByEmail(email).map(UserDataMapper::dataCoreMapper);
     }
 

@@ -1,23 +1,24 @@
 package user.models;
 
-public class CreateUserRequestModel {
+public class UserResponseModel {
+    private String id;
     private String name;
     private String lastName;
     private String email;
-    private String password;
     private String role;
 
-    private CreateUserRequestModel(){
+    private UserResponseModel(){
     }
 
-    public CreateUserRequestModel(String name, String lastName, String email, String password, String role) {
+    public UserResponseModel(String id, String name, String lastName, String email, String role) {
+        this.id = id;
         this.name = name;
         this.lastName = lastName;
         this.email = email;
-        this.password = password;
         this.role = role;
     }
 
+    public String getId() { return id; }
     public String getName() {
         return name;
     }
@@ -26,9 +27,6 @@ public class CreateUserRequestModel {
     }
     public String getEmail() {
         return email;
-    }
-    public String getPassword() {
-        return password;
     }
     public String getRole() {
         return role;

@@ -18,11 +18,6 @@ public class ResponseManager {
     public static ResponseEntity<?> successRequest(String message){
         return response(HttpStatus.OK, message);
     }
-    public static ResponseEntity<?> createRequest(Long id) {
-        Map<String, Long> response = new HashMap<>();
-        response.put("id", id);
-        return ResponseEntity.created(null).body(response);
-    }
     public static ResponseEntity<?> createdRequest(String id) {
         Map<String, String> response = new HashMap<>();
         response.put("id", id);

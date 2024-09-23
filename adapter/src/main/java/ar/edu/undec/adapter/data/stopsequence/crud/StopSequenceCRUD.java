@@ -10,12 +10,12 @@ import java.util.Map;
 @Repository
 public interface StopSequenceCRUD extends Neo4jRepository<StopSequenceNode, String> {
     @Query("""
-    MATCH (s:Stop)<-[:STOP_AT]-(seq:StopSequence)<-[:HAS_STOP]-(r:Route)
-    WHERE s.name = $stopName AND r.long_name <> $routeName
+    MATCH (s:Stop {name: $stopName})<-[:STOP_AT]-(seq:StopSequence)<-[:HAS_STOP]-(r:Route)
+    WHERE r.long_name <> $routeName
     RETURN COUNT(seq) > 0
     """)
     boolean isStopUsedInOtherRoutes(String stopName, String routeName);
     @Query("MATCH (r:Route {long_name: $longName})-[:HAS_STOP]->(ss:StopSequence)-[:STOP_AT]->(s:Stop)" +
-            "RETURN {arrivalTime: ss.arrival_time, distanceTraveled: ss.distance_traveled, headsign: ss.headsign, stop: {name: s.name, latitude: s.latitude, longitude: s.longitude}} as stopsequence")
+            "RETURN {arrivalTime: ss.arrival_time, distanceTraveled: ss.distance_traveled, headsign: ss.headsign, stop: {id: s.id, name: s.name, latitude: s.latitude, longitude: s.longitude, status: s.status}} as stopsequence")
     List<Map<String, Object>> findAllStopSequencesByRouteLongName(String longName);
 }

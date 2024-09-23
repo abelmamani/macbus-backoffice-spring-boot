@@ -2,8 +2,10 @@ package ar.edu.undec.adapter.data.trip.repoimplementations;
 
 import ar.edu.undec.adapter.data.trip.crud.TripCRUD;
 import ar.edu.undec.adapter.data.trip.mapper.TripDataMapper;
+import busroute.models.RouteStatus;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
+import trip.models.Trip;
 import trip.models.TripResponseModel;
 import trip.outputs.TripRepository;
 import java.util.List;
@@ -12,7 +14,7 @@ import java.util.stream.Collectors;
 
 @AllArgsConstructor
 @Service
-public class GetTripsByRouteRepoImpelementation implements TripRepository {
+public class TripRepoImpelementation implements TripRepository {
     private final TripCRUD tripCRUD;
 
     @Override
@@ -26,5 +28,20 @@ public class GetTripsByRouteRepoImpelementation implements TripRepository {
     @Override
     public boolean existsByServiceName(String serviceName) {
         return tripCRUD.existsByServiceName(serviceName);
+    }
+
+    @Override
+    public boolean existsByRouteAndDepartureTimeAndServiceName(String longName, String departureTime, String serviceName) {
+        return tripCRUD.existsByRouteAndDepartureTimeAndService(longName, departureTime, serviceName);
+    }
+
+    @Override
+    public void addTrip(String longName, String tripId) {
+        tripCRUD.addTrip(longName, tripId, RouteStatus.WITH_TRIPS);
+    }
+
+    @Override
+    public String save(Trip trip) {
+        return tripCRUD.save(TripDataMapper.dataNodeMapper(trip)).getId();
     }
 }

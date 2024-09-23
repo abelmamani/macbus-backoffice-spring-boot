@@ -15,6 +15,6 @@ public class DeleteUserUseCase implements DeleteUserInput {
     public void deleteUser(String email) {
         if(!deleteUserRepository.existsByEmail(email))
             throw new UserNotExistException("No se puede eliminar, el usuario " + email + " no existe.");
-        deleteUserRepository.deleteByEamil(email);
+        deleteUserRepository.deleteByEmail(email);
     }
 }
