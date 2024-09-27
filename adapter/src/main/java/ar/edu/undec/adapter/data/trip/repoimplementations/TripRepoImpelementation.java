@@ -5,6 +5,7 @@ import ar.edu.undec.adapter.data.trip.mapper.TripDataMapper;
 import busroute.models.RouteStatus;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
+import report.models.TripStatusCountsResponseModel;
 import trip.models.Trip;
 import trip.models.TripResponseModel;
 import trip.outputs.TripRepository;
@@ -57,5 +58,10 @@ public class TripRepoImpelementation implements TripRepository {
         return results.stream()
                 .map(TripDataMapper::mapToTripResponseModel)
                 .collect(Collectors.toList());
+    }
+
+    @Override
+    public TripStatusCountsResponseModel getTripStatusCounts() {
+       return tripCRUD.getTripStatusCounts();
     }
 }

@@ -4,6 +4,7 @@ import busroute.models.RouteStatus;
 import org.springframework.data.neo4j.repository.Neo4jRepository;
 import org.springframework.data.neo4j.repository.query.Query;
 import org.springframework.stereotype.Repository;
+import report.models.TripStatusCountsResponseModel;
 import java.util.List;
 import java.util.Map;
 
@@ -27,4 +28,11 @@ public interface TripCRUD extends Neo4jRepository<TripNode, String> {
     @Query("MATCH (r:Route {long_name: $longName})-[:HAS_TRIP]->(t:Trip)-[:TRIP_AT]->(s:Service) " +
             "RETURN {id: t.id, departureTime: t.departure_time, tripStatus: t.trip_status, service: s.name} AS trip")
     List<Map<String, Object>> findAllTripsByRouteLongName(String longName);
+    @Query("MATCH (t:Trip) " +
+            "RETURN COUNT(t) AS total, " +
+            "COUNT(CASE WHEN t.trip_status = 'SCHEDULED' THEN 1 END) AS scheduled, " +
+            "COUNT(CASE WHEN t.trip_status = 'RUNNING' THEN 1 END) AS running, " +
+            "COUNT(CASE WHEN t.trip_status = 'COMPLETED' THEN 1 END) AS completed, " +
+            "COUNT(CASE WHEN t.trip_status = 'CANCELLED' THEN 1 END) AS cancelled")
+    TripStatusCountsResponseModel getTripStatusCounts();
 }

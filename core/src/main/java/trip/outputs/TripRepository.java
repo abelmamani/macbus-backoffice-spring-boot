@@ -1,5 +1,6 @@
 package trip.outputs;
 
+import report.models.TripStatusCountsResponseModel;
 import trip.models.Trip;
 import trip.models.TripResponseModel;
 import java.util.List;
@@ -14,4 +15,5 @@ public interface TripRepository {
     void addTrip(String longName, String tripId);
     String save(Trip trip);
     List<TripResponseModel> findAllByRouteLongName(String longName);
+    TripStatusCountsResponseModel getTripStatusCounts();
 }

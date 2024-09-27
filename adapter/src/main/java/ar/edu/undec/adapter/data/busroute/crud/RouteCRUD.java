@@ -6,6 +6,7 @@ import org.springframework.data.neo4j.repository.query.Query;
 import org.springframework.stereotype.Repository;
 import busroute.models.RouteGeneralInfoResponseModel;
 import busroute.models.RouteStatus;
+import report.models.RouteStatusCountsResponseModel;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
@@ -34,5 +35,12 @@ public interface RouteCRUD extends Neo4jRepository<RouteNode, String> {
             "OPTIONAL MATCH (r)-[rel:HAS_SHAPE]->(s:Shape) " +
             "DETACH DELETE s, r")
     void deleteRouteAndShapes(String longName);
-
+    @Query("MATCH (r:Route) " +
+            "RETURN COUNT(r) AS total, " +
+            "COUNT(CASE WHEN r.route_status = 'EMPTY' THEN 1 END) AS empty, " +
+            "COUNT(CASE WHEN r.route_status = 'WITH_SHAPES' THEN 1 END) AS withShapes, " +
+            "COUNT(CASE WHEN r.route_status = 'WITH_STOP' THEN 1 END) AS withStop, " +
+            "COUNT(CASE WHEN r.route_status = 'WITH_STOPS' THEN 1 END) AS withStops, " +
+            "COUNT(CASE WHEN r.route_status = 'WITH_TRIPS' THEN 1 END) AS withTrips")
+    RouteStatusCountsResponseModel getRouteStatusCounts();
 }
