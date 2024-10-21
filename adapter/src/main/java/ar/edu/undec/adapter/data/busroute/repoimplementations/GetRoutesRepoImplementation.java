@@ -18,4 +18,9 @@ public class GetRoutesRepoImplementation implements GetRoutesRepository {
     public Collection<RouteGeneralInfoResponseModel> findAll() {
         return routeCRUD.findAllRoutesGeneralInfo().stream().map(RouteDataMapper::mapToGeneralInfo).collect(Collectors.toList());
     }
+
+    @Override
+    public Collection<RouteGeneralInfoResponseModel> findRoutesWithTrips() {
+        return routeCRUD.findRoutesWithTrips().stream().map(RouteDataMapper::mapToGeneralInfo).collect(Collectors.toList());
+    }
 }

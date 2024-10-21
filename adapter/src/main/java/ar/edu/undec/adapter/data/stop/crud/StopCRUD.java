@@ -15,6 +15,7 @@ public interface StopCRUD extends Neo4jRepository<StopNode, String> {
     Optional<StopNode> findByName(String name);
     void deleteByName(String name);
     @Query("MATCH (s:Stop) " +
+            "WHERE s.status IS NOT NULL "+
             "RETURN COUNT(s) AS total, " +
             "COUNT(CASE WHEN s.status = 'ASSIGNED' THEN 1 END) AS assigned, " +
             "COUNT(CASE WHEN s.status = 'UNASSIGNED' THEN 1 END) AS unassigned")

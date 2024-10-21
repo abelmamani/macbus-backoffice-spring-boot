@@ -30,6 +30,16 @@ public class RouteController {
         }
     }
 
+    @GetMapping("/with_trips")
+    @PreAuthorize("hasRole('ADMIN')")
+    public ResponseEntity<?> getRoutesWithTrips(){
+        try {
+            return ResponseEntity.ok(getRoutesInput.getRoutesWithTrips());
+        }catch (RuntimeException exception){
+            return ResponseManager.badRequest(exception.getMessage());
+        }
+    }
+
     @GetMapping("/name/{name}")
     @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<?> getRouteByName(@PathVariable("name") String name){

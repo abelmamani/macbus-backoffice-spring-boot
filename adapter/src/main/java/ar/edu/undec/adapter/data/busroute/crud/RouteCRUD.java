@@ -20,6 +20,9 @@ public interface RouteCRUD extends Neo4jRepository<RouteNode, String> {
     RouteGeneralInfoResponseModel findByRouteLongName(String longName);
     @Query("MATCH (r:Route) RETURN {shortName: r.short_name, longName: r.long_name, description: r.description, color: r.color, textColor: r.text_color, routeStatus: r.route_status} as route")
     List<Map<String, Object>> findAllRoutesGeneralInfo();
+    @Query("MATCH (r:Route {route_status: 'WITH_TRIPS'}) RETURN {shortName: r.short_name, longName: r.long_name, description: r.description, color: r.color, textColor: r.text_color, routeStatus: r.route_status} as route")
+    List<Map<String, Object>> findRoutesWithTrips();
+
     @Query("MATCH (r:Route {long_name: $longName}) RETURN r.route_status")
     Optional<RouteStatus> getRouteStatusByLongName(String longName);
     @Query("MATCH (r:Route {long_name: $longName}) " +
@@ -36,6 +39,7 @@ public interface RouteCRUD extends Neo4jRepository<RouteNode, String> {
             "DETACH DELETE s, r")
     void deleteRouteAndShapes(String longName);
     @Query("MATCH (r:Route) " +
+            "WHERE r.route_status IS NOT NULL "+
             "RETURN COUNT(r) AS total, " +
             "COUNT(CASE WHEN r.route_status = 'EMPTY' THEN 1 END) AS empty, " +
             "COUNT(CASE WHEN r.route_status = 'WITH_SHAPES' THEN 1 END) AS withShapes, " +

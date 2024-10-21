@@ -16,4 +16,9 @@ public class GetRoutesUseCase implements GetRoutesInput {
     public Collection<RouteGeneralInfoResponseModel> getRoutes() {
         return getRoutesRepository.findAll();
     }
+
+    @Override
+    public Collection<RouteGeneralInfoResponseModel> getRoutesWithTrips() {
+        return getRoutesRepository.findRoutesWithTrips();
+    }
 }

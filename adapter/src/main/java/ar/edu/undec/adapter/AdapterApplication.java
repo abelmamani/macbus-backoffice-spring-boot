@@ -9,7 +9,6 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import user.models.ERole;
-
 import java.time.LocalDateTime;
 import java.util.UUID;
 

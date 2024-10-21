@@ -6,4 +6,5 @@ import java.util.Collection;
 
 public interface GetRoutesInput {
     Collection<RouteGeneralInfoResponseModel> getRoutes();
+    Collection<RouteGeneralInfoResponseModel> getRoutesWithTrips();
 }

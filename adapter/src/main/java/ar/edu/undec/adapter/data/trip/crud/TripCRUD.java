@@ -29,6 +29,7 @@ public interface TripCRUD extends Neo4jRepository<TripNode, String> {
             "RETURN {id: t.id, departureTime: t.departure_time, tripStatus: t.trip_status, service: s.name} AS trip")
     List<Map<String, Object>> findAllTripsByRouteLongName(String longName);
     @Query("MATCH (t:Trip) " +
+            "WHERE t.trip_status IS NOT NULL "+
             "RETURN COUNT(t) AS total, " +
             "COUNT(CASE WHEN t.trip_status = 'SCHEDULED' THEN 1 END) AS scheduled, " +
             "COUNT(CASE WHEN t.trip_status = 'RUNNING' THEN 1 END) AS running, " +
