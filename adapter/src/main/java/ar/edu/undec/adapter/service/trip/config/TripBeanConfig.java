@@ -12,6 +12,11 @@ import trip.outputs.TripRepository;
 import trip.usecases.CreateTripUseCase;
 import trip.usecases.DeleteTripUseCase;
 import trip.usecases.GetTripsByRouteUseCase;
+import tripupdate.inputs.GetTripUpdatesInput;
+import tripupdate.inputs.StopTripUpdateInput;
+import tripupdate.outputs.TripUpdateRepository;
+import tripupdate.usecases.GetTripUpdatesUseCase;
+import tripupdate.usecases.StopTripUpdateUseCase;
 
 @Component
 public class TripBeanConfig {
@@ -26,5 +31,13 @@ public class TripBeanConfig {
     @Bean
     public DeleteTripInput deleteTripInput(UpdateRouteRepository updateRouteRepository, TripRepository tripRepository){
         return new DeleteTripUseCase(updateRouteRepository, tripRepository);
+    }
+    @Bean
+    public GetTripUpdatesInput getTripUpdatesInput(TripUpdateRepository tripUpdateRepository){
+        return new GetTripUpdatesUseCase(tripUpdateRepository);
+    }
+    @Bean
+    public StopTripUpdateInput stopTripUpdateInput(TripUpdateRepository tripUpdateRepository){
+        return new StopTripUpdateUseCase(tripUpdateRepository);
     }
 }

@@ -2,6 +2,7 @@ package ar.edu.undec.adapter.data.trip.models;
 
 import ar.edu.undec.adapter.data.busservice.models.ServiceNode;
 import ar.edu.undec.adapter.data.stoptime.models.StopTimeNode;
+import ar.edu.undec.adapter.data.tripupdate.models.TripUpdateNode;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -26,6 +27,8 @@ public class TripNode {
     private TripStatus tripStatus;
     @Relationship(type = "TRIP_AT", direction = Relationship.Direction.OUTGOING)
     private ServiceNode service;
+    @Relationship(type = "HAS_UPDATE", direction = Relationship.Direction.OUTGOING)
+    private TripUpdateNode tripUpdate;
     @Relationship(type = "PART_OF_TRIP", direction = Relationship.Direction.INCOMING)
     private List<StopTimeNode> stopTImes;
 }

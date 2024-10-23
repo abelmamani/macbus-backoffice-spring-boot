@@ -14,6 +14,7 @@ import trip.inputs.CreateTripInput;
 import trip.models.CreateTripRequestModel;
 import trip.models.Trip;
 import trip.models.TripStatus;
+import tripupdate.models.TripUpdate;
 import trip.outputs.TripRepository;
 import utils.TimeUtils;
 import java.util.stream.Collectors;
@@ -49,6 +50,7 @@ public class CreateTripUseCase implements CreateTripInput {
                 TimeUtils.formatTime(createTripRequestModel.getDepartureTime()),
                 TripStatus.SCHEDULED,
                 service,
+                TripUpdate.getInstance(null, 0.0, 0.0, 0L),
                 stopSequenceRepository.findAllByRouteLongName(createTripRequestModel.getBusRouteName()).stream()
                         .map(ss -> StopTIme.getInstance(
                                 null,

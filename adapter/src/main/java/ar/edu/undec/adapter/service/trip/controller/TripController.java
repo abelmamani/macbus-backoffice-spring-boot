@@ -9,6 +9,8 @@ import trip.inputs.CreateTripInput;
 import trip.inputs.DeleteTripInput;
 import trip.inputs.GetTripsByRouteInput;
 import trip.models.CreateTripRequestModel;
+import tripupdate.inputs.GetTripUpdatesInput;
+import tripupdate.inputs.StopTripUpdateInput;
 
 @AllArgsConstructor
 @RestController
@@ -18,6 +20,8 @@ public class TripController {
     private GetTripsByRouteInput getTripsByRouteInput;
     private CreateTripInput createTripInput;
     private DeleteTripInput deleteTripInput;
+    private GetTripUpdatesInput getTripUpdatesInput;
+    private StopTripUpdateInput stopTripUpdateInput;
 
     @GetMapping("/route/{longName}")
     @PreAuthorize("hasRole('ADMIN')")
@@ -43,6 +47,27 @@ public class TripController {
     public ResponseEntity<?> deleteStopSequenceByRouteAndArrivalTime(@PathVariable("longName") String longName, @PathVariable("tripId") String tripId){
         try {
             return ResponseEntity.ok(deleteTripInput.deleteTrip(longName, tripId));
+        }catch (RuntimeException exception){
+            return ResponseManager.badRequest(exception.getMessage());
+        }
+    }
+
+    @PutMapping("/{id}")
+    @PreAuthorize("hasRole('ADMIN')")
+    public ResponseEntity<?> stopTripUpdate(@PathVariable("id") String id){
+        try {
+            stopTripUpdateInput.stopTripUpdate(id);
+            return ResponseManager.successRequest("Viaje detenido correctamente.");
+        }catch (RuntimeException exception){
+            return ResponseManager.badRequest(exception.getMessage());
+        }
+    }
+
+    @GetMapping("/updates")
+    @PreAuthorize("hasRole('ADMIN')")
+    public ResponseEntity<?> getTripUpdates(){
+        try {
+            return ResponseEntity.ok(getTripUpdatesInput.getTripUpdates());
         }catch (RuntimeException exception){
             return ResponseManager.badRequest(exception.getMessage());
         }

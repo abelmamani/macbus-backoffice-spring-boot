@@ -4,6 +4,7 @@ import ar.edu.undec.adapter.data.exceptions.FailedMappingException;
 import ar.edu.undec.adapter.data.busservice.mapper.ServiceDataMapper;
 import ar.edu.undec.adapter.data.stoptime.mapper.StopTimeDataMapper;
 import ar.edu.undec.adapter.data.trip.models.TripNode;
+import ar.edu.undec.adapter.data.tripupdate.mapper.TripUpdateDataMapper;
 import trip.models.Trip;
 import trip.models.TripResponseModel;
 import java.util.Map;
@@ -16,6 +17,7 @@ public class TripDataMapper {
                     trip.getDepartureTime(),
                     trip.getTripStatus(),
                     ServiceDataMapper.dataCoreMapper(trip.getService()),
+                    TripUpdateDataMapper.dataCoreMapper(trip.getTripUpdate()),
                     trip.getStopTImes().stream().map(StopTimeDataMapper::dataCoreMapper).collect(Collectors.toList()));
             }catch (RuntimeException exception){
             throw new FailedMappingException("Error mapping from node to core");
@@ -28,6 +30,7 @@ public class TripDataMapper {
                     .departureTime(trip.getDepartureTime())
                     .tripStatus(trip.getTripStatus())
                     .service(ServiceDataMapper.dataNodeMapper(trip.getService()))
+                    .tripUpdate(TripUpdateDataMapper.dataNodeMapper(trip.getTripUpdate()))
                     .stopTImes(trip.getStopTImes().stream().map(StopTimeDataMapper::dataNodeMapper).collect(Collectors.toList()))
                     .build();
         }catch (RuntimeException exception){
