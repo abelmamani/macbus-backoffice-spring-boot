@@ -23,7 +23,6 @@ public class LoginUseCase implements LoginInput {
         User user = loginRepository.findByEmail(loginRequestModel.getEmail());
         return AuthResponse.getInstance(
                 loginRepository.generateToken(user),
-                UserIdentity.getInstance(user.getEmail(), user.getRole().toString())
-        );
+                UserIdentity.getInstance(user.getEmail(), user.getRole()));
     }
 }

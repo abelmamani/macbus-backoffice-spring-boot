@@ -18,7 +18,7 @@ public class ShapeController {
     private CreateShapeInput createShapeInput;
 
     @GetMapping("/route/{longName}")
-    @PreAuthorize("hasRole('ADMIN')")
+    @PreAuthorize("hasAuthority('ROUTE_MANAGER')")
     public ResponseEntity<?> getShapesByRoute(@PathVariable("longName") String longName){
         try {
             return ResponseEntity.ok(getShapesByRouteInput.getAllShapes(longName));
@@ -28,7 +28,7 @@ public class ShapeController {
     }
 
     @PostMapping
-    @PreAuthorize("hasRole('ADMIN')")
+    @PreAuthorize("hasAuthority('ROUTE_MANAGER')")
     public ResponseEntity<?> createShapes(@RequestBody CreateShapeRequestModel createShapeRequestModel){
         try {
             return ResponseEntity.created(null).body(createShapeInput.createShape(createShapeRequestModel));

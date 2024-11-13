@@ -21,7 +21,7 @@ public class RouteController {
     private DeleteRouteInput deleteRouteInput;
 
     @GetMapping
-    @PreAuthorize("hasRole('ADMIN')")
+    @PreAuthorize("hasAuthority('ROUTE_MANAGER')")
     public ResponseEntity<?> getRoutes(){
         try {
             return ResponseEntity.ok(getRoutesInput.getRoutes());
@@ -31,7 +31,6 @@ public class RouteController {
     }
 
     @GetMapping("/with_trips")
-    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<?> getRoutesWithTrips(){
         try {
             return ResponseEntity.ok(getRoutesInput.getRoutesWithTrips());
@@ -41,7 +40,7 @@ public class RouteController {
     }
 
     @GetMapping("/name/{name}")
-    @PreAuthorize("hasRole('ADMIN')")
+    @PreAuthorize("hasAuthority('ROUTE_MANAGER')")
     public ResponseEntity<?> getRouteByName(@PathVariable("name") String name){
         try {
             return ResponseEntity.ok(getRouteInput.getRouteGeneralInfoByName(name));
@@ -51,7 +50,7 @@ public class RouteController {
     }
 
     @PostMapping
-    @PreAuthorize("hasRole('ADMIN')")
+    @PreAuthorize("hasAuthority('ROUTE_MANAGER')")
     public ResponseEntity<?> createRoute(@RequestBody CreateRouteRequestModel createRouteRequestModel){
         try {
             return ResponseManager.createdRequest(createRouteInput.createRoute(createRouteRequestModel));
@@ -61,7 +60,7 @@ public class RouteController {
     }
 
     @PutMapping("/{name}")
-    @PreAuthorize("hasRole('ADMIN')")
+    @PreAuthorize("hasAuthority('ROUTE_MANAGER')")
     public ResponseEntity<?> updateRoute(@PathVariable("name") String name, @RequestBody UpdateRouteRequestModel updateRouteRequestModel){
         try {
             updateGeneralInfoInputt.updateRoute(name, updateRouteRequestModel);
@@ -72,7 +71,7 @@ public class RouteController {
     }
 
     @DeleteMapping("/{name}")
-    @PreAuthorize("hasRole('ADMIN')")
+    @PreAuthorize("hasAuthority('ROUTE_MANAGER')")
     public ResponseEntity<?> deleteRoute(@PathVariable("name") String name){
         try {
             deleteRouteInput.deleteRoute(name);

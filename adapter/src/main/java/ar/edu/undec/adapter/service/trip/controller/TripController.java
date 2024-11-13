@@ -24,7 +24,7 @@ public class TripController {
     private StopTripUpdateInput stopTripUpdateInput;
 
     @GetMapping("/route/{longName}")
-    @PreAuthorize("hasRole('ADMIN')")
+    @PreAuthorize("hasAuthority('ROUTE_MANAGER')")
     public ResponseEntity<?> getTripsByRoute(@PathVariable("longName") String longName){
         try {
             return ResponseEntity.ok(getTripsByRouteInput.getAllTrips(longName));
@@ -34,7 +34,7 @@ public class TripController {
     }
 
     @PostMapping
-    @PreAuthorize("hasRole('ADMIN')")
+    @PreAuthorize("hasAuthority('ROUTE_MANAGER')")
     public ResponseEntity<?> createTrip(@RequestBody CreateTripRequestModel createTripRequestModel){
         try {
             return ResponseEntity.created(null).body(createTripInput.createTrip(createTripRequestModel));
@@ -43,7 +43,7 @@ public class TripController {
         }
     }
     @DeleteMapping("/route/{longName}/{tripId}")
-    @PreAuthorize("hasRole('ADMIN')")
+    @PreAuthorize("hasAuthority('ROUTE_MANAGER')")
     public ResponseEntity<?> deleteStopSequenceByRouteAndArrivalTime(@PathVariable("longName") String longName, @PathVariable("tripId") String tripId){
         try {
             return ResponseEntity.ok(deleteTripInput.deleteTrip(longName, tripId));
@@ -53,7 +53,7 @@ public class TripController {
     }
 
     @PutMapping("/{id}")
-    @PreAuthorize("hasRole('ADMIN')")
+    @PreAuthorize("hasAuthority('TRIP_MONITOR')")
     public ResponseEntity<?> stopTripUpdate(@PathVariable("id") String id){
         try {
             stopTripUpdateInput.stopTripUpdate(id);
@@ -64,7 +64,7 @@ public class TripController {
     }
 
     @GetMapping("/updates")
-    @PreAuthorize("hasRole('ADMIN')")
+    @PreAuthorize("hasAuthority('TRIP_MONITOR')")
     public ResponseEntity<?> getTripUpdates(){
         try {
             return ResponseEntity.ok(getTripUpdatesInput.getTripUpdates());

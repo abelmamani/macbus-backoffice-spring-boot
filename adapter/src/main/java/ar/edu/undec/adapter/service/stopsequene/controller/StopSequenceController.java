@@ -20,7 +20,7 @@ public class StopSequenceController {
     private DeleteStopSequenceInput deleteStopSequenceInput;
 
     @GetMapping("/route/{longName}")
-    @PreAuthorize("hasRole('ADMIN')")
+    @PreAuthorize("hasAuthority('ROUTE_MANAGER')")
     public ResponseEntity<?> getStopSequencesByRoute(@PathVariable("longName") String longName){
         try {
             return ResponseEntity.ok(getStopSequencesByRouteInput.getAllStopSequences(longName));
@@ -30,7 +30,7 @@ public class StopSequenceController {
     }
 
     @PostMapping
-    @PreAuthorize("hasRole('ADMIN')")
+    @PreAuthorize("hasAuthority('ROUTE_MANAGER')")
     public ResponseEntity<?> createStopSequence(@RequestBody CreateStopSequenceRequestModel createStopSequenceRequestModel){
         try {
             return ResponseEntity.created(null).body(createStopSequenceInput.createStopSequence(createStopSequenceRequestModel));
@@ -40,7 +40,7 @@ public class StopSequenceController {
     }
 
     @DeleteMapping("/route/{routeName}/{sequenceId}")
-    @PreAuthorize("hasRole('ADMIN')")
+    @PreAuthorize("hasAuthority('ROUTE_MANAGER')")
     public ResponseEntity<?> deleteStopSequenceByRoute(@PathVariable("routeName") String routeName, @PathVariable("sequenceId") String sequenceId){
         try {
             return ResponseEntity.ok(deleteStopSequenceInput.deleteStopSequence(routeName, sequenceId));

@@ -21,11 +21,15 @@ public class StopSequence {
     public static StopSequence getInstance(String id, String arrivalTime, Long distanceTraveled, String headsign, Stop stop) {
         if(arrivalTime == null)
             throw new StopSequenceException("El tiempo de arribo es requerido.");
+        if(distanceTraveled == null)
+            throw new StopSequenceException("La distancia recorrida es requerida.");
         if(distanceTraveled < 0)
             throw new StopSequenceException("La distancia recorrida no puede ser negativo.");
-        //if(stop == null)
-          //  throw new StopSequenceException("La parada de arribo es requerido.");
-        return new StopSequence(id, arrivalTime, distanceTraveled, headsign, stop);
+        if(headsign == null || headsign.isBlank())
+            throw new StopSequenceException("El destiono es requerido.");
+        if(stop == null)
+            throw new StopSequenceException("La parada de arribo es requerido.");
+        return new StopSequence(id, arrivalTime, distanceTraveled, headsign.trim(), stop);
     }
 
     public String getId() {

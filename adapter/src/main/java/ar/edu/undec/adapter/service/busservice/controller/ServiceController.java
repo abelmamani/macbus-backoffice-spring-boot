@@ -20,7 +20,7 @@ public class ServiceController {
     private DeleteServiceInput deleteServiceInput;
 
     @GetMapping
-    @PreAuthorize("hasRole('ADMIN')")
+    @PreAuthorize("hasAnyAuthority('SERVICE_MANAGER', 'ROUTE_MANAGER', 'CALENDAR_DATE_MANAGER')")
     public ResponseEntity<?> getServices(){
         try {
             return ResponseEntity.ok(getServicesInput.getServices());
@@ -30,7 +30,7 @@ public class ServiceController {
     }
 
     @GetMapping("/{name}")
-    @PreAuthorize("hasRole('ADMIN')")
+    @PreAuthorize("hasAuthority('SERVICE_MANAGER')")
     public ResponseEntity<?> getService(@PathVariable("name") String name){
         try {
             return ResponseEntity.ok(getServiceInput.getService(name));
@@ -40,7 +40,7 @@ public class ServiceController {
     }
 
     @PostMapping
-    @PreAuthorize("hasRole('ADMIN')")
+    @PreAuthorize("hasAuthority('SERVICE_MANAGER')")
     public ResponseEntity<?> createService(@RequestBody ServiceModel createServiceRequestModel){
         try {
             return ResponseManager.createdRequest(createServiceInput.createService(createServiceRequestModel));
@@ -50,7 +50,7 @@ public class ServiceController {
     }
 
     @PutMapping("/{name}")
-    @PreAuthorize("hasRole('ADMIN')")
+    @PreAuthorize("hasAuthority('SERVICE_MANAGER')")
     public ResponseEntity<?> updateService(@PathVariable("name") String name, @RequestBody ServiceModel updateServiceRequestModel){
         try {
             updateServiceInput.updateService(name, updateServiceRequestModel);
@@ -61,7 +61,7 @@ public class ServiceController {
     }
 
     @DeleteMapping("/{name}")
-    @PreAuthorize("hasRole('ADMIN')")
+    @PreAuthorize("hasAuthority('SERVICE_MANAGER')")
     public ResponseEntity<?> deleteService(@PathVariable("name") String name){
         try {
             deleteServiceInput.deleteServiceByName(name);

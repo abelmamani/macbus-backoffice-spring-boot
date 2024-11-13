@@ -15,7 +15,7 @@ public class ReportController {
     private GetStatusCountsInput getStatusCountsInput;
 
     @GetMapping
-    @PreAuthorize("hasRole('ADMIN')")
+    @PreAuthorize("hasAuthority('REPORTS_VIEWER')")
     public ResponseEntity<?> getStatusCounts(){
         try {
             return ResponseEntity.ok(getStatusCountsInput.getStatusCounts());

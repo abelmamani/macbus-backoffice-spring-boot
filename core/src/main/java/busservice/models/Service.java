@@ -27,7 +27,7 @@ public class Service {
             throw new ServiceException("La fecha de inicio no es válida.");
         if (!DateUtils.isValidDate(endDate))
             throw new ServiceException("La fecha de fin no es válida.");
-        return new Service(id, name, startDate, endDate, calendarDates);
+        return new Service(id, name.trim(), startDate, endDate, calendarDates);
     }
     public String getId() {
         return id;
