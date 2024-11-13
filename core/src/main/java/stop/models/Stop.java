@@ -1,6 +1,7 @@
 package stop.models;
 
 import stop.exceptions.StopException;
+import utils.ValidatorUtils;
 
 public class Stop {
     private String id;
@@ -21,13 +22,17 @@ public class Stop {
     public static Stop getInstance(String id, String name, Double latitude, Double longitude, StopStatus status) {
         if(name == null || name.trim().isEmpty())
             throw new StopException("El nombre de la parada es requerido.");
-        if(latitude == null)
-            throw new StopException("La latitud de la parada es requerido.");
-        if(longitude == null)
-            throw new StopException("La lingitud de la parada es requerido.");
-        //if(status == null)
-           // throw new StopException("El estado de la parada es requerido.");
-        return new Stop(id, name, latitude, longitude, status);
+        if (latitude == null)
+            throw new StopException("La latitud de la parada es requerida.");
+        if (!ValidatorUtils.isValidLatitude(latitude))
+            throw new StopException("La latitud de la parada debe estar entre -90 y 90.");
+        if (longitude == null)
+            throw new StopException("La longitud de la parada es requerida.");
+        if (!ValidatorUtils.isValidLongitude(longitude))
+            throw new StopException("La longitud de la parada debe estar entre -180 y 180.");
+        if(status == null)
+            throw new StopException("El estado de la parada es requerido.");
+        return new Stop(id, name.trim(), latitude, longitude, status);
     }
 
     public String getId() {

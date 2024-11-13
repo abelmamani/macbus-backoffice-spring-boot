@@ -15,7 +15,7 @@ public class StopHistoryController {
     private GetStopHistoryCountsInput getStopHistoryCountsInput;
 
     @GetMapping("/{startDate}/{endDate}")
-    @PreAuthorize("hasRole('ADMIN')")
+    @PreAuthorize("hasAuthority('REPORTS_VIEWER')")
     public ResponseEntity<?> getStopHistoryCounts(@PathVariable("startDate") String startDate, @PathVariable("endDate") String endDate){
         try {
             return ResponseEntity.ok(getStopHistoryCountsInput.getStopHistoryCounts(startDate, endDate));

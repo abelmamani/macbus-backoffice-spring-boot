@@ -1,21 +1,19 @@
 package ar.edu.undec.adapter.data.user.models;
 
+import ar.edu.undec.adapter.data.role.models.RoleNode;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.springframework.data.neo4j.core.schema.GeneratedValue;
-import org.springframework.data.neo4j.core.schema.Id;
-import org.springframework.data.neo4j.core.schema.Node;
-import org.springframework.data.neo4j.core.schema.Property;
+import org.springframework.data.neo4j.core.schema.*;
 import org.springframework.data.neo4j.core.support.UUIDStringGenerator;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
-import user.models.ERole;
+
 import java.time.LocalDateTime;
 import java.util.Collection;
-import java.util.List;
+import java.util.stream.Collectors;
 
 @Data
 @Builder
@@ -34,16 +32,18 @@ public class UserNode implements UserDetails {
     private String email;
     @Property(name = "password")
     private String password;
-    @Property(name = "role")
-    private ERole role;
     @Property(name = "reset_token")
     private String resetToken;
     @Property(name = "token_expiry_date")
     private LocalDateTime tokenExpiryDate;
+    @Relationship(type = "HAS_ROLE")
+    private RoleNode role;
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return List.of(new SimpleGrantedAuthority(role.name()));
+        return role.getPrivileges().stream()
+                .map(permission -> new SimpleGrantedAuthority(permission.getName()))
+                .collect(Collectors.toSet());
     }
 
     @Override
@@ -70,5 +70,4 @@ public class UserNode implements UserDetails {
     public boolean isEnabled() {
         return true;
     }
-
 }

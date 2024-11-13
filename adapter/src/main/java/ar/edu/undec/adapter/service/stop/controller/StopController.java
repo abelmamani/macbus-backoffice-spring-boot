@@ -21,7 +21,7 @@ public class StopController {
     private DeleteStopInput deleteStopInput;
 
     @GetMapping
-    @PreAuthorize("hasRole('ADMIN')")
+    @PreAuthorize("hasAuthority('STOP_MANAGER')")
     public ResponseEntity<?> getStops(){
         try {
             return ResponseEntity.ok(getStopsInput.getStops());
@@ -31,7 +31,7 @@ public class StopController {
     }
 
     @GetMapping("/{name}")
-    @PreAuthorize("hasRole('ADMIN')")
+    @PreAuthorize("hasAuthority('STOP_MANAGER')")
     public ResponseEntity<?> getStop(@PathVariable("name") String name){
         try {
             return ResponseEntity.ok(getStopInput.getStop(name));
@@ -41,7 +41,7 @@ public class StopController {
     }
 
     @PostMapping
-    @PreAuthorize("hasRole('ADMIN')")
+    @PreAuthorize("hasAuthority('STOP_MANAGER')")
     public ResponseEntity<?> createStop(@RequestBody CreateStopRequestModel createRouteRequestModel){
         try {
             return ResponseManager.createdRequest(createStopInput.createStop(createRouteRequestModel));
@@ -51,7 +51,7 @@ public class StopController {
     }
 
     @PutMapping("/{name}")
-    @PreAuthorize("hasRole('ADMIN')")
+    @PreAuthorize("hasAuthority('STOP_MANAGER')")
     public ResponseEntity<?> updateStop(@PathVariable("name") String name, @RequestBody UpdateStopRequestModel updateRouteRequestModel){
         try {
             updateStopInput.updateStop(name, updateRouteRequestModel);
@@ -62,7 +62,7 @@ public class StopController {
     }
 
     @DeleteMapping("/{name}")
-    @PreAuthorize("hasRole('ADMIN')")
+    @PreAuthorize("hasAuthority('STOP_MANAGER')")
     public ResponseEntity<?> deleteStop(@PathVariable("name") String name){
         try {
             deleteStopInput.deleteStop(name);

@@ -15,8 +15,6 @@ public interface UserCRUD extends Neo4jRepository <UserNode, String> {
     Optional<UserNode> findByEmail(String email);
     Optional<UserNode> findByResetToken(String resetToken);
     void deleteByEmail(String email);
-    @Query("MATCH (u:User {role: 'ROLE_CONDUCTOR'}) RETURN {id: u.id, name: u.name, lastName: u.last_name, email: u.email} AS conductor")
-    List<Map<String, Object>> findConductors();
-    @Query("MATCH (u:User) RETURN {id: u.id, name: u.name, lastName: u.last_name, email: u.email, role: u.role} AS conductor")
+    @Query("MATCH (u:User)-[:HAS_ROLE]->(r:Role) RETURN {id: u.id, name: u.name, lastName: u.last_name, email: u.email, role: r.name} AS conductor")
     List<Map<String, Object>> findAllUsers();
 }

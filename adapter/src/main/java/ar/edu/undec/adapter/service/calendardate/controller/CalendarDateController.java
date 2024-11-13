@@ -20,7 +20,7 @@ public class CalendarDateController {
     private DeleteCalendarDateInput deleteCalendarDateInput;
 
     @GetMapping
-    @PreAuthorize("hasRole('ADMIN')")
+    @PreAuthorize("hasAuthority('CALENDAR_DATE_MANAGER')")
     public ResponseEntity<?> getCalendarDates(){
         try {
             return ResponseEntity.ok(getCalendarDatesByServiceInput.getAllCalendarDates());
@@ -29,7 +29,7 @@ public class CalendarDateController {
         }
     }
     @PostMapping
-    @PreAuthorize("hasRole('ADMIN')")
+    @PreAuthorize("hasAuthority('CALENDAR_DATE_MANAGER')")
     public ResponseEntity<?> createCalendarDate(@RequestBody CalendarDateModel createCalendarDateRequestModel){
         try {
             createCalendarDateInput.createCalendarDate(createCalendarDateRequestModel);
@@ -40,7 +40,7 @@ public class CalendarDateController {
     }
 
     @DeleteMapping("/{date}")
-    @PreAuthorize("hasRole('ADMIN')")
+    @PreAuthorize("hasAuthority('CALENDAR_DATE_MANAGER')")
     public ResponseEntity<?> deleteCalendarDate(@PathVariable("date") String date){
         try {
             deleteCalendarDateInput.deleteCalendarDate(date);

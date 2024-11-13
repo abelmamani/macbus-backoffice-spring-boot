@@ -23,7 +23,7 @@ public class UserController {
     private DeleteUserInput deleteUserInput;
 
     @GetMapping
-    @PreAuthorize("hasRole('ADMIN')")
+    @PreAuthorize("hasAuthority('USER_MANAGER')")
     public ResponseEntity<?> getUsers(){
         try {
             return ResponseEntity.ok(getUsersInput.getAllUsers());
@@ -33,7 +33,7 @@ public class UserController {
     }
 
     @GetMapping("/{email}")
-    @PreAuthorize("hasRole('ADMIN')")
+    @PreAuthorize("hasAuthority('USER_MANAGER')")
     public ResponseEntity<?> getUser(@PathVariable("email") String email){
         try {
             return ResponseEntity.ok(getUserInput.getUser(email));
@@ -43,7 +43,7 @@ public class UserController {
     }
 
     @PostMapping
-    @PreAuthorize("hasRole('ADMIN')")
+    @PreAuthorize("hasAuthority('USER_MANAGER')")
     public ResponseEntity<?> createUser(@RequestBody CreateUserRequestModel createUserRequestModel){
         try {
             return ResponseManager.createdRequest(createUserInput.createUser(createUserRequestModel));
@@ -53,7 +53,7 @@ public class UserController {
     }
 
     @PutMapping("/{email}")
-    @PreAuthorize("hasRole('ADMIN')")
+    @PreAuthorize("hasAuthority('USER_MANAGER')")
     public ResponseEntity<?> updateUser(@PathVariable("email") String email, @RequestBody UpdateUserRequestModel updateUserRequestModel){
         try {
             updateUserInput.updateUser(email, updateUserRequestModel);
@@ -64,7 +64,6 @@ public class UserController {
     }
 
     @PutMapping("/change-password")
-    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<?> changePassword(@RequestBody ChangePasswordRequestModel changePasswordRequestModel){
         try {
             changePasswordInput.changePassword(changePasswordRequestModel);
@@ -75,7 +74,7 @@ public class UserController {
     }
 
     @DeleteMapping("/{email}")
-    @PreAuthorize("hasRole('ADMIN')")
+    @PreAuthorize("hasAuthority('USER_MANAGER')")
     public ResponseEntity<?> deleteUser(@PathVariable("email") String email){
         try {
             deleteUserInput.deleteUser(email);

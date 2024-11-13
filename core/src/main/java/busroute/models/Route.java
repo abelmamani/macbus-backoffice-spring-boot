@@ -4,6 +4,8 @@ import busroute.exceptions.RouteException;
 import shape.models.Shape;
 import stopsequence.models.StopSequence;
 import trip.models.Trip;
+import utils.ValidatorUtils;
+
 import java.util.Comparator;
 import java.util.List;
 import java.util.NoSuchElementException;
@@ -38,13 +40,19 @@ public class Route {
             throw new RouteException("El nombre corto de la linea es requerido.");
         if (longName == null || longName.trim().isEmpty())
             throw new RouteException("El nombre largo de la linea es requerido.");
+        if (description == null || description.trim().isEmpty())
+            throw new RouteException("La descripción de la linea es requerida.");
         if (color == null || color.trim().isEmpty())
-            throw new RouteException("El color de la linea es requerido.");
+            throw new RouteException("El color de la línea es requerido.");
+        if (!ValidatorUtils.isValidHexColor(color))
+            throw new RouteException("El color de la línea debe estar en formato hexadecimal (# seguido de 6 caracteres hexadecimales).");
         if (textColor == null || textColor.trim().isEmpty())
-            throw new RouteException("El color de texto de la linea es requerido.");
+            throw new RouteException("El color de texto de la línea es requerido.");
+        if (!ValidatorUtils.isValidHexColor(textColor))
+            throw new RouteException("El color de texto debe estar en formato hexadecimal (# seguido de 6 caracteres hexadecimales).");
         if (routeStatus == null)
             throw new RouteException("El estado de la linea es requerido.");
-        return new Route(id, shortName, longName, description, color, textColor, routeStatus, shapes, stopSequences, trips);
+        return new Route(id, shortName.trim(), longName.trim(), description.trim(), color.trim(), textColor.trim(), routeStatus, shapes, stopSequences, trips);
     }
 
     public String getId() {

@@ -1,10 +1,10 @@
 package ar.edu.undec.adapter.data.user.mapper;
 
 import ar.edu.undec.adapter.data.exceptions.FailedMappingException;
+import ar.edu.undec.adapter.data.role.mapper.RoleDataMapper;
 import ar.edu.undec.adapter.data.user.models.UserNode;
 import user.models.User;
 import user.models.UserResponseModel;
-
 import java.util.Map;
 
 public class UserDataMapper {
@@ -15,9 +15,9 @@ public class UserDataMapper {
                     userNode.getLastName(),
                     userNode.getEmail(),
                     userNode.getPassword(),
-                    userNode.getRole(),
                     userNode.getResetToken(),
-                    userNode.getTokenExpiryDate());
+                    userNode.getTokenExpiryDate(),
+                    RoleDataMapper.dataCoreMapper(userNode.getRole()));
         }catch (RuntimeException exception){
             throw new FailedMappingException("Error mapping from node to core");
         }
@@ -30,9 +30,9 @@ public class UserDataMapper {
                     .lastName(user.getLastName())
                     .email(user.getEmail())
                     .password(user.getPassword())
-                    .role(user.getRole())
                     .resetToken(user.getResetToken())
                     .tokenExpiryDate(user.getTokenExpiryDate())
+                    .role(RoleDataMapper.dataNodeMapper(user.getRole()))
                     .build();
         }catch (RuntimeException exception){
             throw new FailedMappingException("Error mapping from core to node");
