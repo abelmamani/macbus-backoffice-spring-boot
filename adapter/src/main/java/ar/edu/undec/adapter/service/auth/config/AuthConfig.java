@@ -21,7 +21,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 
 @Configuration
 @RequiredArgsConstructor
-public class AplicationConfig {
+public class AuthConfig {
     private final UserCRUD userCRUD;
     @Bean
     public AuthenticationManager authenticationManager(AuthenticationConfiguration config) throws Exception{

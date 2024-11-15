@@ -1,5 +1,6 @@
 package ar.edu.undec.adapter.data.stop.models;
 
+import ar.edu.undec.adapter.data.audit.AuditableNode;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -16,7 +17,7 @@ import stop.models.StopStatus;
 @AllArgsConstructor
 @Builder
 @Node("Stop")
-public class StopNode {
+public class StopNode extends AuditableNode {
     @Id
     @GeneratedValue(UUIDStringGenerator.class)
     String id;

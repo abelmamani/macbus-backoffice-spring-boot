@@ -1,5 +1,6 @@
 package ar.edu.undec.adapter.data.role.models;
 
+import ar.edu.undec.adapter.data.audit.AuditableNode;
 import ar.edu.undec.adapter.data.privilege.models.PrivilegeNode;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -14,7 +15,7 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @Node("Role")
-public class RoleNode {
+public class RoleNode extends AuditableNode {
     @Id
     @GeneratedValue(UUIDStringGenerator.class)
     private String id;

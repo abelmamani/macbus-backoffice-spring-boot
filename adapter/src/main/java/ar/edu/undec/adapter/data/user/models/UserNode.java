@@ -1,5 +1,6 @@
 package ar.edu.undec.adapter.data.user.models;
 
+import ar.edu.undec.adapter.data.audit.AuditableNode;
 import ar.edu.undec.adapter.data.role.models.RoleNode;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -10,7 +11,6 @@ import org.springframework.data.neo4j.core.support.UUIDStringGenerator;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
-
 import java.time.LocalDateTime;
 import java.util.Collection;
 import java.util.stream.Collectors;
@@ -20,7 +20,7 @@ import java.util.stream.Collectors;
 @NoArgsConstructor
 @AllArgsConstructor
 @Node("User")
-public class UserNode implements UserDetails {
+public class UserNode extends AuditableNode implements UserDetails {
     @Id
     @GeneratedValue(UUIDStringGenerator.class)
     private String id;

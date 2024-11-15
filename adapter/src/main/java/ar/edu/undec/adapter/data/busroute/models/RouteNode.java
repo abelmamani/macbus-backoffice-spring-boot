@@ -1,5 +1,6 @@
 package ar.edu.undec.adapter.data.busroute.models;
 
+import ar.edu.undec.adapter.data.audit.AuditableNode;
 import ar.edu.undec.adapter.data.shape.models.ShapeNode;
 import ar.edu.undec.adapter.data.stopsequence.models.StopSequenceNode;
 import ar.edu.undec.adapter.data.trip.models.TripNode;
@@ -17,7 +18,7 @@ import java.util.List;
 @AllArgsConstructor
 @Builder
 @Node("Route")
-public class RouteNode {
+public class RouteNode extends AuditableNode{
     @Id
     @GeneratedValue(UUIDStringGenerator.class)
     String id;
