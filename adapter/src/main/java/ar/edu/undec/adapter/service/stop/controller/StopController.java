@@ -30,6 +30,16 @@ public class StopController {
         }
     }
 
+    @GetMapping("/active")
+    @PreAuthorize("hasAuthority('ROUTE_MANAGER')")
+    public ResponseEntity<?> getActiveStops(){
+        try {
+            return ResponseEntity.ok(getStopsInput.getActiveStops());
+        }catch (RuntimeException exception){
+            return ResponseManager.badRequest(exception.getMessage());
+        }
+    }
+
     @GetMapping("/{name}")
     @PreAuthorize("hasAuthority('STOP_MANAGER')")
     public ResponseEntity<?> getStop(@PathVariable("name") String name){
@@ -50,22 +60,22 @@ public class StopController {
         }
     }
 
-    @PutMapping("/{name}")
+    @PutMapping
     @PreAuthorize("hasAuthority('STOP_MANAGER')")
-    public ResponseEntity<?> updateStop(@PathVariable("name") String name, @RequestBody UpdateStopRequestModel updateRouteRequestModel){
+    public ResponseEntity<?> updateStop(@RequestBody UpdateStopRequestModel updateRouteRequestModel){
         try {
-            updateStopInput.updateStop(name, updateRouteRequestModel);
+            updateStopInput.updateStop(updateRouteRequestModel);
             return ResponseManager.successRequest("Se actualizo la parada correctamente.");
         }catch (RuntimeException exception){
             return ResponseManager.badRequest(exception.getMessage());
         }
     }
 
-    @DeleteMapping("/{name}")
+    @DeleteMapping("/{id}")
     @PreAuthorize("hasAuthority('STOP_MANAGER')")
-    public ResponseEntity<?> deleteStop(@PathVariable("name") String name){
+    public ResponseEntity<?> deleteStop(@PathVariable("id") String id){
         try {
-            deleteStopInput.deleteStop(name);
+            deleteStopInput.deleteStop(id);
             return ResponseManager.successRequest("Se elimino la parada correctamente.");
         }catch (RuntimeException exception){
             return ResponseManager.badRequest(exception.getMessage());

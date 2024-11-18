@@ -1,11 +1,11 @@
 package stopsequence.usecases;
 
 import busroute.exceptions.RouteException;
-import busroute.models.RouteStatus;
+import busroute.models.RouteProgressStatus;
 import busroute.outputs.UpdateRouteRepository;
 import stop.exceptions.StopException;
 import stop.models.Stop;
-import stop.models.StopStatus;
+import stop.models.StopAssignedStatus;
 import stop.outputs.GetStopRepository;
 import stopsequence.exceptions.StopSequenceException;
 import stopsequence.inputs.CreateStopSequenceInput;
@@ -28,26 +28,22 @@ public class CreateStopSequenceUseCase implements CreateStopSequenceInput {
     }
 
     @Override
-    public RouteStatus createStopSequence(CreateStopSequenceRequestModel createStopSequenceRequestModel) {
+    public RouteProgressStatus createStopSequence(CreateStopSequenceRequestModel createStopSequenceRequestModel) {
         String routeName = createStopSequenceRequestModel.getBusRouteName();
         String arrivalTime =  TimeUtils.formatTime(createStopSequenceRequestModel.getArrivalTime());
-        RouteStatus routeStatus = updateRouteRepository.getRouteStatusByLongName(createStopSequenceRequestModel.getBusRouteName()).orElseThrow(() -> new RouteException("La linea no existe."));
+        RouteProgressStatus progressStatus = updateRouteRepository.getProgressStatusByLongName(createStopSequenceRequestModel.getBusRouteName()).orElseThrow(() -> new RouteException("La linea no existe."));
         Stop stop = getStopRepository.findByName(createStopSequenceRequestModel.getStopName()).orElseThrow(() -> new StopException("La parada no existe."));
-        if (routeStatus.equals(RouteStatus.EMPTY) || routeStatus.equals(RouteStatus.WITH_TRIPS))
+        if (progressStatus.equals(RouteProgressStatus.EMPTY) || progressStatus.equals(RouteProgressStatus.WITH_TRIPS))
             throw new StopSequenceException("No se puede registrar una secuencia de parada porque la línea no tiene un reocrrido definido o ya tiene viajes planificados.");
-        if (routeStatus.equals(RouteStatus.WITH_SHAPES) && createStopSequenceRequestModel.getArrivalTime() != LocalTime.of(0, 0))
+        if (progressStatus.equals(RouteProgressStatus.WITH_SHAPES) && createStopSequenceRequestModel.getArrivalTime() != LocalTime.of(0, 0))
             throw new StopSequenceException("La primera parada debe tener un tiempo de arribo de 00:00 ");
-        if (routeStatus.equals(RouteStatus.WITH_SHAPES) && createStopSequenceRequestModel.getDistanceTraveled() != 0)
+        if (progressStatus.equals(RouteProgressStatus.WITH_SHAPES) && createStopSequenceRequestModel.getDistanceTraveled() != 0)
             throw new StopSequenceException("La primera parada debe tener una distancia de 0");
-        //if (routeStatus..equals(RouteStatus.WITH_STOP) && !createStopSequenceRequestModel.getDistanceTraveled().equals(busRoute.getLastShape().getDistanceTraveled()))
-       //     throw new StopSequenceException("La última parada debe tener una distancia igual a " + busRoute.getLastShape().getDistanceTraveled());
-        //if(routeStatus.equals(RouteStatus.WITH_STOPS) && !createStopSequenceRequestModel.getArrivalTime().isBefore(TimeUtils.parseTime(busRoute.getLastStopSequence().getArrivalTime())))
-        //    throw new StopSequenceException("El tiempo de arribo debe ser inferior a " + busRoute.getLastStopSequence().getArrivalTime());
-        //if(routeStatus.equals(RouteStatus.WITH_STOPS) && createStopSequenceRequestModel.getDistanceTraveled() >= busRoute.getLastStopSequence().getDistanceTraveled())
-         //   throw new StopSequenceException("La distancia recorrida debe ser inferior a " + busRoute.getLastStopSequence().getDistanceTraveled());
+        if ((progressStatus.equals(RouteProgressStatus.WITH_STOP) ||  progressStatus.equals(RouteProgressStatus.WITH_STOPS)) && createStopSequenceRequestModel.getDistanceTraveled() == 0)
+            throw new StopSequenceException("La parada debe tener una distancia superior a 0");
         if(stopSequenceRepository.existsByRouteAndArrivalTime(routeName, arrivalTime))
             throw new StopSequenceException("Ya existe una parada con tiempo de arribo igual a "+arrivalTime);
-        RouteStatus newRouteStatus =  routeStatus.equals(RouteStatus.WITH_SHAPES) ? RouteStatus.WITH_STOP : RouteStatus.WITH_STOPS;
+        RouteProgressStatus newProgressStatus =  progressStatus.equals(RouteProgressStatus.WITH_SHAPES) ? RouteProgressStatus.WITH_STOP : RouteProgressStatus.WITH_STOPS;
         String sequenceId = stopSequenceRepository.save(StopSequence.getInstance(null,
                 arrivalTime,
                 createStopSequenceRequestModel.getDistanceTraveled(),
@@ -56,9 +52,10 @@ public class CreateStopSequenceUseCase implements CreateStopSequenceInput {
                         stop.getName(),
                         stop.getLatitude(),
                         stop.getLongitude(),
-                        StopStatus.ASSIGNED)));
-        stopSequenceRepository.addStopSequence(routeName, sequenceId, newRouteStatus);
-        return newRouteStatus;
+                        StopAssignedStatus.ASSIGNED,
+                        stop.getStatus())));
+        stopSequenceRepository.addStopSequence(routeName, sequenceId, newProgressStatus);
+        return newProgressStatus;
     }
 
     /*

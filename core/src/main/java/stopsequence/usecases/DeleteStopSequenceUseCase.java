@@ -1,10 +1,10 @@
 package stopsequence.usecases;
 
 import busroute.exceptions.RouteNotExistsException;
-import busroute.models.RouteStatus;
+import busroute.models.RouteProgressStatus;
 import busroute.outputs.UpdateRouteRepository;
 import stop.models.Stop;
-import stop.models.StopStatus;
+import stop.models.StopAssignedStatus;
 import stop.outputs.UpdateStopRepository;
 import stopsequence.exceptions.StopSequenceException;
 import stopsequence.inputs.DeleteStopSequenceInput;
@@ -23,13 +23,13 @@ public class DeleteStopSequenceUseCase implements DeleteStopSequenceInput {
     }
 
     @Override
-    public RouteStatus deleteStopSequence(String routeName, String sequenceId) {
+    public RouteProgressStatus deleteStopSequence(String routeName, String sequenceId) {
         StopSequence stopSequence = stopSequenceRepository.findById(sequenceId)
                 .orElseThrow(() -> new StopSequenceException("Error, la secuancia de parada no existe."));
         Stop stop = stopSequence.getStop();
-        RouteStatus routeStatus = updateRouteRepository.getRouteStatusByLongName(routeName)
+        RouteProgressStatus routeStatus = updateRouteRepository.getProgressStatusByLongName(routeName)
                 .orElseThrow(() -> new RouteNotExistsException("La línea " + routeName + " no existe."));
-        if (routeStatus.equals(RouteStatus.WITH_TRIPS))
+        if (routeStatus.equals(RouteProgressStatus.WITH_TRIPS))
             throw new StopSequenceException("No se puede eliminar una secuencia de parada porque la línea ya tiene viajes planificados.");
         stopSequenceRepository.deleteStopSequence(sequenceId);
         if (!stopSequenceRepository.existsByStopName(stop.getName())) {
@@ -38,13 +38,13 @@ public class DeleteStopSequenceUseCase implements DeleteStopSequenceInput {
                     stop.getName(),
                     stop.getLatitude(),
                     stop.getLongitude(),
-                    StopStatus.UNASSIGNED
-            ));
+                    StopAssignedStatus.UNASSIGNED,
+                    stop.getStatus()));
         }
         int total = stopSequenceRepository.countStopSequencesByRoute(routeName);
-        RouteStatus newRouteStatus = total == 0 ? RouteStatus.WITH_SHAPES :
-                (total > 1 ? RouteStatus.WITH_STOPS : RouteStatus.WITH_STOP);
-        updateRouteRepository.updateRouteStatus(routeName, newRouteStatus);
+        RouteProgressStatus newRouteStatus = total == 0 ? RouteProgressStatus.WITH_SHAPES :
+                (total > 1 ? RouteProgressStatus.WITH_STOPS : RouteProgressStatus.WITH_STOP);
+        updateRouteRepository.updateProgressStatus(routeName, newRouteStatus);
         return newRouteStatus;
     }
 }

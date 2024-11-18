@@ -20,8 +20,8 @@ public class UpdateStopRepoImplementation implements UpdateStopRepository {
     }
 
     @Override
-    public Optional<Stop> findByName(String name) {
-        return stopCRUD.findByName(name).map(StopDataMapper::dataCoreMapper);
+    public Optional<Stop> findById(String name) {
+        return stopCRUD.findById(name).map(StopDataMapper::dataCoreMapper);
     }
 
     @Override

@@ -1,22 +1,25 @@
 package ar.edu.undec.adapter.data.stop.repoimplementations;
 
 import ar.edu.undec.adapter.data.stop.crud.StopCRUD;
+import ar.edu.undec.adapter.data.stop.mapper.StopDataMapper;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
-import stop.models.StopStatus;
+import stop.models.Stop;
 import stop.outputs.DeleteStopRepository;
+import java.util.Optional;
 
 @AllArgsConstructor
 @Service
 public class DeleteStopRepoImplementation implements DeleteStopRepository {
     private StopCRUD stopCRUD;
+
     @Override
-    public boolean existsByNameAndStatus(String name, StopStatus status) {
-        return stopCRUD.existsByNameAndStatus(name, status);
+    public Optional<Stop> findById(String id) {
+        return stopCRUD.findById(id).map(StopDataMapper::dataCoreMapper);
     }
 
     @Override
-    public void deleteByName(String name) {
-        stopCRUD.deleteByName(name);
+    public void save(Stop stop) {
+        stopCRUD.save(StopDataMapper.dataNodeMapper(stop));
     }
 }

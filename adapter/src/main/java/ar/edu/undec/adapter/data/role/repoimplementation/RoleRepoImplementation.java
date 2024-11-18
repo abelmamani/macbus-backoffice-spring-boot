@@ -2,6 +2,7 @@ package ar.edu.undec.adapter.data.role.repoimplementation;
 
 import ar.edu.undec.adapter.data.role.crud.RoleCRUD;
 import ar.edu.undec.adapter.data.role.mapper.RoleDataMapper;
+import audit.EntityStatus;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 import role.models.Role;
@@ -37,7 +38,7 @@ public class RoleRepoImplementation implements RoleRepository {
 
     @Override
     public Optional<Role> findByName(String name) {
-        return roleCRUD.findByName(name).map(RoleDataMapper::dataCoreMapper);
+        return roleCRUD.findByNameAndStatus(name, EntityStatus.ACTIVE).map(RoleDataMapper::dataCoreMapper);
     }
 
     @Override
@@ -53,5 +54,10 @@ public class RoleRepoImplementation implements RoleRepository {
     @Override
     public Collection<Role> findAll() {
         return roleCRUD.findAll().stream().map(RoleDataMapper::dataCoreMapper).collect(Collectors.toList());
+    }
+
+    @Override
+    public Collection<Role> findAllByStatus(EntityStatus status) {
+        return roleCRUD.findAllByStatus(status).stream().map(RoleDataMapper::dataCoreMapper).collect(Collectors.toList());
     }
 }

@@ -1,8 +1,13 @@
 package stop.outputs;
 
-import stop.models.StopStatus;
+import stop.models.Stop;
+import stop.models.StopAssignedStatus;
+
+import java.util.Optional;
 
 public interface DeleteStopRepository {
-    boolean existsByNameAndStatus(String name, StopStatus status);
-    void deleteByName(String name);
+    Optional<Stop> findById(String id);
+    void save(Stop stop);
+    //boolean existsByNameAndStatus(String name, StopAssignedStatus status);
+    //void deleteByName(String name);
 }

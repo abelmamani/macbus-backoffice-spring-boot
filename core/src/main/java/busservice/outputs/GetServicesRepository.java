@@ -5,4 +5,5 @@ import java.util.Collection;
 
 public interface GetServicesRepository {
     Collection<ServiceModel> findAll();
+    Collection<ServiceModel> findAllActiveServices();
 }

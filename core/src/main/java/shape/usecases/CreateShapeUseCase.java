@@ -1,8 +1,9 @@
 package shape.usecases;
 
+import audit.EntityStatus;
 import busroute.exceptions.RouteNotExistsException;
 import busroute.models.Route;
-import busroute.models.RouteStatus;
+import busroute.models.RouteProgressStatus;
 import busroute.outputs.UpdateRouteRepository;
 import shape.exceptions.ShapeException;
 import shape.inpúts.CreateShapeInput;
@@ -19,11 +20,11 @@ public class CreateShapeUseCase implements CreateShapeInput {
     }
 
     @Override
-    public RouteStatus createShape(CreateShapeRequestModel createShapeRequestModel) {
+    public RouteProgressStatus createShape(CreateShapeRequestModel createShapeRequestModel) {
         Route busRoute = updateRouteRepository.findByLongName(createShapeRequestModel.getRouteName())
-                .orElseThrow(() -> new RouteNotExistsException("La linea a eliminar no existe."));
-        RouteStatus routeStatus = busRoute.getRouteStatus();
-        if(!routeStatus.equals(RouteStatus.EMPTY) && !routeStatus.equals(RouteStatus.WITH_SHAPES))
+                .orElseThrow(() -> new RouteNotExistsException("La linea no existe."));
+        RouteProgressStatus progressStatus = busRoute.getProgressStatus();
+        if(!progressStatus.equals(RouteProgressStatus.EMPTY) && !progressStatus.equals(RouteProgressStatus.WITH_SHAPES))
             throw new ShapeException("No se puede registrar el recorrido porque la ruta tiene paradas y/o viajes existentes.");
         Route route = Route.getInstance(busRoute.getId(),
                     busRoute.getShortName(),
@@ -31,14 +32,17 @@ public class CreateShapeUseCase implements CreateShapeInput {
                     busRoute.getDescription(),
                     busRoute.getColor(),
                     busRoute.getTextColor(),
-                    RouteStatus.WITH_SHAPES,
+                    RouteProgressStatus.WITH_SHAPES,
+                    busRoute.getStatus(),
                     createShapeRequestModel.getShapes(),
                     busRoute.getStopSequences(),
                     busRoute.getTrips());
-        if(!busRoute.getRouteStatus().equals(RouteStatus.EMPTY)){
+
+        if(!progressStatus.equals(RouteProgressStatus.EMPTY)){
             shapeRepository.deleteShapesByRoute(createShapeRequestModel.getRouteName());
         }
+
         updateRouteRepository.update(route);
-        return RouteStatus.WITH_SHAPES;
+        return RouteProgressStatus.WITH_SHAPES;
     }
 }

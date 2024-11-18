@@ -2,6 +2,7 @@ package ar.edu.undec.adapter.data.busservice.repoimplementations;
 
 import ar.edu.undec.adapter.data.busservice.crud.ServiceCRUD;
 import ar.edu.undec.adapter.data.busservice.mapper.ServiceDataMapper;
+import audit.EntityStatus;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 import busservice.outputs.UpdateServiceRepository;
@@ -18,8 +19,13 @@ public class UpdateServiceRepoImplementation implements UpdateServiceRepository 
     }
 
     @Override
+    public Optional<busservice.models.Service> findById(String id) {
+        return serviceCRUD.findById(id).map(ServiceDataMapper::dataCoreMapper);
+    }
+
+    @Override
     public Optional<busservice.models.Service> findByName(String name) {
-        return serviceCRUD.findByName(name).map(ServiceDataMapper::dataCoreMapper);
+        return serviceCRUD.findByNameAndStatus(name, EntityStatus.ACTIVE).map(ServiceDataMapper::dataCoreMapper);
     }
 
     @Override

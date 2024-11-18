@@ -1,5 +1,6 @@
 package role.usecases;
 
+import audit.EntityStatus;
 import role.inputs.GetRolesInput;
 import role.models.Role;
 import role.outputs.RoleRepository;
@@ -15,5 +16,10 @@ public class GetRolesUseCase implements GetRolesInput {
     @Override
     public Collection<Role> getRoles() {
         return roleRepository.findAll();
+    }
+
+    @Override
+    public Collection<Role> getActiveRoles() {
+        return roleRepository.findAllByStatus(EntityStatus.ACTIVE);
     }
 }

@@ -2,7 +2,8 @@ package ar.edu.undec.adapter.data.busroute.repoimplementations;
 
 import ar.edu.undec.adapter.data.busroute.crud.RouteCRUD;
 import ar.edu.undec.adapter.data.busroute.mapper.RouteDataMapper;
-import busroute.models.RouteStatus;
+import audit.EntityStatus;
+import busroute.models.RouteProgressStatus;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 import busroute.models.Route;
@@ -15,18 +16,18 @@ public class UpdateRouteRepoImplementation implements UpdateRouteRepository {
     private RouteCRUD routeCRUD;
 
     @Override
-    public Optional<RouteStatus> getRouteStatusByLongName(String longName) {
-        return routeCRUD.getRouteStatusByLongName(longName);
+    public Optional<RouteProgressStatus> getProgressStatusByLongName(String longName) {
+        return routeCRUD.getProgressStatusByLongName(longName);
     }
 
     @Override
     public Optional<Route> findByLongName(String longName) {
-        return routeCRUD.findByLongName(longName).map(RouteDataMapper::dataCoreMapper);
+        return routeCRUD.findByLongNameAndStatus(longName, EntityStatus.ACTIVE).map(RouteDataMapper::dataCoreMapper);
     }
 
     @Override
-    public void updateRouteStatus(String longName, RouteStatus routeStatus) {
-        routeCRUD.updateRouteStatus(longName, routeStatus);
+    public void updateProgressStatus(String longName, RouteProgressStatus progressStatus) {
+        routeCRUD.updateProgressStatus(longName, progressStatus);
     }
 
     @Override

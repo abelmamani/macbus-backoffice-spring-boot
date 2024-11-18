@@ -1,5 +1,6 @@
 package calendardate.usecases;
 
+import audit.EntityStatus;
 import busservice.exceptions.ServiceAlreadyExistException;
 import busservice.exceptions.ServiceNotExistsException;
 import busservice.models.Service;
@@ -33,6 +34,7 @@ public class CreateCalendarDateUseCase implements CreateCalendarDateInput {
             throw new ServiceAlreadyExistException("La fecha de calendario " + dateStr + " ya existe.");
         Service foundService = updateServiceRepository.findByName(calendarDateModel.getService())
                 .orElseThrow(() -> new ServiceNotExistsException("El servicio " + calendarDateModel.getService() + " no existe."));
+
         if (calendarDate.isBefore(DateUtils.getLocalDate(foundService.getStartDate())) || calendarDate.isAfter(DateUtils.getLocalDate(foundService.getEndDate())))
             throw new CalendarDateException("La fecha de calendario debe estar dentro del rango de fechas del servicio.");
         List<CalendarDate> calendarDates = new ArrayList<>(foundService.getCalendarDates());
@@ -42,6 +44,7 @@ public class CreateCalendarDateUseCase implements CreateCalendarDateInput {
                 foundService.getName(),
                 foundService.getStartDate(),
                 foundService.getEndDate(),
+                foundService.getStatus(),
                 calendarDates
         );
         updateServiceRepository.update(updatedService);

@@ -24,6 +24,7 @@ public class ChangePasswordUseCase implements ChangePasswordInput {
                 changePasswordRepository.encodePassword(changePasswordRequestModel.getPassword()),
                 user.getResetToken(),
                 user.getTokenExpiryDate(),
+                user.getStatus(),
                 user.getRole());
         changePasswordRepository.save(updateUser);
     }

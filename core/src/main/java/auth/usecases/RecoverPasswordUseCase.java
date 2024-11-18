@@ -29,6 +29,7 @@ public class RecoverPasswordUseCase implements RecoverPasswordInput {
                 user.getPassword(),
                 token,
                 LocalDateTime.now().plusHours(1),
+                user.getStatus(),
                 user.getRole());
 
         recoverPasswordRepository.save(updateUser);
@@ -48,6 +49,7 @@ public class RecoverPasswordUseCase implements RecoverPasswordInput {
                 recoverPasswordRepository.encodePassword(newPassword),
                 "",
                 LocalDateTime.now().minusMinutes(1),
+                user.getStatus(),
                 user.getRole());
         recoverPasswordRepository.save(updateUser);
     }

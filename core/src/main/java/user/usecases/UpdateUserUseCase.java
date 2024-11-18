@@ -1,5 +1,6 @@
 package user.usecases;
 
+import audit.EntityStatus;
 import role.exceptions.RoleException;
 import role.models.Role;
 import role.outputs.RoleRepository;
@@ -20,8 +21,18 @@ public class UpdateUserUseCase implements UpdateUserInput {
     }
 
     @Override
-    public void updateUser(String email, UpdateUserRequestModel updateUserRequestModel) {
-        User findUser = updateUserRepository.findByEmail(email).orElseThrow(() -> new UserNotExistException("El usuario " + email +" no existe."));
+    public void updateUser(UpdateUserRequestModel updateUserRequestModel) {
+        User findUser = updateUserRepository.findById(updateUserRequestModel.getId()).orElseThrow(() -> new UserNotExistException("El usuario a actualizar no existe."));
+        EntityStatus newStatus = findUser.getStatus();
+        if (newStatus.equals(EntityStatus.INACTIVE)) {
+            try {
+                validateStringField(updateUserRequestModel.getStatus(), "estado del usuario");
+                newStatus = EntityStatus.valueOf(updateUserRequestModel.getStatus());
+            } catch (IllegalArgumentException e) {
+                throw new RoleException("El estado " + updateUserRequestModel.getStatus()+ " no es válido.");
+            }
+        }
+
         if(updateUserRepository.existsByEmail(updateUserRequestModel.getEmail()) && !findUser.getEmail().equals(updateUserRequestModel.getEmail()))
             throw new UserAlreadyExistsException("El usuario con email "+updateUserRequestModel.getEmail()+" ya existe, utilice otro.");
         Role role = roleRepository.findByName(updateUserRequestModel.getRole()).orElseThrow(() -> new RoleException("El Rol "+ updateUserRequestModel.getRole() +" no existe."));
@@ -32,7 +43,13 @@ public class UpdateUserUseCase implements UpdateUserInput {
                 findUser.getPassword(),
                 findUser.getResetToken(),
                 findUser.getTokenExpiryDate(),
+                newStatus,
                 role);
         updateUserRepository.update(user);
+    }
+    private void validateStringField(String field, String fieldName) {
+        if (field == null || field.isBlank()) {
+            throw new RoleException("El " + fieldName + " es requerido.");
+        }
     }
 }

@@ -1,10 +1,11 @@
 package stop.usecases;
 
+import audit.EntityStatus;
 import stop.exceptions.StopAlreadyExistException;
 import stop.inputs.CreateStopInput;
 import stop.models.CreateStopRequestModel;
 import stop.models.Stop;
-import stop.models.StopStatus;
+import stop.models.StopAssignedStatus;
 import stop.outputs.CreateStopRepository;
 
 public class CreateStopUseCase implements CreateStopInput {
@@ -22,7 +23,8 @@ public class CreateStopUseCase implements CreateStopInput {
                 createStopRequestModel.getName(),
                 createStopRequestModel.getLatitude(),
                 createStopRequestModel.getLongitude(),
-                StopStatus.UNASSIGNED);
+                StopAssignedStatus.UNASSIGNED,
+                EntityStatus.ACTIVE);
         return createStopRepository.save(stop);
     }
 }

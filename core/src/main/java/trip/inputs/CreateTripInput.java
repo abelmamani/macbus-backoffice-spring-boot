@@ -1,8 +1,8 @@
 package trip.inputs;
 
-import busroute.models.RouteStatus;
+import busroute.models.RouteProgressStatus;
 import trip.models.CreateTripRequestModel;
 
 public interface CreateTripInput {
-    RouteStatus createTrip(CreateTripRequestModel createTripRequestModel);
+    RouteProgressStatus createTrip(CreateTripRequestModel createTripRequestModel);
 }

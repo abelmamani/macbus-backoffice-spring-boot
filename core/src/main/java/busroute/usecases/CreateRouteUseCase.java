@@ -1,10 +1,11 @@
 package busroute.usecases;
 
+import audit.EntityStatus;
 import busroute.exceptions.RouteAlreadyExistException;
 import busroute.inputs.CreateRouteInput;
 import busroute.models.CreateRouteRequestModel;
 import busroute.models.Route;
-import busroute.models.RouteStatus;
+import busroute.models.RouteProgressStatus;
 import busroute.outputs.CreateRouteRepository;
 import shape.models.Shape;
 import stopsequence.models.StopSequence;
@@ -31,7 +32,8 @@ public class CreateRouteUseCase implements CreateRouteInput {
                 createRouteRequestModel.getDescription(),
                 createRouteRequestModel.getColor(),
                 createRouteRequestModel.getTextColor(),
-                RouteStatus.EMPTY,
+                RouteProgressStatus.EMPTY,
+                EntityStatus.ACTIVE,
                 new ArrayList<Shape>(),
                 new ArrayList<StopSequence> (),
                 new ArrayList<Trip>());

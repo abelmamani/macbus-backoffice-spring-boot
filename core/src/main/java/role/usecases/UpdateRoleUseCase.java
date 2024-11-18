@@ -1,5 +1,6 @@
 package role.usecases;
 
+import audit.EntityStatus;
 import privilege.exceptions.PrivilegeException;
 import privilege.models.EPrivilege;
 import privilege.models.Privilege;
@@ -25,12 +26,12 @@ public class UpdateRoleUseCase implements UpdateRoleInput {
     public void updateRole(UpdateRoleRequestModel updateRoleRequestModel) {
         String roleId = updateRoleRequestModel.getId();
         String roleName = updateRoleRequestModel.getName();
+        String status = updateRoleRequestModel.getStatus();
         List<String> privileges = updateRoleRequestModel.getPrivileges();
 
-        if (roleId == null || roleId.isBlank())
-            throw new RoleException("El id del rol es requerido.");
-        if (roleName == null || roleName.isBlank())
-            throw new RoleException("El nombre del rol es requerido.");
+        validateStringField(roleId, "id del rol");
+        validateStringField(roleName, "nombre del rol");
+
         if (privileges == null || privileges.isEmpty())
             throw new RoleException("El rol debe tener al menos un privilegio.");
 
@@ -43,6 +44,17 @@ public class UpdateRoleUseCase implements UpdateRoleInput {
         });
 
         Role foundRole = roleRepository.findById(updateRoleRequestModel.getId()).orElseThrow(() -> new RoleException("El rol a actualizar no existe."));
+
+        EntityStatus newStatus = foundRole.getStatus();
+
+        if (newStatus.equals(EntityStatus.INACTIVE)) {
+            validateStringField(status, "estado del rol");
+            try {
+                 newStatus = EntityStatus.valueOf(status);
+            } catch (IllegalArgumentException e) {
+                throw new RoleException("El estado " + status + " no es válido.");
+            }
+        }
         if(roleRepository.existsByName(updateRoleRequestModel.getName()) && !foundRole.getName().equals(updateRoleRequestModel.getName()))
             throw new RoleException("El rol con nombre "+ updateRoleRequestModel.getName()+ " ya existe, elige otro.");
 
@@ -52,7 +64,12 @@ public class UpdateRoleUseCase implements UpdateRoleInput {
                             .orElseThrow(() -> new PrivilegeException("El privilegio '" + privilege + "' no existe."));
                 }).collect(Collectors.toList());
 
-        Role role = Role.getInstance(roleId, roleName, newPrivileges);
+        Role role = Role.getInstance(roleId, roleName, newStatus, newPrivileges);
         roleRepository.save(role);
+    }
+    private void validateStringField(String field, String fieldName) {
+        if (field == null || field.isBlank()) {
+            throw new RoleException("El " + fieldName + " es requerido.");
+        }
     }
 }

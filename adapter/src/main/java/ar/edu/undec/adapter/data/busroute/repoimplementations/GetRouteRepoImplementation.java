@@ -6,6 +6,7 @@ import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 import busroute.outputs.GetRouteRepository;
 import report.models.RouteStatusCountsResponseModel;
+import java.util.Optional;
 
 @AllArgsConstructor
 @Service
@@ -18,7 +19,7 @@ public class GetRouteRepoImplementation implements GetRouteRepository {
     }
 
     @Override
-    public RouteGeneralInfoResponseModel findByRouteLongName(String longName) {
+    public Optional<RouteGeneralInfoResponseModel> findByRouteLongName(String longName) {
         return routeCRUD.findByRouteLongName(longName);
     }
 

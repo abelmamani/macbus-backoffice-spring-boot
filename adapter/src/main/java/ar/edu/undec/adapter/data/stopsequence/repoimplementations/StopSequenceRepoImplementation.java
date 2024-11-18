@@ -2,14 +2,13 @@ package ar.edu.undec.adapter.data.stopsequence.repoimplementations;
 
 import ar.edu.undec.adapter.data.stopsequence.crud.StopSequenceCRUD;
 import ar.edu.undec.adapter.data.stopsequence.mapper.StopSequenceDataMapper;
-import busroute.models.RouteStatus;
+import busroute.models.RouteProgressStatus;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 import stopsequence.models.StopSequence;
 import stopsequence.models.StopSequenceResponseModel;
 import stopsequence.outputs.StopSequenceRepository;
 import java.util.List;
-import java.util.Map;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
@@ -44,7 +43,7 @@ public class StopSequenceRepoImplementation implements StopSequenceRepository {
     }
 
     @Override
-    public void addStopSequence(String longName, String sequenceId, RouteStatus routeStatus) {
+    public void addStopSequence(String longName, String sequenceId, RouteProgressStatus routeStatus) {
         stopSequenceCRUD.addStopSequence(longName, sequenceId, routeStatus);
     }
 
@@ -55,8 +54,7 @@ public class StopSequenceRepoImplementation implements StopSequenceRepository {
 
     @Override
     public List<StopSequenceResponseModel> findAllByRouteLongName(String longName) {
-        List<Map<String, Object>> results = stopSequenceCRUD.findAllStopSequencesByRouteLongName(longName);
-        return results.stream()
+        return stopSequenceCRUD.findAllStopSequencesByRouteLongName(longName).stream()
                 .map(StopSequenceDataMapper::mapToStopSequenceResponseModel)
                 .collect(Collectors.toList());
     }

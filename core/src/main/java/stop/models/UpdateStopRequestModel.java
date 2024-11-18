@@ -1,18 +1,23 @@
 package stop.models;
 
 public class UpdateStopRequestModel {
+    private String id;
     private String name;
     private Double latitude;
     private Double longitude;
+    private String status;
     private UpdateStopRequestModel(){}
-    private UpdateStopRequestModel(String name, Double latitude, Double longitude) {
+
+    public UpdateStopRequestModel(String id, String name, Double latitude, Double longitude, String status) {
+        this.id = id;
         this.name = name;
         this.latitude = latitude;
         this.longitude = longitude;
+        this.status = status;
     }
 
-    public static UpdateStopRequestModel getInstance(String name, Double latitude, Double longitude) {
-        return new UpdateStopRequestModel(name, latitude, longitude);
+    public String getId() {
+        return id;
     }
 
     public String getName() {
@@ -25,5 +30,9 @@ public class UpdateStopRequestModel {
 
     public Double getLongitude() {
         return longitude;
+    }
+
+    public String getStatus() {
+        return status;
     }
 }

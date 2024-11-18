@@ -12,6 +12,7 @@ public class RoleDataMapper {
         try {
             return Role.getInstance(roleNode.getId(),
                     roleNode.getName(),
+                    roleNode.getStatus(),
                     roleNode.getPrivileges().stream().map(PrivilegeDataMapper::dataCoreMapper).collect(Collectors.toList()));
         }catch (RuntimeException exception){
             throw new FailedMappingException("Error mapping from node to core");
@@ -23,6 +24,7 @@ public class RoleDataMapper {
             return RoleNode.builder()
                     .id(role.getId())
                     .name(role.getName())
+                    .status(role.getStatus())
                     .privileges(role.getPrivileges().stream().map(PrivilegeDataMapper::dataNodeMapper).collect(Collectors.toList()))
                     .build();
         }catch (RuntimeException exception){

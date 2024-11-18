@@ -26,10 +26,20 @@ public class RoleController {
     private DeleteRoleInput deleteRoleInput;
 
     @GetMapping
-    @PreAuthorize("hasAnyAuthority('USER_MANAGER', 'ROLE_MANAGER')")
+    @PreAuthorize("hasAnyAuthority('ROLE_MANAGER')")
     public ResponseEntity<?> getRoles(){
         try {
             return ResponseEntity.ok(getRolesInput.getRoles());
+        }catch (RuntimeException exception){
+            return ResponseManager.badRequest(exception.getMessage());
+        }
+    }
+
+    @GetMapping("/active")
+    @PreAuthorize("hasAnyAuthority('USER_MANAGER')")
+    public ResponseEntity<?> getActiveRoles(){
+        try {
+            return ResponseEntity.ok(getRolesInput.getActiveRoles());
         }catch (RuntimeException exception){
             return ResponseManager.badRequest(exception.getMessage());
         }

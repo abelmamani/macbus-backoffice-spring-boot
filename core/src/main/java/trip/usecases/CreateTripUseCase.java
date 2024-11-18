@@ -1,7 +1,8 @@
 package trip.usecases;
 
+import audit.EntityStatus;
 import busroute.exceptions.RouteException;
-import busroute.models.RouteStatus;
+import busroute.models.RouteProgressStatus;
 import busroute.outputs.UpdateRouteRepository;
 import busservice.exceptions.ServiceException;
 import busservice.models.Service;
@@ -34,14 +35,14 @@ public class CreateTripUseCase implements CreateTripInput {
     }
 
     @Override
-    public RouteStatus createTrip(CreateTripRequestModel createTripRequestModel) {
+    public RouteProgressStatus createTrip(CreateTripRequestModel createTripRequestModel) {
         String departureTime = TimeUtils.formatTime(createTripRequestModel.getDepartureTime());
         String longName = createTripRequestModel.getBusRouteName();
-        RouteStatus routeStatus = updateRouteRepository.getRouteStatusByLongName(longName).orElseThrow(() -> new RouteException("La linea no existe."));
+        RouteProgressStatus routeStatus = updateRouteRepository.getProgressStatusByLongName(longName).orElseThrow(() -> new RouteException("La linea no existe."));
 
-        if (!routeStatus.equals(RouteStatus.WITH_STOPS) && !routeStatus.equals(RouteStatus.WITH_TRIPS))
+        if (!routeStatus.equals(RouteProgressStatus.WITH_STOPS) && !routeStatus.equals(RouteProgressStatus.WITH_TRIPS))
             throw new TripException("No se puede registrar viaje porque la línea no tiene un reocrrido y/o secuencias de paradas definidos.");
-        Service service = getServiceRepository.findByName(createTripRequestModel.getServiceName()).orElseThrow(() -> new ServiceException("El servicio no existe."));
+        Service service = getServiceRepository.findByNameAndStatus(createTripRequestModel.getServiceName(), EntityStatus.ACTIVE).orElseThrow(() -> new ServiceException("El servicio no existe."));
         if (tripRepository.existsByRouteAndDepartureTimeAndServiceName(longName, departureTime, createTripRequestModel.getServiceName()))
             throw new TripException("La linea "+longName+" ya tiene un viaje con el mismo servicio y hora de salida.");
 
@@ -61,12 +62,13 @@ public class CreateTripUseCase implements CreateTripInput {
                                         ss.getStop().getName(),
                                         ss.getStop().getLatitude(),
                                         ss.getStop().getLongitude(),
+                                        ss.getStop().getAssignedStatus(),
                                         ss.getStop().getStatus())
                         ))
                         .collect(Collectors.toList()));
         String tripId = tripRepository.save(trip);
         tripRepository.addTrip(longName, tripId);
-        return RouteStatus.WITH_TRIPS;
+        return RouteProgressStatus.WITH_TRIPS;
     }
 
     /*

@@ -2,6 +2,7 @@ package ar.edu.undec.adapter.data.user.repoimplementation;
 
 import ar.edu.undec.adapter.data.user.crud.UserCRUD;
 import ar.edu.undec.adapter.data.user.mapper.UserDataMapper;
+import audit.EntityStatus;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 import user.models.User;
@@ -15,6 +16,6 @@ public class GetUserRepoImplementation implements GetUserRepository {
 
     @Override
     public Optional<User> findByEmail(String email) {
-        return userCRUD.findByEmail(email).map(UserDataMapper::dataCoreMapper);
+        return userCRUD.findByEmailAndStatus(email, EntityStatus.ACTIVE).map(UserDataMapper::dataCoreMapper);
     }
 }

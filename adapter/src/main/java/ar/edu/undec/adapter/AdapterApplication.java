@@ -6,6 +6,7 @@ import ar.edu.undec.adapter.data.role.crud.RoleCRUD;
 import ar.edu.undec.adapter.data.role.models.RoleNode;
 import ar.edu.undec.adapter.data.user.crud.UserCRUD;
 import ar.edu.undec.adapter.data.user.models.UserNode;
+import audit.EntityStatus;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
@@ -50,6 +51,7 @@ public class AdapterApplication {
             RoleNode adminRole = roleCRUD.findByName("ADMIN").orElseGet(() -> {
                 RoleNode role = RoleNode.builder()
                         .name("ADMIN")
+                        .status(EntityStatus.ACTIVE)
                         .privileges(privilegeNodes)
                         .build();
                 return roleCRUD.save(role);
@@ -62,6 +64,7 @@ public class AdapterApplication {
                         .password(passwordEncoder.encode("aA12345678"))
                         .resetToken(UUID.randomUUID().toString())
                         .tokenExpiryDate(LocalDateTime.now().minusMinutes(1))
+                        .status(EntityStatus.ACTIVE)
                         .role(adminRole)
                         .build();
                 userCRUD.save(superAdminUser);

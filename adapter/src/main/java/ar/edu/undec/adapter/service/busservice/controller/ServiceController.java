@@ -20,10 +20,20 @@ public class ServiceController {
     private DeleteServiceInput deleteServiceInput;
 
     @GetMapping
-    @PreAuthorize("hasAnyAuthority('SERVICE_MANAGER', 'ROUTE_MANAGER', 'CALENDAR_DATE_MANAGER')")
+    @PreAuthorize("hasAnyAuthority('SERVICE_MANAGER')")
     public ResponseEntity<?> getServices(){
         try {
             return ResponseEntity.ok(getServicesInput.getServices());
+        }catch (RuntimeException exception){
+            return ResponseManager.badRequest(exception.getMessage());
+        }
+    }
+
+    @GetMapping("/active")
+    @PreAuthorize("hasAnyAuthority('ROUTE_MANAGER', 'CALENDAR_DATE_MANAGER')")
+    public ResponseEntity<?> getActiveServices(){
+        try {
+            return ResponseEntity.ok(getServicesInput.getActiveServices());
         }catch (RuntimeException exception){
             return ResponseManager.badRequest(exception.getMessage());
         }
@@ -49,11 +59,11 @@ public class ServiceController {
         }
     }
 
-    @PutMapping("/{name}")
+    @PutMapping
     @PreAuthorize("hasAuthority('SERVICE_MANAGER')")
-    public ResponseEntity<?> updateService(@PathVariable("name") String name, @RequestBody ServiceModel updateServiceRequestModel){
+    public ResponseEntity<?> updateService(@RequestBody ServiceModel updateServiceRequestModel){
         try {
-            updateServiceInput.updateService(name, updateServiceRequestModel);
+            updateServiceInput.updateService(updateServiceRequestModel);
             return ResponseManager.successRequest("Se actualizo el servicio correctamente.");
         }catch (RuntimeException exception){
             return ResponseManager.badRequest(exception.getMessage());

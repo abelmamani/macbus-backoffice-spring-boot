@@ -16,4 +16,9 @@ public class GetServicesUseCase implements GetServicesInput {
     public Collection<ServiceModel> getServices() {
         return getServicesRepository.findAll();
     }
+
+    @Override
+    public Collection<ServiceModel> getActiveServices() {
+        return getServicesRepository.findAllActiveServices();
+    }
 }

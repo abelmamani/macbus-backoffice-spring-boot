@@ -1,11 +1,11 @@
 package busroute.models;
 
+import audit.EntityStatus;
 import busroute.exceptions.RouteException;
 import shape.models.Shape;
 import stopsequence.models.StopSequence;
 import trip.models.Trip;
 import utils.ValidatorUtils;
-
 import java.util.Comparator;
 import java.util.List;
 import java.util.NoSuchElementException;
@@ -17,25 +17,27 @@ public class Route {
     private String description;
     private String color;
     private String textColor;
-    private RouteStatus routeStatus;
+    private RouteProgressStatus progressStatus;
+    private EntityStatus status;
     private List<Shape> shapes;
     private List<StopSequence> stopSequences;
     private List<Trip> trips;
 
-    private Route(String id, String shortName, String longName, String description, String color, String textColor, RouteStatus routeStatus, List<Shape> shapes, List<StopSequence> stopSequences, List<Trip> trips) {
+    private Route(String id, String shortName, String longName, String description, String color, String textColor, RouteProgressStatus progressStatus, EntityStatus status, List<Shape> shapes, List<StopSequence> stopSequences, List<Trip> trips) {
         this.id = id;
         this.shortName = shortName;
         this.longName = longName;
         this.description = description;
         this.color = color;
         this.textColor = textColor;
-        this.routeStatus = routeStatus;
+        this.progressStatus = progressStatus;
+        this.status = status;
         this.shapes = shapes;
         this.stopSequences = stopSequences;
         this.trips = trips;
     }
 
-    public static Route getInstance(String id, String shortName, String longName, String description, String color, String textColor, RouteStatus routeStatus, List<Shape> shapes, List<StopSequence> stopSequences, List<Trip> trips) {
+    public static Route getInstance(String id, String shortName, String longName, String description, String color, String textColor, RouteProgressStatus progressStatus, EntityStatus status, List<Shape> shapes, List<StopSequence> stopSequences, List<Trip> trips) {
         if (shortName == null || shortName.trim().isEmpty())
             throw new RouteException("El nombre corto de la linea es requerido.");
         if (longName == null || longName.trim().isEmpty())
@@ -50,9 +52,11 @@ public class Route {
             throw new RouteException("El color de texto de la línea es requerido.");
         if (!ValidatorUtils.isValidHexColor(textColor))
             throw new RouteException("El color de texto debe estar en formato hexadecimal (# seguido de 6 caracteres hexadecimales).");
-        if (routeStatus == null)
+        if (progressStatus == null)
+            throw new RouteException("El estado de progreso de la linea es requerido.");
+        if (status == null)
             throw new RouteException("El estado de la linea es requerido.");
-        return new Route(id, shortName.trim(), longName.trim(), description.trim(), color.trim(), textColor.trim(), routeStatus, shapes, stopSequences, trips);
+        return new Route(id, shortName.trim(), longName.trim(), description.trim(), color.trim(), textColor.trim(), progressStatus, status, shapes, stopSequences, trips);
     }
 
     public String getId() {
@@ -79,9 +83,9 @@ public class Route {
         return textColor;
     }
 
-    public RouteStatus getRouteStatus() {
-        return routeStatus;
-    }
+    public RouteProgressStatus getProgressStatus() { return progressStatus; }
+
+    public EntityStatus getStatus() { return status; }
 
     public List<Shape> getShapes() {
         return shapes;

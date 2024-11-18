@@ -1,21 +1,26 @@
 package busroute.models;
 
+import audit.EntityStatus;
+
 public class RouteGeneralInfoResponseModel {
     private String shortName;
     private String longName;
     private String description;
     private String color;
     private String textColor;
-    private RouteStatus routeStatus;
-    public RouteGeneralInfoResponseModel(){}
+    private RouteProgressStatus progressStatus;
+    private EntityStatus status;
 
-    public RouteGeneralInfoResponseModel(String shortName, String longName, String description, String color, String textColor, RouteStatus routeStatus) {
+    public RouteGeneralInfoResponseModel() {}
+
+    public RouteGeneralInfoResponseModel(String shortName, String longName, String description, String color, String textColor, RouteProgressStatus progressStatus, EntityStatus status) {
         this.shortName = shortName;
         this.longName = longName;
         this.description = description;
         this.color = color;
         this.textColor = textColor;
-        this.routeStatus = routeStatus;
+        this.progressStatus = progressStatus;
+        this.status = status;
     }
 
     public String getShortName() {
@@ -38,7 +43,11 @@ public class RouteGeneralInfoResponseModel {
         return textColor;
     }
 
-    public RouteStatus getRouteStatus() {
-        return routeStatus;
+    public RouteProgressStatus getProgressStatus() {
+        return progressStatus;
+    }
+
+    public EntityStatus getStatus() {
+        return status;
     }
 }

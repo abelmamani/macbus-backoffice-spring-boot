@@ -1,7 +1,7 @@
 package stopsequence.inputs;
 
-import busroute.models.RouteStatus;
+import busroute.models.RouteProgressStatus;
 
 public interface DeleteStopSequenceInput {
-    RouteStatus deleteStopSequence(String busRouteName, String sequenceId);
+    RouteProgressStatus deleteStopSequence(String busRouteName, String sequenceId);
 }

@@ -1,5 +1,6 @@
 package busservice.usecases;
 
+import audit.EntityStatus;
 import busservice.exceptions.ServiceNotExistsException;
 import busservice.inputs.GetServiceInput;
 import busservice.models.Service;
@@ -14,6 +15,6 @@ public class GetServiceUseCase implements GetServiceInput {
 
     @Override
     public Service getService(String name) {
-        return getServiceRepository.findByName(name).orElseThrow(() -> new ServiceNotExistsException("El servicio " + name + " no existe."));
+        return getServiceRepository.findByNameAndStatus(name, EntityStatus.ACTIVE).orElseThrow(() -> new ServiceNotExistsException("El servicio " + name + " no existe."));
     }
 }

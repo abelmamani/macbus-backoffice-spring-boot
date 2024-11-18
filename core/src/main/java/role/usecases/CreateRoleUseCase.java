@@ -1,5 +1,6 @@
 package role.usecases;
 
+import audit.EntityStatus;
 import privilege.exceptions.PrivilegeException;
 import privilege.models.EPrivilege;
 import privilege.outputs.PrivilegeRepository;
@@ -49,7 +50,7 @@ public class CreateRoleUseCase implements CreateRoleInput {
                     return privilegeRepository.findByName(privilege)
                             .orElseThrow(() -> new PrivilegeException("El privilegio '" + privilege + "' no existe."));
                 }).collect(Collectors.toList());
-        Role role = Role.getInstance(null, roleName, newPrivileges);
+        Role role = Role.getInstance(null, roleName, EntityStatus.ACTIVE, newPrivileges);
         roleRepository.save(role);
     }
 }

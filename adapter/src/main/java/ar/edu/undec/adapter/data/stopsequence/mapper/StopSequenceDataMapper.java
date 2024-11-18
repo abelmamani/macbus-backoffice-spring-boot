@@ -3,7 +3,8 @@ package ar.edu.undec.adapter.data.stopsequence.mapper;
 import ar.edu.undec.adapter.data.exceptions.FailedMappingException;
 import ar.edu.undec.adapter.data.stop.mapper.StopDataMapper;
 import ar.edu.undec.adapter.data.stopsequence.models.StopSequenceNode;
-import stop.models.StopStatus;
+import audit.EntityStatus;
+import stop.models.StopAssignedStatus;
 import stopsequence.models.StopResponseModel;
 import stopsequence.models.StopSequence;
 import stopsequence.models.StopSequenceResponseModel;
@@ -43,7 +44,8 @@ public class StopSequenceDataMapper {
                 (String) stopMap.get("name"),
                 (Double) stopMap.get("latitude"),
                 (Double) stopMap.get("longitude"),
-                StopStatus.valueOf((String) stopMap.get("status")));
+                StopAssignedStatus.valueOf((String) stopMap.get("assignedStatus")),
+                EntityStatus.valueOf((String) stopMap.get("status")));;
         return new StopSequenceResponseModel(
                 (String) map.get("id"),
                 (String) map.get("arrivalTime"),

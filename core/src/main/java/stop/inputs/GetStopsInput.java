@@ -6,4 +6,5 @@ import java.util.Collection;
 
 public interface GetStopsInput {
     Collection<Stop> getStops();
+    Collection<Stop> getActiveStops();
 }

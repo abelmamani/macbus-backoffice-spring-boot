@@ -1,12 +1,12 @@
 package busroute.outputs;
 
 import busroute.models.Route;
-import busroute.models.RouteStatus;
+import busroute.models.RouteProgressStatus;
 import java.util.Optional;
 
 public interface UpdateRouteRepository {
-    Optional<RouteStatus> getRouteStatusByLongName(String longName);
+    Optional<RouteProgressStatus> getProgressStatusByLongName(String longName);
     Optional<Route> findByLongName(String longName);
-    void updateRouteStatus(String longName, RouteStatus routeStatus);
+    void updateProgressStatus(String longName, RouteProgressStatus progressStatus);
     void update(Route route);
 }

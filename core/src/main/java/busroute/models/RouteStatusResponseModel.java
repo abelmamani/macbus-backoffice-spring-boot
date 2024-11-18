@@ -1,14 +1,14 @@
 package busroute.models;
 
 public class RouteStatusResponseModel {
-    private RouteStatus routeStatus;
+    private RouteProgressStatus routeStatus;
     public RouteStatusResponseModel(){}
 
-    public RouteStatusResponseModel(RouteStatus routeStatus) {
+    public RouteStatusResponseModel(RouteProgressStatus routeStatus) {
         this.routeStatus = routeStatus;
     }
 
-    public RouteStatus getRouteStatus() {
+    public RouteProgressStatus getRouteStatus() {
         return routeStatus;
     }
 }

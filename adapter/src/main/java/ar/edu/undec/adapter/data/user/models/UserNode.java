@@ -2,6 +2,7 @@ package ar.edu.undec.adapter.data.user.models;
 
 import ar.edu.undec.adapter.data.audit.AuditableNode;
 import ar.edu.undec.adapter.data.role.models.RoleNode;
+import audit.EntityStatus;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -36,6 +37,8 @@ public class UserNode extends AuditableNode implements UserDetails {
     private String resetToken;
     @Property(name = "token_expiry_date")
     private LocalDateTime tokenExpiryDate;
+    @Property(name = "status")
+    private EntityStatus status;
     @Relationship(type = "HAS_ROLE")
     private RoleNode role;
 

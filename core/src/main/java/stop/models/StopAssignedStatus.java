@@ -1,5 +1,5 @@
 package stop.models;
 
-public enum StopStatus {
+public enum StopAssignedStatus {
     ASSIGNED, UNASSIGNED;
 }

@@ -1,6 +1,6 @@
 package stopsequence.outputs;
 
-import busroute.models.RouteStatus;
+import busroute.models.RouteProgressStatus;
 import stopsequence.models.StopSequence;
 import stopsequence.models.StopSequenceResponseModel;
 import java.util.List;
@@ -12,7 +12,7 @@ public interface StopSequenceRepository {
     boolean existsByStopName(String stopName);
     int countStopSequencesByRoute(String longName);
     void deleteStopSequence(String sequenceId);
-    void addStopSequence(String longName, String sequenceId, RouteStatus routeStatus);
+    void addStopSequence(String longName, String sequenceId, RouteProgressStatus routeStatus);
     String save(StopSequence stopSequence);
     List<StopSequenceResponseModel> findAllByRouteLongName(String longName);
 

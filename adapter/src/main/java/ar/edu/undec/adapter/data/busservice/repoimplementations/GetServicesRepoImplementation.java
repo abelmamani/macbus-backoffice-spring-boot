@@ -18,4 +18,9 @@ public class GetServicesRepoImplementation implements GetServicesRepository {
     public Collection<ServiceModel> findAll() {
         return serviceCRUD.findAllServices().stream().map(ServiceDataMapper::mapToServiceModel).collect(Collectors.toList());
     }
+
+    @Override
+    public Collection<ServiceModel> findAllActiveServices() {
+        return serviceCRUD.findAllActiveServices().stream().map(ServiceDataMapper::mapToServiceModel).collect(Collectors.toList());
+    }
 }

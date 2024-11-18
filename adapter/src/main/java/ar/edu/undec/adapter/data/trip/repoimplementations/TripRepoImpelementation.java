@@ -2,7 +2,7 @@ package ar.edu.undec.adapter.data.trip.repoimplementations;
 
 import ar.edu.undec.adapter.data.trip.crud.TripCRUD;
 import ar.edu.undec.adapter.data.trip.mapper.TripDataMapper;
-import busroute.models.RouteStatus;
+import busroute.models.RouteProgressStatus;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 import report.models.TripStatusCountsResponseModel;
@@ -45,7 +45,7 @@ public class TripRepoImpelementation implements TripRepository {
 
     @Override
     public void addTrip(String longName, String tripId) {
-        tripCRUD.addTrip(longName, tripId, RouteStatus.WITH_TRIPS);
+        tripCRUD.addTrip(longName, tripId, RouteProgressStatus.WITH_TRIPS);
     }
 
     @Override

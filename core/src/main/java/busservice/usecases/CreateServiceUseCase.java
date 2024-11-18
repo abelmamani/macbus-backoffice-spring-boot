@@ -1,5 +1,6 @@
 package busservice.usecases;
 
+import audit.EntityStatus;
 import busservice.exceptions.ServiceAlreadyExistException;
 import busservice.exceptions.ServiceException;
 import busservice.inputs.CreateServiceInput;
@@ -32,6 +33,7 @@ public class CreateServiceUseCase implements CreateServiceInput {
                 createServiceRequestModel.getName(),
                 createServiceRequestModel.getStartDate(),
                 createServiceRequestModel.getEndDate(),
+                EntityStatus.ACTIVE,
                 new ArrayList<CalendarDate>());
         return createServiceRepository.save(service);
     }

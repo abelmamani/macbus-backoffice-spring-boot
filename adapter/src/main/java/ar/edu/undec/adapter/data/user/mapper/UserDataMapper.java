@@ -17,6 +17,7 @@ public class UserDataMapper {
                     userNode.getPassword(),
                     userNode.getResetToken(),
                     userNode.getTokenExpiryDate(),
+                    userNode.getStatus(),
                     RoleDataMapper.dataCoreMapper(userNode.getRole()));
         }catch (RuntimeException exception){
             throw new FailedMappingException("Error mapping from node to core");
@@ -32,6 +33,7 @@ public class UserDataMapper {
                     .password(user.getPassword())
                     .resetToken(user.getResetToken())
                     .tokenExpiryDate(user.getTokenExpiryDate())
+                    .status(user.getStatus())
                     .role(RoleDataMapper.dataNodeMapper(user.getRole()))
                     .build();
         }catch (RuntimeException exception){
@@ -45,6 +47,7 @@ public class UserDataMapper {
                 (String) map.get("name"),
                 (String) map.get("lastName"),
                 (String) map.get("email"),
-                (String) map.get("role"));
+                (String) map.get("role"),
+                (String) map.get("status"));
     }
 }

@@ -2,6 +2,7 @@ package ar.edu.undec.adapter.data.auth.repoimplementations;
 
 import ar.edu.undec.adapter.data.user.crud.UserCRUD;
 import ar.edu.undec.adapter.data.user.mapper.UserDataMapper;
+import audit.EntityStatus;
 import auth.outputs.RecoverPasswordRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.mail.SimpleMailMessage;
@@ -20,7 +21,7 @@ public class RecoverPasswordRepoImplementation implements RecoverPasswordReposit
     private final JavaMailSender mailSender;
     @Override
     public Optional<User> findByEmail(String email) {
-        return userCRUD.findByEmail(email).map(UserDataMapper::dataCoreMapper);
+        return userCRUD.findByEmailAndStatus(email, EntityStatus.ACTIVE).map(UserDataMapper::dataCoreMapper);
     }
 
     @Override

@@ -1,5 +1,6 @@
 package role.outputs;
 
+import audit.EntityStatus;
 import role.models.Role;
 import java.util.Collection;
 import java.util.Optional;
@@ -13,4 +14,5 @@ public interface RoleRepository {
     void deleteById(String id);
     void save(Role role);
     Collection<Role> findAll();
+    Collection<Role> findAllByStatus(EntityStatus status);
 }

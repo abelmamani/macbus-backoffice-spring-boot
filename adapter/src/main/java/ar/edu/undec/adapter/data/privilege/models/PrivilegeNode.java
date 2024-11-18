@@ -7,6 +7,7 @@ import lombok.NoArgsConstructor;
 import org.springframework.data.neo4j.core.schema.GeneratedValue;
 import org.springframework.data.neo4j.core.schema.Id;
 import org.springframework.data.neo4j.core.schema.Node;
+import org.springframework.data.neo4j.core.schema.Property;
 import org.springframework.data.neo4j.core.support.UUIDStringGenerator;
 
 @Data
@@ -18,5 +19,6 @@ public class PrivilegeNode {
     @Id
     @GeneratedValue(UUIDStringGenerator.class)
     private String id;
+    @Property(name = "name")
     private String name;
 }

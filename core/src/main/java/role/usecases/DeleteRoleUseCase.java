@@ -1,7 +1,9 @@
 package role.usecases;
 
+import audit.EntityStatus;
 import role.exceptions.RoleException;
 import role.inputs.DeleteRoleInput;
+import role.models.Role;
 import role.outputs.RoleRepository;
 
 public class DeleteRoleUseCase implements DeleteRoleInput {
@@ -13,10 +15,13 @@ public class DeleteRoleUseCase implements DeleteRoleInput {
 
     @Override
     public void deleteRole(String id) {
-        if (!roleRepository.existsById(id))
-            throw new RoleException("El rol a eliminar no existe.");
+        Role foundRole = roleRepository.findById(id).orElseThrow(() -> new RoleException("El rol a eliminar no existe."));
         if (roleRepository.isUsedByUsers(id))
             throw new RoleException("El rol no puede eliminarse porque está en uso.");
-        roleRepository.deleteById(id);
+        Role role = Role.getInstance(foundRole.getId(),
+                foundRole.getName(),
+                EntityStatus.INACTIVE,
+                foundRole.getPrivileges());
+        roleRepository.save(role);
     }
 }

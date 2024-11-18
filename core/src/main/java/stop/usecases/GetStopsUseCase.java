@@ -16,4 +16,9 @@ public class GetStopsUseCase implements GetStopsInput {
     public Collection<Stop> getStops() {
         return getStopsRepository.findAll();
     }
+
+    @Override
+    public Collection<Stop> getActiveStops() {
+        return getStopsRepository.findAllActiveStops();
+    }
 }

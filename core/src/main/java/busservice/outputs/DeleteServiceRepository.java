@@ -1,6 +1,10 @@
 package busservice.outputs;
 
+import audit.EntityStatus;
+import busservice.models.Service;
+import java.util.Optional;
+
 public interface DeleteServiceRepository {
-    boolean existsByName(String name);
-    void deleteByName(String name);
+    Optional<Service> findByNameAndStatus(String name, EntityStatus status);
+    void update(Service service);
 }

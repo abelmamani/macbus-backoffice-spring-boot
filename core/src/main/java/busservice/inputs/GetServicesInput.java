@@ -5,4 +5,5 @@ import java.util.Collection;
 
 public interface GetServicesInput {
     Collection<ServiceModel> getServices();
+    Collection<ServiceModel> getActiveServices();
 }

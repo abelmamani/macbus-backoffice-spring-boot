@@ -14,8 +14,7 @@ public class GetRouteUseCase implements GetRouteInput {
 
     @Override
     public RouteGeneralInfoResponseModel getRouteGeneralInfoByName(String name) {
-        if(!getRouteRepository.existsByLongName(name))
-            throw new RouteNotExistsException("La linea " + name + " no existe.");
-        return getRouteRepository.findByRouteLongName(name);
+        return getRouteRepository.findByRouteLongName(name).orElseThrow(
+                ()-> new RouteNotExistsException("La linea " + name + " no existe o no esta disponible."));
     }
 }

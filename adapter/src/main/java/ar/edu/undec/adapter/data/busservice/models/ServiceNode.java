@@ -2,6 +2,7 @@ package ar.edu.undec.adapter.data.busservice.models;
 
 import ar.edu.undec.adapter.data.audit.AuditableNode;
 import ar.edu.undec.adapter.data.calendardate.models.CalendarDateNode;
+import audit.EntityStatus;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -25,6 +26,8 @@ public class ServiceNode extends AuditableNode {
     private String startDate;
     @Property(name = "end_date")
     private String endDate;
+    @Property(name = "status")
+    private EntityStatus status;
     @Relationship(type = "HAS_CALENDAR_DATE", direction = Relationship.Direction.OUTGOING)
     private List<CalendarDateNode> calendarDates;
 }

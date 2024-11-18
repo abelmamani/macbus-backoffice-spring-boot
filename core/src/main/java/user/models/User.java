@@ -1,10 +1,9 @@
 package user.models;
 
+import audit.EntityStatus;
 import role.models.Role;
 import user.exceptions.UserException;
 import utils.GmailValidator;
-import utils.ValidatorUtils;
-
 import java.time.LocalDateTime;
 
 public class User {
@@ -15,9 +14,10 @@ public class User {
     private String password;
     private String resetToken;
     private LocalDateTime tokenExpiryDate;
+    private EntityStatus status;
     private Role role;
 
-    private User(String id, String name, String lastName, String email, String password, String resetToken, LocalDateTime tokenExpiryDate, Role role) {
+    private User(String id, String name, String lastName, String email, String password, String resetToken, LocalDateTime tokenExpiryDate, EntityStatus status, Role role) {
         this.id = id;
         this.name = name;
         this.lastName = lastName;
@@ -25,10 +25,11 @@ public class User {
         this.password = password;
         this.resetToken = resetToken;
         this.tokenExpiryDate = tokenExpiryDate;
+        this.status = status;
         this.role = role;
     }
 
-    public static User getInstance(String id, String name, String lastName, String email, String password, String resetToken, LocalDateTime tokenExpiryDate, Role role) {
+    public static User getInstance(String id, String name, String lastName, String email, String password, String resetToken, LocalDateTime tokenExpiryDate, EntityStatus status, Role role) {
         if (name == null || name.isBlank())
             throw new UserException("El nombre del usuario es requerido.");
 
@@ -46,10 +47,14 @@ public class User {
 
         //if (!ValidatorUtils.isValidPassword(password))
           //  throw new UserException("La contraseña no es válida. Debe tener al menos 8 caracteres, incluyendo una letra mayúscula, una minúscula y un número.");
+
+        if (status == null)
+            throw new UserException("El estado del usuario es requerido.");
+
         if (role == null)
             throw new UserException("El rol del usuario es requerido.");
 
-        return new User(id, name, lastName, email.trim(), password.trim(), resetToken, tokenExpiryDate, role);
+        return new User(id, name, lastName, email.trim(), password.trim(), resetToken, tokenExpiryDate, status, role);
     }
 
     public String getId() {
@@ -73,6 +78,7 @@ public class User {
     public LocalDateTime getTokenExpiryDate() {
         return tokenExpiryDate;
     }
+    public EntityStatus getStatus() { return status; }
     public Role getRole() {
         return role;
     }

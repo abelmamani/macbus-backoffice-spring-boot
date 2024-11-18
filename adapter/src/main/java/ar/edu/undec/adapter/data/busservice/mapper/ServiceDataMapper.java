@@ -15,6 +15,7 @@ public class ServiceDataMapper {
                     serviceNode.getName(),
                     serviceNode.getStartDate(),
                     serviceNode.getEndDate(),
+                    serviceNode.getStatus(),
                     serviceNode.getCalendarDates().stream().map(CalendarDateDataMapper::dataCoreMapper).collect(Collectors.toList()));
         }catch (RuntimeException exception){
             throw new FailedMappingException("Error mapping from node to core");
@@ -27,6 +28,7 @@ public class ServiceDataMapper {
                     .name(service.getName())
                     .startDate(service.getStartDate())
                     .endDate(service.getEndDate())
+                    .status(service.getStatus())
                     .calendarDates(service.getCalendarDates().stream().map(CalendarDateDataMapper::dataNodeMapper).collect(Collectors.toList()))
                     .build();
         }catch (RuntimeException exception){
@@ -36,8 +38,10 @@ public class ServiceDataMapper {
 
     public static ServiceModel mapToServiceModel(Map<String, Object> map) {
         return new ServiceModel(
+                (String) map.get("id"),
                 (String) map.get("name"),
                 (String) map.get("startDate"),
-                (String) map.get("endDate"));
+                (String) map.get("endDate"),
+                (String) map.get("status"));
     }
 }

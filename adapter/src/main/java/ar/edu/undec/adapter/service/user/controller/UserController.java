@@ -52,11 +52,11 @@ public class UserController {
         }
     }
 
-    @PutMapping("/{email}")
+    @PutMapping
     @PreAuthorize("hasAuthority('USER_MANAGER')")
-    public ResponseEntity<?> updateUser(@PathVariable("email") String email, @RequestBody UpdateUserRequestModel updateUserRequestModel){
+    public ResponseEntity<?> updateUser(@RequestBody UpdateUserRequestModel updateUserRequestModel){
         try {
-            updateUserInput.updateUser(email, updateUserRequestModel);
+            updateUserInput.updateUser(updateUserRequestModel);
             return ResponseManager.successRequest("Usuario actualizado correctamente.");
         }catch (RuntimeException exception){
             return ResponseManager.badRequest(exception.getMessage());

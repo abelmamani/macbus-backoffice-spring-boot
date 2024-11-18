@@ -8,16 +8,20 @@ public class UpdateRouteRequestModel {
     private String description;
     private String color;
     private String textColor;
+    private String status;
 
     private UpdateRouteRequestModel(){}
-    private UpdateRouteRequestModel(String shortName, String longName, String description, String color, String textColor) {
+
+    private UpdateRouteRequestModel(String shortName, String longName, String description, String color, String textColor, String status) {
         this.shortName = shortName;
         this.longName = longName;
         this.description = description;
         this.color = color;
         this.textColor = textColor;
+        this.status = status;
     }
-    public static UpdateRouteRequestModel getInstance(String shortName, String longName, String description, String color, String textColor) {
+
+    public static UpdateRouteRequestModel getInstance(String shortName, String longName, String description, String color, String textColor, String status) {
         if (shortName == null || shortName.trim().isEmpty())
             throw new RouteException("El nombre corto de la linea es requerido.");
         if (longName == null || longName.trim().isEmpty())
@@ -26,7 +30,9 @@ public class UpdateRouteRequestModel {
             throw new RouteException("El color de la linea es requerido.");
         if (textColor == null || textColor.trim().isEmpty())
             throw new RouteException("El color de texto de la linea es requerido.");
-        return new UpdateRouteRequestModel(shortName, longName, description, color, textColor);
+        if (status == null || status.trim().isEmpty())
+            throw new RouteException("El estado de la linea es requerido.");
+        return new UpdateRouteRequestModel(shortName, longName, description, color, textColor, status);
     }
 
     public String getShortName() {
@@ -47,5 +53,9 @@ public class UpdateRouteRequestModel {
 
     public String getTextColor() {
         return textColor;
+    }
+
+    public String getStatus() {
+        return status;
     }
 }

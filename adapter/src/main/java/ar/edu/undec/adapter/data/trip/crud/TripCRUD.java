@@ -1,6 +1,6 @@
 package ar.edu.undec.adapter.data.trip.crud;
 import ar.edu.undec.adapter.data.trip.models.TripNode;
-import busroute.models.RouteStatus;
+import busroute.models.RouteProgressStatus;
 import org.springframework.data.neo4j.repository.Neo4jRepository;
 import org.springframework.data.neo4j.repository.query.Query;
 import org.springframework.stereotype.Repository;
@@ -21,12 +21,13 @@ public interface TripCRUD extends Neo4jRepository<TripNode, String> {
     @Query("MATCH (r:Route {long_name: $longName}) " +
             "OPTIONAL MATCH (t:Trip {id: $tripId}) "+
             "CREATE (r)-[:HAS_TRIP]->(t) " +
-            "SET r.route_status = $routeStatus")
-    void addTrip(String longName, String tripId, RouteStatus routeStatus);
+            "SET r.progress_status = $routeStatus")
+    void addTrip(String longName, String tripId, RouteProgressStatus routeStatus);
     @Query("MATCH (t:Trip {id: $tripId})<-[pof:PART_OF_TRIP]-(st:StopTime) DETACH DELETE t, st")
     void deleteTripAndStopTimes(String tripId);
     @Query("MATCH (r:Route {long_name: $longName})-[:HAS_TRIP]->(t:Trip)-[:TRIP_AT]->(s:Service) " +
-            "RETURN {id: t.id, departureTime: t.departure_time, tripStatus: t.trip_status, service: s.name} AS trip")
+            "RETURN {id: t.id, departureTime: t.departure_time, tripStatus: t.trip_status, service: s.name} AS trip "+
+            "ORDER BY t.departure_time ")
     List<Map<String, Object>> findAllTripsByRouteLongName(String longName);
     @Query("MATCH (t:Trip) " +
             "WHERE t.trip_status IS NOT NULL "+

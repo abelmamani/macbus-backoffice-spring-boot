@@ -1,6 +1,7 @@
 package ar.edu.undec.adapter.service.auth.config;
 
 import ar.edu.undec.adapter.data.user.crud.UserCRUD;
+import audit.EntityStatus;
 import auth.inputs.LoginInput;
 import auth.inputs.RecoverPasswordInput;
 import auth.outputs.LoginRepository;
@@ -42,7 +43,7 @@ public class AuthConfig {
     }
     @Bean
     public UserDetailsService userDetailService(){
-        return username -> userCRUD.findByEmail(username)
+        return username -> userCRUD.findByEmailAndStatus(username, EntityStatus.ACTIVE)
                 .orElseThrow(() -> new UsernameNotFoundException("El usuario "+username+" no esta registrado."));
     }
     @Bean

@@ -1,7 +1,7 @@
 package trip.inputs;
 
-import busroute.models.RouteStatus;
+import busroute.models.RouteProgressStatus;
 
 public interface DeleteTripInput {
-    RouteStatus deleteTrip(String routeName, String tripId);
+    RouteProgressStatus deleteTrip(String routeName, String tripId);
 }

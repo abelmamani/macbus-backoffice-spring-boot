@@ -1,5 +1,6 @@
 package user.usecases;
 
+import audit.EntityStatus;
 import role.exceptions.RoleException;
 import role.models.Role;
 import role.outputs.RoleRepository;
@@ -30,6 +31,7 @@ public class CreateUserUseCase implements CreateUserInput {
                 createUserRepository.encodePassword(createUserRequestModel.getPassword()),
                 UUID.randomUUID().toString(),
                 LocalDateTime.now().minusMinutes(1),
+                EntityStatus.ACTIVE,
                 role);
         return createUserRepository.save(user);
     }
