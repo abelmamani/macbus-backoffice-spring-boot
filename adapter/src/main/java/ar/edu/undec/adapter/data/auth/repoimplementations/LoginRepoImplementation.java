@@ -32,7 +32,7 @@ public class LoginRepoImplementation implements LoginRepository {
     @Override
     public User findByEmail(String email) {
         return UserDataMapper.dataCoreMapper(userCRUD.findByEmailAndStatus(email, EntityStatus.ACTIVE)
-                .orElseThrow(() -> new UsernameNotFoundException("El usuario con este email no existe.")));
+                .orElseThrow(() -> new UsernameNotFoundException("El usuario "+email+" no existe.")));
     }
 
     @Override

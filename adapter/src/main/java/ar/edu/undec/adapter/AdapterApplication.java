@@ -56,11 +56,11 @@ public class AdapterApplication {
                         .build();
                 return roleCRUD.save(role);
             });
-            if (!userCRUD.existsByEmail("abelmamani186f@gmail.com")) {
+            if (!userCRUD.existsByEmail("juan@gmail.com")) {
                 UserNode superAdminUser = UserNode.builder()
                         .name("ABEL")
                         .lastName("MAMANI")
-                        .email("abelmamani186f@gmail.com")
+                        .email("juan@gmail.com")
                         .password(passwordEncoder.encode("aA12345678"))
                         .resetToken(UUID.randomUUID().toString())
                         .tokenExpiryDate(LocalDateTime.now().minusMinutes(1))
