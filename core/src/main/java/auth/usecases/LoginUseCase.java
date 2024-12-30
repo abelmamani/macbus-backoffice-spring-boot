@@ -17,10 +17,10 @@ public class LoginUseCase implements LoginInput {
 
     @Override
     public AuthResponse login(LoginRequestModel loginRequestModel) {
-        User user = loginRepository.findByEmail(loginRequestModel.getEmail());
         if (!loginRepository.authenticate(loginRequestModel.getEmail(), loginRequestModel.getPassword())) {
-            throw new UserNotExistException("Contraseña iconrrecto.");
+            throw new UserNotExistException("Correo electrónico y/o contraseña iconrrecto.");
         }
+        User user = loginRepository.findByEmail(loginRequestModel.getEmail());
         return AuthResponse.getInstance(
                 loginRepository.generateToken(user),
                 UserIdentity.getInstance(user.getEmail(), user.getRole()));
