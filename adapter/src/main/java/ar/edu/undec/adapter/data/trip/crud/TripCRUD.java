@@ -33,8 +33,6 @@ public interface TripCRUD extends Neo4jRepository<TripNode, String> {
             "WHERE t.trip_status IS NOT NULL "+
             "RETURN COUNT(t) AS total, " +
             "COUNT(CASE WHEN t.trip_status = 'SCHEDULED' THEN 1 END) AS scheduled, " +
-            "COUNT(CASE WHEN t.trip_status = 'RUNNING' THEN 1 END) AS running, " +
-            "COUNT(CASE WHEN t.trip_status = 'COMPLETED' THEN 1 END) AS completed, " +
-            "COUNT(CASE WHEN t.trip_status = 'CANCELLED' THEN 1 END) AS cancelled")
+            "COUNT(CASE WHEN t.trip_status = 'RUNNING' THEN 1 END) AS running")
     TripStatusCountsResponseModel getTripStatusCounts();
 }

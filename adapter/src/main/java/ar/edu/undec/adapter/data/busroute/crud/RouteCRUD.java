@@ -19,7 +19,7 @@ public interface RouteCRUD extends Neo4jRepository<RouteNode, String> {
     Optional<RouteNode> findByLongNameAndStatus(String longName, EntityStatus status);
     @Query("MATCH (r:Route {long_name: $longName, status: 'ACTIVE'}) RETURN r {.short_name, .long_name, .description, .color, .text_color, .progress_status, .status}")
     Optional<RouteGeneralInfoResponseModel> findByRouteLongName(String longName);
-    @Query("MATCH (r:Route) RETURN {shortName: r.short_name, longName: r.long_name, description: r.description, color: r.color, textColor: r.text_color, progressStatus: r.progress_status, status: r.status} as route")
+    @Query("MATCH (r:Route) RETURN {shortName: r.short_name, longName: r.long_name, description: r.description, color: r.color, textColor: r.text_color, progressStatus: r.progress_status, status: r.status} as route ORDER BY r.short_name")
     List<Map<String, Object>> findAllRoutesGeneralInfo();
     @Query("MATCH (r:Route {progress_status: 'WITH_TRIPS'}) RETURN {shortName: r.short_name, longName: r.long_name, description: r.description, color: r.color, textColor: r.text_color, progressStatus: r.progress_status, status: r.status} as route")
     List<Map<String, Object>> findRoutesWithTrips();
