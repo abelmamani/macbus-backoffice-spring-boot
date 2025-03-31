@@ -27,7 +27,7 @@ public class CreateServiceUseCase implements CreateServiceInput {
             throw new ServiceException("La fecha de inicio y fin deben ser superiores a la fecha actual.");
         if (startDate.isAfter(endDate))
             throw new ServiceException("La fecha de inicio debe ser inferior a la fecha de fin.");
-        if(createServiceRepository.existsByName(createServiceRequestModel.getName()))
+        if(createServiceRepository.existsByName(createServiceRequestModel.getName().trim()))
             throw new ServiceAlreadyExistException("El servicio "+createServiceRequestModel.getName() + " ya existe.");
         Service service = Service.getInstance(null,
                 createServiceRequestModel.getName(),

@@ -27,7 +27,7 @@ public class CreateRoleUseCase implements CreateRoleInput {
 
     @Override
     public void createRole(CreateRoleRequestModel createRoleRequestModel) {
-        String roleName = createRoleRequestModel.getName();
+        String roleName = createRoleRequestModel.getName().trim();
         List<String> privileges = createRoleRequestModel.getPrivileges();
 
         if (roleName == null || roleName.isBlank())

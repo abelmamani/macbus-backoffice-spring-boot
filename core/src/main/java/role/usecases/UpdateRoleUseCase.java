@@ -55,7 +55,7 @@ public class UpdateRoleUseCase implements UpdateRoleInput {
                 throw new RoleException("El estado " + status + " no es válido.");
             }
         }
-        if(roleRepository.existsByName(updateRoleRequestModel.getName()) && !foundRole.getName().equals(updateRoleRequestModel.getName()))
+        if(roleRepository.existsByName(updateRoleRequestModel.getName().trim()) && !foundRole.getName().equals(updateRoleRequestModel.getName().trim()))
             throw new RoleException("El rol con nombre "+ updateRoleRequestModel.getName()+ " ya existe, elige otro.");
 
         List<Privilege> newPrivileges = privileges.stream()

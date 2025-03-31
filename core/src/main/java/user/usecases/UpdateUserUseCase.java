@@ -33,7 +33,7 @@ public class UpdateUserUseCase implements UpdateUserInput {
             }
         }
 
-        if(updateUserRepository.existsByEmail(updateUserRequestModel.getEmail()) && !findUser.getEmail().equals(updateUserRequestModel.getEmail()))
+        if(updateUserRepository.existsByEmail(updateUserRequestModel.getEmail().trim()) && !findUser.getEmail().equals(updateUserRequestModel.getEmail().trim()))
             throw new UserAlreadyExistsException("El usuario con email "+updateUserRequestModel.getEmail()+" ya existe, utilice otro.");
         Role role = roleRepository.findByName(updateUserRequestModel.getRole()).orElseThrow(() -> new RoleException("El Rol "+ updateUserRequestModel.getRole() +" no existe."));
         User user = User.getInstance(findUser.getId(),

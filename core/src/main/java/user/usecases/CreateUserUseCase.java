@@ -22,7 +22,7 @@ public class CreateUserUseCase implements CreateUserInput {
     }
     @Override
     public String createUser(CreateUserRequestModel createUserRequestModel) {
-        if(createUserRepository.existsByEmail(createUserRequestModel.getEmail()))
+        if(createUserRepository.existsByEmail(createUserRequestModel.getEmail().trim()))
             throw new UserAlreadyExistsException("El usuario con email " +createUserRequestModel.getEmail()+ " ya existe." );
         Role role = roleRepository.findByName(createUserRequestModel.getRole()).orElseThrow(() -> new RoleException("El Rol "+ createUserRequestModel.getRole() +" no existe."));
         User user = User.getInstance(null, createUserRequestModel.getName(),

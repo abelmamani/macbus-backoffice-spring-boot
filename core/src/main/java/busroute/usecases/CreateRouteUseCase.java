@@ -21,9 +21,9 @@ public class CreateRouteUseCase implements CreateRouteInput {
 
     @Override
     public String createRoute(CreateRouteRequestModel createRouteRequestModel) {
-        if(createRouteRepository.existsByShortName(createRouteRequestModel.getShortName()))
+        if(createRouteRepository.existsByShortName(createRouteRequestModel.getShortName().trim()))
             throw new RouteAlreadyExistException("La linea con nombre corto "+createRouteRequestModel.getShortName()+" ya existe.");
-        if(createRouteRepository.existsByLongName(createRouteRequestModel.getLongName()))
+        if(createRouteRepository.existsByLongName(createRouteRequestModel.getLongName().trim()))
             throw new RouteAlreadyExistException("La linea con nombre largo "+createRouteRequestModel.getLongName()+" ya existe.");
 
         Route route = Route.getInstance(null,

@@ -17,7 +17,7 @@ public class CreateStopUseCase implements CreateStopInput {
 
     @Override
     public String createStop(CreateStopRequestModel createStopRequestModel) {
-        if(createStopRepository.existsByName(createStopRequestModel.getName()))
+        if(createStopRepository.existsByName(createStopRequestModel.getName().trim()))
             throw new StopAlreadyExistException("La parada con nombre "+createStopRequestModel.getName()+" ya existe.");
         Stop stop = Stop.getInstance(null,
                 createStopRequestModel.getName(),

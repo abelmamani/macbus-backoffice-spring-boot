@@ -31,10 +31,10 @@ public class UpdateGeneralInfoUseCase implements UpdateGeneralInfoInput {
             }
         }
 
-        if (updateGeneralInfoRepository.existsByShortNameAndNotLongName(updateRouteRequestModel.getShortName(), longName))
+        if (updateGeneralInfoRepository.existsByShortNameAndNotLongName(updateRouteRequestModel.getShortName().trim(), longName))
             throw new RouteAlreadyExistException("La línea con nombre corto " + updateRouteRequestModel.getShortName() + " ya existe.");
 
-        if(!longName.equals(updateRouteRequestModel.getLongName()) && updateGeneralInfoRepository.existsByLongName(updateRouteRequestModel.getLongName()))
+        if(!longName.equals(updateRouteRequestModel.getLongName().trim()) && updateGeneralInfoRepository.existsByLongName(updateRouteRequestModel.getLongName().trim()))
             throw new RouteAlreadyExistException("La linea con nombre largo " + updateRouteRequestModel.getLongName() + " ya existe.");
         UpdateRouteRequestModel updateRoute = UpdateRouteRequestModel.getInstance(updateRouteRequestModel.getShortName(),
                 updateRouteRequestModel.getLongName(),

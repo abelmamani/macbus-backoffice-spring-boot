@@ -28,7 +28,7 @@ public class UpdateStopUseCase implements UpdateStopInput {
                 throw new RoleException("El estado " + updateStopRequestModel.getStatus()+ " no es válido.");
             }
         }
-        if(updateStopRepository.existsByName(updateStopRequestModel.getName()) && !findStop.getName().equals(updateStopRequestModel.getName()))
+        if(updateStopRepository.existsByName(updateStopRequestModel.getName().trim()) && !findStop.getName().equals(updateStopRequestModel.getName().trim()))
             throw new StopAlreadyExistException("La parada con nombre "+ updateStopRequestModel.getName()+ " ya existe.");
         Stop newBusStop = Stop.getInstance(
                 findStop.getId(),

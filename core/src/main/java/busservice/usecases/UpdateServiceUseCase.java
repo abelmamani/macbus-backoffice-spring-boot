@@ -39,7 +39,7 @@ public class UpdateServiceUseCase implements UpdateServiceInput {
                 throw new RoleException("El estado " + updateServiceRequestModel.getStatus()+ " no es válido.");
             }
         }
-        if (updateServiceRepository.existsByName(updateServiceRequestModel.getName()) && !foundService.getName().equals(updateServiceRequestModel.getName()))
+        if (updateServiceRepository.existsByName(updateServiceRequestModel.getName().trim()) && !foundService.getName().equals(updateServiceRequestModel.getName().trim()))
             throw new ServiceAlreadyExistException("El servicio con nombre " + updateServiceRequestModel.getName() + " ya existe.");
         if (!foundService.getStartDate().equals(updateServiceRequestModel.getStartDate()) && startDate.isBefore(LocalDate.now()))
             throw new ServiceException("La nueva fecha de inicio debe ser igual o posterior a la fecha actual.");

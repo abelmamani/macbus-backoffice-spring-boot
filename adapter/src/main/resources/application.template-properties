@@ -1,6 +1,1 @@
-spring.datasource.url=jdbc:postgresql://localhost/databasename
-spring.datasource.username=
-spring.datasource.password=
-spring.jpa.generate-ddl=true
-spring.jpa.properties.hibernate.dialect=
-server.error.include-message=always
+
