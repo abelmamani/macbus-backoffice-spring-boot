@@ -54,7 +54,7 @@ public class User {
         if (role == null)
             throw new UserException("El rol del usuario es requerido.");
 
-        return new User(id, name, lastName, email.trim(), password.trim(), resetToken, tokenExpiryDate, status, role);
+        return new User(id, name.trim(), lastName.trim(), email.trim(), password.trim(), resetToken, tokenExpiryDate, status, role);
     }
 
     public String getId() {

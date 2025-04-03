@@ -36,9 +36,9 @@ public class UpdateGeneralInfoUseCase implements UpdateGeneralInfoInput {
 
         if(!longName.equals(updateRouteRequestModel.getLongName().trim()) && updateGeneralInfoRepository.existsByLongName(updateRouteRequestModel.getLongName().trim()))
             throw new RouteAlreadyExistException("La linea con nombre largo " + updateRouteRequestModel.getLongName() + " ya existe.");
-        UpdateRouteRequestModel updateRoute = UpdateRouteRequestModel.getInstance(updateRouteRequestModel.getShortName(),
-                updateRouteRequestModel.getLongName(),
-                updateRouteRequestModel.getDescription(),
+        UpdateRouteRequestModel updateRoute = UpdateRouteRequestModel.getInstance(updateRouteRequestModel.getShortName().trim(),
+                updateRouteRequestModel.getLongName().trim(),
+                updateRouteRequestModel.getDescription().trim(),
                 updateRouteRequestModel.getColor(),
                 updateRouteRequestModel.getTextColor(),
                 newStatus.toString());
