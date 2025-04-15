@@ -1,5 +1,5 @@
 # Macbus Backend
-
+![Diagrama de Nodos](images/DN.png)
 ## Tecnologías utilizadas
 
 - **Spring Boot**: Framework de desarrollo en Java para crear aplicaciones basadas en microservicios.
