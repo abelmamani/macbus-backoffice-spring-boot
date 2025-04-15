@@ -21,7 +21,7 @@ Antes de comenzar, asegúrate de tener instalados los siguientes requisitos en t
 ### 1. Clona el repositorio:
 
 ```bash
-git clone https://gitlab.com/macbus-project/macbus-backend.git
+git clone https://github.com/abelmamani/macbus-backoffice-spring-boot.git
 ```
 
 ### 2. Configura el archivo application.properties
